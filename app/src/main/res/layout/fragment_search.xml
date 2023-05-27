@@ -7,32 +7,18 @@
     tools:context="FragmentSearch">
 
     <FrameLayout
-        android:id="@+id/frameS"
+        android:id="@+id/frameSearch"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@drawable/shape"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editTextText"
+        <SearchView
+            android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="2dp"
-            android:background="#00000000"
-            android:ems="10"
-            android:hint="Search"
+            android:background="#9A6C6C" />
 
-            android:inputType="text" />
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:layout_marginRight="1dp"
-            android:background="#00000000"
-            android:src="@android:drawable/ic_menu_search" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

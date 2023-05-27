@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import com.example.biblioteca.databinding.FragmentSearchBinding
 
@@ -15,11 +16,9 @@ class FragmentSearch(): Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding= FragmentSearchBinding.inflate(inflater)
-
-
+        binding.searchBar.setOnClickListener{
+            binding.searchBar.isIconified = false
+        }
         return binding.root
     }
-
-
-
 }
