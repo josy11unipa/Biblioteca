@@ -10,6 +10,7 @@
         android:id="@+id/frameSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/home"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,7 +19,9 @@
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#9A6C6C" />
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/shape" />
 
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
