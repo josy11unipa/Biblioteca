@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
+        android:id="@+id/fragmentSearchBar"
         android:name="com.example.biblioteca.FragmentSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_search" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView4"
+        android:id="@+id/fragmentMain"
         android:name="com.example.biblioteca.Home_Fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentSearchBar"
         app:layout_constraintVertical_bias="0.247"
         tools:layout="@layout/home_layout" />
 
@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/tastoHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
@@ -51,7 +51,7 @@
             app:srcCompat="@drawable/home_icon" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/tastoUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
@@ -60,7 +60,7 @@
             app:srcCompat="@drawable/user_icon" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/tastoInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"

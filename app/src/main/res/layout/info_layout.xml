@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#329E85">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -11,26 +12,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/Titolo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:elevation="10dp"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="GigaByte Library"
-                android:textAlignment="textStart"
-                android:textSize="34sp"
-                android:textStyle="bold" />
+            android:orientation="vertical"
+            android:paddingTop="10dp">
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="249dp"
-                android:layout_height="177dp"
+                android:layout_width="247dp"
+                android:layout_height="155dp"
                 android:elevation="6dp"
-                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
                 app:srcCompat="@drawable/interni" />
 
             <ImageView
@@ -39,7 +29,8 @@
                 android:layout_height="196dp"
                 android:layout_gravity="right"
                 android:elevation="6dp"
-                app:srcCompat="@drawable/Immagine7" />
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/esterno" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -48,7 +39,8 @@
                 android:paddingTop="10dp"
                 android:text="Viale delle scienze"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -56,7 +48,8 @@
                 android:layout_height="wrap_content"
                 android:text="Ed 8"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -64,28 +57,33 @@
                 android:layout_height="wrap_content"
                 android:text="Palermo"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="20dp">
 
                 <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView4"
+                    android:layout_width="181dp"
+                    android:layout_height="104dp"
                     android:layout_weight="1"
-                    app:srcCompat="@android:drawable/ic_dialog_map" />
+                    app:srcCompat="@drawable/maps_icon" />
 
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Premi per apire le mappe" />
+                    android:text="Premi per apire le mappe"
+                    android:textAlignment="center"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
     </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
