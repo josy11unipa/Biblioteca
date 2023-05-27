@@ -15,6 +15,11 @@ class FragmentSearch(): Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding= FragmentSearchBinding.inflate(inflater)
+
+
         return binding.root
     }
+
+
+
 }

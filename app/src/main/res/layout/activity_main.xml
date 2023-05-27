@@ -27,13 +27,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
         app:layout_constraintVertical_bias="0.247"
-        tools:layout="@layout/grid_layout" />
+        tools:layout="@layout/home_layout" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#9A6C6C"
+        android:background="@drawable/shape"
         android:foregroundTint="#9A6C6C"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"

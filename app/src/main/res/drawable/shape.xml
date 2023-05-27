@@ -1,0 +1,8 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <stroke
+        android:width="2dp"
+        android:color="#3D3A3A" /> <!-- Colore del contorno, in questo caso rosso (#FF0000) -->
+
+    <solid android:color="@color/home" /> <!-- Colore di riempimento trasparente -->
+    <corners android:radius="0dp" /> <!-- Opzionale: bordi arrotondati -->
+</shape>
