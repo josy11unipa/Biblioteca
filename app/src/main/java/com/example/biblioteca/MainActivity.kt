@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
             val fragmentManager = supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(R.id.fragmentMain,Home_Fragment())
+            transaction.addToBackStack(null)
             transaction.commit()
         }
 
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             val fragmentManager = supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(R.id.fragmentMain,Info_Fragment())
+            transaction.addToBackStack(null)
             transaction.commit()
         }
     }
