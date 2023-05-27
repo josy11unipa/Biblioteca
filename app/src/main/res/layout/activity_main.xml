@@ -26,7 +26,8 @@
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
-        app:layout_constraintVertical_bias="0.247" />
+        app:layout_constraintVertical_bias="0.247"
+        tools:layout="@layout/grid_layout" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
