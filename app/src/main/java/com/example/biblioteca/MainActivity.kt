@@ -2,6 +2,8 @@ package com.example.biblioteca
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.biblioteca.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,23 +17,42 @@ class MainActivity : AppCompatActivity() {
         home_binding.setOnClickListener{
             val fragmentManager = supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentMain,Home_Fragment())
-            transaction.addToBackStack(null)
-            transaction.commit()
+            val activeFragment = fragmentManager.findFragmentById(R.id.fragmentMain)
+            if(activeFragment  is Home_Fragment){
+
+            }else {
+                transaction.replace(R.id.fragmentMain, Home_Fragment())
+                transaction.addToBackStack(null)
+
+                transaction.commit()
+            }
         }
 
         val info_binding = binding.tastoInfo
         info_binding.setOnClickListener{
             val fragmentManager = supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentMain,Info_Fragment())
-            transaction.addToBackStack(null)
-            transaction.commit()
+            val activeFragment = fragmentManager.findFragmentById(R.id.fragmentMain)
+            if(activeFragment is Info_Fragment){
+
+            }else {
+                transaction.replace(R.id.fragmentMain, Info_Fragment())
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
         }
+
+
+
+
+
+        }
+
+
     }
 
 
 
 
 
-}
+
