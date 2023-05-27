@@ -41,7 +41,18 @@ class MainActivity : AppCompatActivity() {
                 transaction.commit()
             }
         }
+        binding.tastoUser.setOnClickListener{
+            val fragmentManager = supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            val activeFragment = fragmentManager.findFragmentById(R.id.fragmentMain)
+            if(activeFragment is Fragment_profile){
 
+            }else {
+                transaction.replace(R.id.fragmentMain, Fragment_profile())
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+        }
 
 
 
