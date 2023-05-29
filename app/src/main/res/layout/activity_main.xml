@@ -68,5 +68,14 @@
             android:backgroundTint="@color/home"
             app:srcCompat="@drawable/senza_titolo_1" />
 
+        <ImageButton
+            android:id="@+id/debug_backstack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/home"
+            app:srcCompat="@android:drawable/ic_menu_help" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
