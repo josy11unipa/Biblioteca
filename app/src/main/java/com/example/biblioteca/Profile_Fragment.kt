@@ -24,15 +24,11 @@ class Profile_Fragment:Fragment() {
     ): View? {
         binding=ProfileLayoutBinding.inflate(inflater)
 
-
-
         binding.button.setOnClickListener {
             val scanner=IntentIntegrator.forSupportFragment(this)
             ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             scanner.initiateScan()
         }
-
-
         return binding.root
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -47,9 +43,7 @@ class Profile_Fragment:Fragment() {
                 risult=result.contents.toString()
                 binding.button.text=risult
             }
-
         }
-
 
     }
 }

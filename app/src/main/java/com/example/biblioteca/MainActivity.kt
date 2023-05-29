@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.biblioteca.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -60,7 +61,18 @@ class MainActivity : AppCompatActivity() {
         val verifica=fragmentManager.findFragmentById(R.id.fragmentMain)
         if(verifica is Home_Fragment){
 
-            super.onBackPressed()
+            val dialogBuilder = android.app.AlertDialog.Builder(this)
+            dialogBuilder.setMessage("Vuoi uscire dall'app?")
+            dialogBuilder.setTitle("Uscita autorizzata")
+            dialogBuilder.setPositiveButton("Si"){
+                    _, _ ->
+                super.onBackPressed()
+            }
+            dialogBuilder.setNegativeButton("No"){
+                    _, _ ->
+            }
+            val dialog = dialogBuilder.create()
+            dialog.show()
         }else{
             transaction.replace(R.id.fragmentMain,Home_Fragment())
             transaction.commit()
