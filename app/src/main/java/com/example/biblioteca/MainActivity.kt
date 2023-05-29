@@ -24,14 +24,9 @@ class MainActivity : AppCompatActivity() {
         home_binding.setOnClickListener{
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
-            if(verifica!=null){
-                if(!fragmentExsist("Home_fragment")){
-                    transaction.replace(R.id.fragmentMain,Home_Fragment())
-                    transaction.addToBackStack("Home_fragment")
-                }
-            }else {
-                transaction.add(R.id.fragmentMain, Home_Fragment())
-                transaction.addToBackStack("Home_fragment")
+            if(verifica is Home_Fragment) {
+            }else{
+                transaction.replace(R.id.fragmentMain,Home_Fragment())
             }
             transaction.commit()
         }
@@ -40,14 +35,10 @@ class MainActivity : AppCompatActivity() {
         info_binding.setOnClickListener{
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
-            if(verifica!=null){
-                if(!fragmentExsist("Info_fragment")){
-                    transaction.replace(R.id.fragmentMain,Info_Fragment())
-                    transaction.addToBackStack("Info_fragment")
-                }
-            }else {
-                transaction.add(R.id.fragmentMain, Info_Fragment())
-                transaction.addToBackStack("Info_fragment")
+            if(verifica is Info_Fragment) {
+
+            }else{
+                transaction.replace(R.id.fragmentMain,Info_Fragment())
             }
             transaction.commit()
         }
@@ -55,14 +46,9 @@ class MainActivity : AppCompatActivity() {
         profile_bindng.setOnClickListener{
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
-            if(verifica!=null){
-                if(!fragmentExsist("Profile_fragment")) {
-                    transaction.replace(R.id.fragmentMain, Profile_Fragment())
-                    transaction.addToBackStack("Profile_fragment")
-                }
-            }else {
-                transaction.add(R.id.fragmentMain, Profile_Fragment())
-                transaction.addToBackStack("Profile_fragment")
+            if(verifica is Profile_Fragment) {
+            }else{
+                transaction.replace(R.id.fragmentMain,Profile_Fragment())
             }
             transaction.commit()
         }
@@ -70,32 +56,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         val fragmentManager = supportFragmentManager
-        val backStackCount = fragmentManager.backStackEntryCount
+        val transaction = fragmentManager.beginTransaction()
+        val verifica=fragmentManager.findFragmentById(R.id.fragmentMain)
+        if(verifica is Home_Fragment){
 
-        if (backStackCount > 0) {                       //si usa l'if per "tornare indietro", quindi per fare la pop si una singola posizione all'interno del backstack
-            fragmentManager.popBackStack()
-        } else {
-            //super.onBackPressed()
-            TODO("Inserire richiesta uscita app")
+            super.onBackPressed()
+        }else{
+            transaction.replace(R.id.fragmentMain,Home_Fragment())
+            transaction.commit()
         }
     }
 
-    private fun fragmentExsist(tag_c:String): Boolean{
-        var flag = false
-        val manager=supportFragmentManager
-        val backStackCount = manager.backStackEntryCount
-        for (i in 0 until backStackCount) {
-            val entry = manager.getBackStackEntryAt(i)
-            if (entry.name == tag_c) {
-                Log.i("TAG", "${entry.name} $tag_c")
-                return true
-            }else{
-                Log.i("TAG", "${entry.name} $tag_c")
-                flag = false
-            }
-        }
-        return flag
-    }
+
 }
 
 
