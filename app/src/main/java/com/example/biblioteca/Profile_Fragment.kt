@@ -9,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.example.biblioteca.databinding.ProfileLayoutBinding
 import com.google.zxing.integration.android.IntentIntegrator
+import androidx.fragment.app.setFragmentResult
+
 
 class Profile_Fragment:Fragment() {
     private lateinit var binding:ProfileLayoutBinding
@@ -23,11 +26,21 @@ class Profile_Fragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=ProfileLayoutBinding.inflate(inflater)
+        val result = "Area Personale"
+        setFragmentResult("key", bundleOf("keyBundle" to result))
 
         binding.button.setOnClickListener {
             val scanner=IntentIntegrator.forSupportFragment(this)
             ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             scanner.initiateScan()
+        }
+        binding.loginButton.setOnClickListener{
+            val manager=parentFragmentManager
+            val transaction=manager.beginTransaction()
+
+            transaction.replace(R.id.fragmentMain,CoinFlipFragment())
+            //transaction.replace(R.id.fragmentSearchBar,TopBarFragment())
+            transaction.commit()
         }
         return binding.root
     }
@@ -44,6 +57,5 @@ class Profile_Fragment:Fragment() {
                 binding.button.text=risult
             }
         }
-
     }
 }

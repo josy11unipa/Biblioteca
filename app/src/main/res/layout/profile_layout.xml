@@ -59,6 +59,12 @@
                 android:text="qr"
                 tools:layout_editor_absoluteX="142dp"
                 tools:layout_editor_absoluteY="689dp" />
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login" />
         </LinearLayout>
 
         <Button

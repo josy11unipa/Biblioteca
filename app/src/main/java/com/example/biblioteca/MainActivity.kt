@@ -2,11 +2,11 @@ package com.example.biblioteca
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import com.example.biblioteca.databinding.ActivityMainBinding
+import androidx.fragment.app.setFragmentResult
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -21,25 +21,26 @@ class MainActivity : AppCompatActivity() {
 
         val manager=supportFragmentManager
 
-
         home_binding.setOnClickListener{
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Home_Fragment) {
             }else{
                 transaction.replace(R.id.fragmentMain,Home_Fragment())
+                transaction.replace(R.id.fragmentSearchBar,FragmentSearch())
+
             }
             transaction.commit()
         }
-
 
         info_binding.setOnClickListener{
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Info_Fragment) {
-
             }else{
+                transaction.replace(R.id.fragmentSearchBar,TopBarFragment())
                 transaction.replace(R.id.fragmentMain,Info_Fragment())
+
             }
             transaction.commit()
         }
@@ -49,7 +50,9 @@ class MainActivity : AppCompatActivity() {
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Profile_Fragment) {
             }else{
+                transaction.replace(R.id.fragmentSearchBar,TopBarFragment())
                 transaction.replace(R.id.fragmentMain,Profile_Fragment())
+
             }
             transaction.commit()
         }
@@ -75,11 +78,10 @@ class MainActivity : AppCompatActivity() {
             dialog.show()
         }else{
             transaction.replace(R.id.fragmentMain,Home_Fragment())
+            transaction.replace(R.id.fragmentSearchBar,FragmentSearch())
             transaction.commit()
         }
     }
-
-
 }
 
 
