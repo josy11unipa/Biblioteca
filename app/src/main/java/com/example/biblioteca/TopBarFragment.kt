@@ -19,11 +19,13 @@ class TopBarFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=TopBarLayoutBinding.inflate(inflater)
+
          setFragmentResultListener("key"){
              requestKey, bundle ->
              value = bundle.getString("keyBundle")
              binding.titolo.text = value.toString()
          }
+
         return binding.root
     }
 }

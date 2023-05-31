@@ -6,6 +6,10 @@ import android.util.Log
 import com.example.biblioteca.databinding.ActivityMainBinding
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.database.LocalDBHelper
+import com.example.biblioteca.home.Home_Fragment
+import com.example.biblioteca.info.Info_Fragment
+import com.example.biblioteca.user.Login_Fragment
+import com.example.biblioteca.user.Profile_Fragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,22 +38,19 @@ class MainActivity : AppCompatActivity() {
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Home_Fragment) {
             }else{
-                transaction.replace(R.id.fragmentMain,Home_Fragment())
+                transaction.replace(R.id.fragmentMain, Home_Fragment())
                 transaction.replace(R.id.fragmentSearchBar,FragmentSearch())
-
             }
             transaction.commit()
         }
 
         info_binding.setOnClickListener{
-
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Info_Fragment) {
             }else{
                 transaction.replace(R.id.fragmentSearchBar,TopBarFragment())
-                transaction.replace(R.id.fragmentMain,Info_Fragment())
-
+                transaction.replace(R.id.fragmentMain, Info_Fragment())
             }
             transaction.commit()
         }
@@ -59,18 +60,16 @@ class MainActivity : AppCompatActivity() {
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(user.count!=0) {
-
                 if (verifica is Profile_Fragment) {
                 }else {
                     transaction.replace(R.id.fragmentSearchBar, TopBarFragment())
                     transaction.replace(R.id.fragmentMain, Profile_Fragment())
                     Log.i("TAG","${user.count}")
-
                 }
             }else{
                 Log.i("TAG","${user.count}")
                 transaction.replace(R.id.fragmentSearchBar, TopBarFragment())
-                transaction.replace(R.id.fragmentMain, CoinFlipFragment())
+                transaction.replace(R.id.fragmentMain, Login_Fragment())
             }
             transaction.commit()
         }
@@ -80,11 +79,12 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         val verifica=fragmentManager.findFragmentById(R.id.fragmentMain)
-        if(verifica is Home_Fragment){
 
+        if(verifica is Home_Fragment){
             val dialogBuilder = android.app.AlertDialog.Builder(this)
             dialogBuilder.setMessage("Vuoi uscire dall'app?")
             dialogBuilder.setTitle("Uscita autorizzata")
+
             dialogBuilder.setPositiveButton("Si"){
                     _, _ ->
                 super.onBackPressed()
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             val dialog = dialogBuilder.create()
             dialog.show()
         }else{
-            transaction.replace(R.id.fragmentMain,Home_Fragment())
+            transaction.replace(R.id.fragmentMain, Home_Fragment())
             transaction.replace(R.id.fragmentSearchBar,FragmentSearch())
             transaction.commit()
         }

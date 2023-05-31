@@ -1,4 +1,4 @@
-package com.example.biblioteca
+package com.example.biblioteca.user
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import com.example.biblioteca.databinding.ProfileLayoutBinding
 import com.google.zxing.integration.android.IntentIntegrator
 import androidx.fragment.app.setFragmentResult
+import com.example.biblioteca.R
 import com.example.biblioteca.database.DBManager
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
@@ -39,8 +40,9 @@ class Profile_Fragment:Fragment() {
         dbManager = DBManager(requireContext())
         dbManager.open()
         val result = "Area Personale"
-        setFragmentResult("key", bundleOf("keyBundle" to result))
         val cursor=dbManager.getUser()
+
+        setFragmentResult("key", bundleOf("keyBundle" to result))
         if (cursor.count!=0) {
             val username = cursor.getString(cursor.getColumnIndex("username"))
             val type = cursor.getString(cursor.getColumnIndex("type"))
@@ -51,8 +53,6 @@ class Profile_Fragment:Fragment() {
             val bitmap = generateQRCode(code)
             binding.imageView3.setImageBitmap(bitmap)
         }
-
-
 
         binding.button.setOnClickListener {
             val scanner=IntentIntegrator.forSupportFragment(this)
@@ -65,7 +65,7 @@ class Profile_Fragment:Fragment() {
             val manager=parentFragmentManager
             val transaction=manager.beginTransaction()
 
-            transaction.replace(R.id.fragmentMain,CoinFlipFragment())
+            transaction.replace(R.id.fragmentMain,Login_Fragment())
             transaction.commit()
 
         }
