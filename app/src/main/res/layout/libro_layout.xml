@@ -14,8 +14,11 @@
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/barra_ricerca"
-            android:text="Button"
+            android:background="@drawable/green_button"
+            android:fontFamily="monospace"
+            android:text="Prenota"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColorHint="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.897"
@@ -75,6 +78,7 @@
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="TITOLO"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -83,6 +87,7 @@
                 android:id="@+id/autore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="Autore"
                 android:textSize="20sp" />
 
@@ -90,6 +95,7 @@
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="Anno pubblicazione"
                 android:textSize="20sp" />
 
@@ -97,6 +103,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="39dp"
+                android:fontFamily="monospace"
                 android:text="Genere" />
         </LinearLayout>
 
@@ -125,6 +132,7 @@
                     android:id="@+id/textView11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:text="aaadacaszn ahzbg az xvbhgz vbhgz gzxvgzv  gvgzvbszxcyhjbazxh ydsg7tsvdytavtyvt tfdtyftavytas dsfcyscyscybybcybvyvcybvycvysvysvdysvysvyvsyvsyvsysvysvsyvsyvsysvysvsyvsyvyvysvysvdysvdyvsydvysvdysvdyvydvysvdyvsyvdyvdyvsydvysvdysvyvydvysvdyvsdyvsvyvsydvysvysvdysvdydsvysvysdvsdvdsysdvysvdyvsdyuyb" />
             </ScrollView>
 

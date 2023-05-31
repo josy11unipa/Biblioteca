@@ -10,7 +10,10 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:includeFontPadding="false"
         android:text="Schermata home "
         android:textAlignment="textStart"
+        android:textColor="@color/white"
         android:textSize="34sp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
