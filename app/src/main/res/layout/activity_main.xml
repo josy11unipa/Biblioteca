@@ -18,7 +18,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentMain"
-        android:name="com.example.biblioteca.Home_Fragment"
+        android:name="com.example.biblioteca.home.Home_Fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/home"

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:padding="16dp"
+tools:context=".user.Register_Fragment">
+
+<ImageView
+    android:id="@+id/profile_image"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:src="@drawable/profile_male_png"
+    android:scaleType="centerCrop"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="16dp"/>
+
+<EditText
+    android:id="@+id/edit_text_nome"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Nome"
+    android:inputType="textPersonName"
+    android:padding="8dp"
+    android:layout_marginBottom="8dp"/>
+
+<EditText
+    android:id="@+id/edit_text_cognome"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Cognome"
+    android:inputType="textPersonName"
+    android:padding="8dp"
+    android:layout_marginBottom="8dp"/>
+
+<EditText
+    android:id="@+id/edit_text_eta"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Età"
+    android:inputType="number"
+    android:padding="8dp"
+    android:layout_marginBottom="8dp"/>
+
+    <Spinner
+        android:id="@+id/spinner_genere"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Genere"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="Registrati" />
+
+</LinearLayout>
