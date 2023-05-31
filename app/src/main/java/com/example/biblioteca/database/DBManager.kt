@@ -19,9 +19,9 @@ class DBManager(val context: Context) {
         db_helper.close()
     }
 
-    fun insert(username: String, qr:String,type:String){
+    fun insert(username: String, qr:String, type:String){
         val value = ContentValues().apply{
-           // put(LocalDBHelper.USERNAME,username)
+            put(LocalDBHelper.USERNAME,username)
             put(LocalDBHelper.QR,qr)
             put(LocalDBHelper.TYPE,type)
         }
@@ -45,7 +45,7 @@ class DBManager(val context: Context) {
 
     }
     fun getUser():Cursor{
-        val projection = arrayOf(LocalDBHelper.USERNAME, LocalDBHelper.QR, LocalDBHelper.TYPE)
+        val projection = arrayOf(LocalDBHelper.ID, LocalDBHelper.USERNAME, LocalDBHelper.QR, LocalDBHelper.TYPE)
         val cursor = db.query(
             LocalDBHelper.TABLE_NAME, projection, null, null, null, null, null
         )

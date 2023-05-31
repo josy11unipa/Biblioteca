@@ -3,6 +3,7 @@ package com.example.biblioteca
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.example.biblioteca.bibliotecario.Librarian_Fragment
 import com.example.biblioteca.databinding.ActivityMainBinding
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.database.LocalDBHelper
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         val home_binding = binding.tastoHome
         val info_binding = binding.tastoInfo
         val profile_bindng = binding.tastoUser
+        val debug = binding.tastoDebugBackstack
 
         val manager=supportFragmentManager
 
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         info_binding.setOnClickListener{
             val transaction = manager.beginTransaction()
+            dbManager.delete()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Info_Fragment) {
             }else{
@@ -71,6 +74,17 @@ class MainActivity : AppCompatActivity() {
                 Log.i("TAG","${user.count}")
                 transaction.replace(R.id.fragmentSearchBar, TopBarFragment())
                 transaction.replace(R.id.fragmentMain, Login_Fragment())
+            }
+            transaction.commit()
+        }
+
+        debug.setOnClickListener{
+            val transaction = manager.beginTransaction()
+            var verifica = manager.findFragmentById(R.id.fragmentMain)
+            if(verifica is Librarian_Fragment) {
+            }else{
+                transaction.replace(R.id.fragmentMain, TopBarFragment())
+                transaction.replace(R.id.fragmentSearchBar,Librarian_Fragment())
             }
             transaction.commit()
         }
