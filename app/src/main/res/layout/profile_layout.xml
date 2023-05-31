@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".info.Info_Fragment">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,15 +20,14 @@
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="match_parent"
-                android:layout_height="162dp"
-                android:background="#F8F2F2"
+                android:layout_height="296dp"
+                android:background="@color/home"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border"
                 android:text="Nome"
                 android:textSize="24sp"
                 android:textStyle="bold|italic" />
@@ -38,7 +36,6 @@
                 android:id="@+id/Cognome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border"
                 android:text="Cognome"
                 android:textSize="24sp"
                 android:textStyle="bold|italic" />
@@ -47,7 +44,6 @@
                 android:id="@+id/point"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border"
                 android:text="point"
                 android:textSize="24sp"
                 android:textStyle="bold|italic" />
@@ -66,6 +62,7 @@
             android:id="@+id/logoutButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/red_button"
             android:text="Logout"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout2" />
     </androidx.constraintlayout.widget.ConstraintLayout>

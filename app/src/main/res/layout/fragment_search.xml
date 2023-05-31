@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:background="@drawable/shape" />
+            android:background="@drawable/barra_ricerca" />
 
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,5 +4,6 @@
         android:color="#3D3A3A" />
 
     <solid android:color="@color/home" />
-    <corners android:radius="6dp" /> <!-- Opzionale: bordi arrotondati -->
+    <corners android:radius="20dp" />
+
 </shape>

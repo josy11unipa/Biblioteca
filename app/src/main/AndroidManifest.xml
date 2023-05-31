@@ -18,12 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Biblioteca"
         tools:targetApi="31">
-        <activity
-            android:name=".qrActivity"
-            android:exported="false" />
-        <activity
-            android:name=".QrActivity"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
