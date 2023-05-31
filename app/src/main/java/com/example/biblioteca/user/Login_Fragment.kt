@@ -34,23 +34,25 @@ class Login_Fragment : Fragment() {
         dbManager = DBManager(requireContext())
         dbManager.open()  //apertura connessione al Database locale -->LocalDB
 
-        coinImageView = binding.coinImageView
+        coinImageView = binding.genericUserImg
         loginFieldsLayout = binding.loginFieldsLayout
         val result = "Login"
         setFragmentResult("key", bundleOf("keyBundle" to result))
       //per cambiare searchBar
 
         binding.button2.setOnClickListener {
-            username = binding.campoUsername.text.toString()
-            password = binding.campoPassword.text.toString()
-            dbManager.insert(username,password,"U")
-            if(true){
-                login()
-                //da implementare credenziali corrette o sbagliate
-            }else{
-                //da implementare
+            if (binding.campoUsername.text.toString() != ""  && binding.campoPassword.text.toString() != ""){
+                username = binding.campoUsername.text.toString()
+                password = binding.campoPassword.text.toString()
+                dbManager.insert(username,password,"U")
+                if(true){
+                    login()
+                    //da implementare credenziali corrette o sbagliate
+                }else{
+                    //da implementare
+                }
+                //Log.d("TAG", "Button clicked")
             }
-            //Log.d("TAG", "Button clicked")
         }
         return binding.root
     }

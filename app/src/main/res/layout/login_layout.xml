@@ -12,18 +12,18 @@
         android:paddingTop="10dp">
 
         <ImageView
-            android:id="@+id/coinImageView"
+            android:id="@+id/generic_user_img"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/coin_heads" />
+            android:src="@drawable/generic_user" />
 
         <LinearLayout
             android:id="@+id/loginFieldsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/coinImageView"
+            android:layout_below="@id/generic_user_img"
             android:orientation="vertical"
             android:padding="16dp"
             android:visibility="visible">

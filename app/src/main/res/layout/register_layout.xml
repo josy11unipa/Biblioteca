@@ -11,7 +11,7 @@ tools:context=".user.Register_Fragment">
     android:id="@+id/profile_image"
     android:layout_width="100dp"
     android:layout_height="100dp"
-    android:src="@drawable/profile_male_png"
+    android:src="@drawable/generic_user"
     android:scaleType="centerCrop"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="16dp"/>
@@ -42,14 +42,6 @@ tools:context=".user.Register_Fragment">
     android:inputType="number"
     android:padding="8dp"
     android:layout_marginBottom="8dp"/>
-
-    <Spinner
-        android:id="@+id/spinner_genere"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Genere"
-        android:padding="8dp"
-        android:layout_marginBottom="8dp"/>
 
     <Button
         android:id="@+id/button_login"

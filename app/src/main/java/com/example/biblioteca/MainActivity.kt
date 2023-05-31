@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
             val user=dbManager.getUser()
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
+
             if(user.count!=0) {
                 if (verifica is Profile_Fragment) {
                 }else {

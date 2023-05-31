@@ -49,7 +49,7 @@ class Profile_Fragment:Fragment() {
             val qr = cursor.getString(cursor.getColumnIndex("qr"))
             binding.nome.text = "NOME: " + qr.toString()
             //qrcode
-            val code = "1234567890" // Codice da convertire in QR Code
+            val code = qr.toString() // Codice da convertire in QR Code
             val bitmap = generateQRCode(code)
             binding.imageView3.setImageBitmap(bitmap)
         }
