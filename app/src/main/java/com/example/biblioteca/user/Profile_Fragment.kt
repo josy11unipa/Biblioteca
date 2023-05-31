@@ -47,9 +47,9 @@ class Profile_Fragment:Fragment() {
             val username = cursor.getString(cursor.getColumnIndex("username"))
             val type = cursor.getString(cursor.getColumnIndex("type"))
             val qr = cursor.getString(cursor.getColumnIndex("qr"))
-            binding.nome.text = "NOME: " + qr.toString()
+            binding.nome.text = "NOME: " + username.toString()
             //qrcode
-            val code = qr.toString() // Codice da convertire in QR Code
+            val code = username.toString() // Codice da convertire in QR Code
             val bitmap = generateQRCode(code)
             binding.imageView3.setImageBitmap(bitmap)
         }
@@ -72,7 +72,6 @@ class Profile_Fragment:Fragment() {
         return binding.root
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         val result=IntentIntegrator.parseActivityResult(requestCode,resultCode,data)
         if(resultCode==Activity.RESULT_OK){
             if(result.contents==null){
