@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.databinding.LoginLayoutBinding
 
 class CoinFlipFragment : Fragment() {
@@ -17,6 +18,7 @@ class CoinFlipFragment : Fragment() {
     private lateinit var coinImageView: ImageView
     private lateinit var loginFieldsLayout: LinearLayout
     private lateinit var binding: LoginLayoutBinding
+    private lateinit var dbManager: DBManager
     var username =""
     var password = ""
 
@@ -27,41 +29,40 @@ class CoinFlipFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.login_layout, container, false)
-        coinImageView = view.findViewById(R.id.coinImageView)
-        loginFieldsLayout = view.findViewById(R.id.loginFieldsLayout)
+        binding=LoginLayoutBinding.inflate(inflater)
+        dbManager = DBManager(requireContext())
+        dbManager.open()  //apertura connessione al Database locale -->LocalDB
 
-        binding=LoginLayoutBinding.inflate(layoutInflater)
+        coinImageView = binding.coinImageView
+        loginFieldsLayout = binding.loginFieldsLayout
         val result = "Login"
         setFragmentResult("key", bundleOf("keyBundle" to result))
-        var button=binding.button2
+      //per cambiare searchBar
 
 
-        button.setOnClickListener {
+        binding.button2.setOnClickListener {
+
             username = binding.campoUsername.text.toString()
             password = binding.campoPassword.text.toString()
-            flipCoin()
-        }
-        Log.i("CREDENZIALI", "username: $username, password: $password")
-        return view
-    }
-
-    private fun flipCoin() {
-        this.flag=false
-        coinImageView.animate().apply {
-            duration = 1000
-
-            rotationYBy(180f)
-            withEndAction {
-                if (coinImageView.rotationY == 180f) {
-                    coinImageView.setImageResource(R.drawable.coin_heads)
-                    //loginFieldsLayout.visibility = View.VISIBLE
-                } else {
-                    coinImageView.setImageResource(R.drawable.coin_heads)
-                    //loginFieldsLayout.visibility = View.GONE
-                }
-                coinImageView.rotationY = 0f
+            dbManager.insert(username,password,"U")
+            if(true){
+                login()
+                //da implementare credenziali corrette o sbagliate
+            }else{
+                //da implementare
             }
-        }.start()
+            //Log.d("TAG", "Button clicked")
+        }
+
+        return binding.root
+    }
+    fun login(){
+        val fragmentmanager=parentFragmentManager
+        val transaction=fragmentmanager.beginTransaction()
+        transaction.replace(R.id.fragmentSearchBar,TopBarFragment())
+        transaction.replace(R.id.fragmentMain,Profile_Fragment())
+        transaction.commit()
+
+
     }
 }

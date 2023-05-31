@@ -2,14 +2,18 @@ package com.example.biblioteca
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
+import android.util.Log
 import com.example.biblioteca.databinding.ActivityMainBinding
-import androidx.fragment.app.setFragmentResult
+import com.example.biblioteca.database.DBManager
+import com.example.biblioteca.database.LocalDBHelper
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var dbManager: DBManager
+    private lateinit var user:LocalDBHelper
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -20,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         val profile_bindng = binding.tastoUser
 
         val manager=supportFragmentManager
+
+        dbManager = DBManager(this)
+        dbManager.open()
+
 
         home_binding.setOnClickListener{
             val transaction = manager.beginTransaction()
@@ -34,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         info_binding.setOnClickListener{
+
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Info_Fragment) {
@@ -46,13 +55,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         profile_bindng.setOnClickListener{
+            val user=dbManager.getUser()
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
-            if(verifica is Profile_Fragment) {
-            }else{
-                transaction.replace(R.id.fragmentSearchBar,TopBarFragment())
-                transaction.replace(R.id.fragmentMain,Profile_Fragment())
+            if(user.count!=0) {
 
+                if (verifica is Profile_Fragment) {
+                }else {
+                    transaction.replace(R.id.fragmentSearchBar, TopBarFragment())
+                    transaction.replace(R.id.fragmentMain, Profile_Fragment())
+                    Log.i("TAG","${user.count}")
+
+                }
+            }else{
+                Log.i("TAG","${user.count}")
+                transaction.replace(R.id.fragmentSearchBar, TopBarFragment())
+                transaction.replace(R.id.fragmentMain, CoinFlipFragment())
             }
             transaction.commit()
         }
@@ -81,6 +99,10 @@ class MainActivity : AppCompatActivity() {
             transaction.replace(R.id.fragmentSearchBar,FragmentSearch())
             transaction.commit()
         }
+    }
+    override fun onDestroy() {
+        dbManager.close()
+        super.onDestroy()
     }
 }
 
