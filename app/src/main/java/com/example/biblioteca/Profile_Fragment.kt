@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +18,10 @@ import com.example.biblioteca.databinding.ProfileLayoutBinding
 import com.google.zxing.integration.android.IntentIntegrator
 import androidx.fragment.app.setFragmentResult
 import com.example.biblioteca.database.DBManager
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.WriterException
+import com.google.zxing.common.BitMatrix
+import com.google.zxing.qrcode.QRCodeWriter
 
 
 class Profile_Fragment:Fragment() {
@@ -40,6 +46,10 @@ class Profile_Fragment:Fragment() {
             val type = cursor.getString(cursor.getColumnIndex("type"))
             val qr = cursor.getString(cursor.getColumnIndex("qr"))
             binding.nome.text = "NOME: " + qr.toString()
+            //qrcode
+            val code = "1234567890" // Codice da convertire in QR Code
+            val bitmap = generateQRCode(code)
+            binding.imageView3.setImageBitmap(bitmap)
         }
 
 
@@ -49,14 +59,7 @@ class Profile_Fragment:Fragment() {
             scanner.setDesiredBarcodeFormats("qrCode")
             scanner.initiateScan()
         }
-     /*   binding.loginButton.setOnClickListener{
-            val manager=parentFragmentManager
-            val transaction=manager.beginTransaction()
 
-            transaction.replace(R.id.fragmentMain,CoinFlipFragment())
-            //transaction.replace(R.id.fragmentSearchBar,TopBarFragment())
-            transaction.commit()
-        }*/
         binding.logoutButton.setOnClickListener{
            dbManager.delete()
             val manager=parentFragmentManager
@@ -81,5 +84,23 @@ class Profile_Fragment:Fragment() {
                 binding.button.text=risult
             }
         }
+    }
+    private fun generateQRCode(code: String): Bitmap? {
+        val qrCodeWriter = QRCodeWriter()
+        try {
+            val bitMatrix: BitMatrix = qrCodeWriter.encode(code, BarcodeFormat.QR_CODE, 200, 200)
+            val width = bitMatrix.width
+            val height = bitMatrix.height
+            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+            for (x in 0 until width) {
+                for (y in 0 until height) {
+                    bitmap.setPixel(x, y, if (bitMatrix[x, y]) Color.BLACK else Color.WHITE)
+                }
+            }
+            return bitmap
+        } catch (e: WriterException) {
+            e.printStackTrace()
+        }
+        return null
     }
 }
