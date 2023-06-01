@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.biblioteca.CustomCaptureActivity
 import com.example.biblioteca.databinding.LibrarianLayoutBinding
 import com.google.zxing.integration.android.IntentIntegrator
 
@@ -25,12 +26,14 @@ class Librarian_Fragment : Fragment() {
 
         binding.qrAccesso.setOnClickListener {
             val scanner= IntentIntegrator.forSupportFragment(this)
+            scanner.setCaptureActivity(CustomCaptureActivity::class.java) // Imposta la tua activity personalizzata
             scanner.setDesiredBarcodeFormats("qrCode")
             scanner.initiateScan()
         }
 
         binding.qrConsegna.setOnClickListener {
             val scanner= IntentIntegrator.forSupportFragment(this)
+            scanner.setCaptureActivity(CustomCaptureActivity::class.java) // Imposta la tua activity personalizzata
             scanner.setDesiredBarcodeFormats("qrCode")
             scanner.initiateScan()
         }

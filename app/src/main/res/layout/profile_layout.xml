@@ -10,72 +10,208 @@
         android:layout_height="match_parent"
         android:background="@color/home">
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
+        <View
+            android:id="@+id/dividerImageTop"
             android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            tools:layout_editor_absoluteY="15dp" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:background="@color/home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerImageTop"
+            tools:src="@tools:sample/avatars" />
+
+        <View
+            android:id="@+id/dividerImageBot"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+        <View
+            android:id="@+id/dividerVERTICALE"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="10dp"
-            tools:layout_editor_absoluteY="10dp">
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="296dp"
-                android:background="@color/home"
-                tools:src="@tools:sample/avatars" />
+        <TextView
+            android:id="@+id/nomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="10dp"
+            android:text="Nome"
+            android:textAlignment="textEnd"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/dividerVERTICALE"
+            app:layout_constraintTop_toBottomOf="@+id/dividerImageBot" />
 
-            <TextView
-                android:id="@+id/nome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Nome"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="italic" />
+        <TextView
+            android:id="@+id/duePunti1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text=":"
+            android:textAlignment="textStart"
+            android:textColor="#FBE236"
+            android:textSize="24sp"
+            android:textStyle="normal|bold"
+            app:layout_constraintEnd_toEndOf="@id/dividerVERTICALE"
+            app:layout_constraintStart_toEndOf="@+id/dividerVERTICALE"
+            app:layout_constraintTop_toBottomOf="@+id/dividerImageBot" />
 
-            <TextView
-                android:id="@+id/Cognome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Cognome"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="italic" />
+        <TextView
+            android:id="@+id/nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="10dp"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toEndOf="@+id/dividerVERTICALE"
+            app:layout_constraintTop_toBottomOf="@+id/dividerImageBot" />
 
-            <TextView
-                android:id="@+id/point"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="point"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="italic" />
+        <View
+            android:id="@+id/dividerFineNome"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@id/nomeText" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="qr"
-                tools:layout_editor_absoluteX="142dp"
-                tools:layout_editor_absoluteY="689dp" />
+        <TextView
+            android:id="@+id/cognomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="10dp"
+            android:text="Cognome"
+            android:textAlignment="textEnd"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/dividerVERTICALE"
+            app:layout_constraintTop_toBottomOf="@id/dividerFineNome" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/duePunti2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text=":"
+            android:textAlignment="textStart"
+            android:textColor="#FBE236"
+            android:textSize="24sp"
+            android:textStyle="normal|bold"
+            app:layout_constraintEnd_toEndOf="@id/dividerVERTICALE"
+            app:layout_constraintStart_toEndOf="@+id/dividerVERTICALE"
+            app:layout_constraintTop_toBottomOf="@id/dividerFineNome" />
+
+        <TextView
+            android:id="@+id/Cognome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="10dp"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toEndOf="@+id/dividerVERTICALE"
+            app:layout_constraintTop_toBottomOf="@id/dividerFineNome" />
+
+        <View
+            android:id="@+id/dividerFineCognome"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@id/Cognome" />
+
+        <TextView
+            android:id="@+id/puntiText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="10dp"
+            android:text="Pt. fedeltà"
+            android:textAlignment="textEnd"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/dividerVERTICALE"
+            app:layout_constraintTop_toBottomOf="@id/dividerFineCognome" />
+
+        <TextView
+            android:id="@+id/duePunti3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text=":"
+            android:textAlignment="textStart"
+            android:textColor="#FBE236"
+            android:textSize="24sp"
+            android:textStyle="normal|bold"
+            app:layout_constraintEnd_toEndOf="@id/dividerVERTICALE"
+            app:layout_constraintStart_toEndOf="@+id/dividerVERTICALE"
+            app:layout_constraintTop_toBottomOf="@id/dividerFineCognome" />
+
+        <TextView
+            android:id="@+id/point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="10dp"
+            android:text="150"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toEndOf="@+id/dividerVERTICALE"
+            app:layout_constraintTop_toBottomOf="@id/dividerFineCognome" />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="150dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="Scansiona codice QR"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider7" />
 
         <Button
             android:id="@+id/logoutButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
             android:background="@drawable/red_button"
             android:fontFamily="monospace"
             android:text="Logout"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="10dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

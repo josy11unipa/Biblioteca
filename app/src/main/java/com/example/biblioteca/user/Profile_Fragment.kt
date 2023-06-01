@@ -3,26 +3,26 @@ package com.example.biblioteca.user
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
+import com.example.biblioteca.R
+import androidx.core.os.bundleOf
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.widget.Toast
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.os.bundleOf
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import com.example.biblioteca.CustomCaptureActivity
+import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.databinding.ProfileLayoutBinding
 import com.google.zxing.integration.android.IntentIntegrator
-import androidx.fragment.app.setFragmentResult
-import com.example.biblioteca.R
-import com.example.biblioteca.database.DBManager
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.WriterException
-import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
+import com.google.zxing.common.BitMatrix
+import com.google.zxing.WriterException
+import com.google.zxing.BarcodeFormat
 
 
 class Profile_Fragment:Fragment() {
@@ -47,7 +47,9 @@ class Profile_Fragment:Fragment() {
             val username = cursor.getString(cursor.getColumnIndex("username"))
             val type = cursor.getString(cursor.getColumnIndex("type"))
             val qr = cursor.getString(cursor.getColumnIndex("qr"))
-            binding.nome.text = "NOME: " + username.toString()
+            //binding.nome.text = "NOME: " + username.toString() //Mod JJ
+            binding.nome.text = username.toString()
+
             //qrcode
             val code = username.toString() // Codice da convertire in QR Code
             val bitmap = generateQRCode(code)
@@ -55,8 +57,9 @@ class Profile_Fragment:Fragment() {
         }
 
         binding.button.setOnClickListener {
-            val scanner=IntentIntegrator.forSupportFragment(this)
+            val scanner = IntentIntegrator.forSupportFragment(this)
             scanner.setDesiredBarcodeFormats("qrCode")
+            scanner.setCaptureActivity(CustomCaptureActivity::class.java) // Imposta la tua activity personalizzata
             scanner.initiateScan()
         }
 

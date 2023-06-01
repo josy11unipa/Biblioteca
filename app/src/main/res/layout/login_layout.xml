@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -16,8 +16,19 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/generic_user" />
+            android:paddingVertical="20dp"
+            android:src="@drawable/generic_user"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:paddingTop="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/generic_user_img" />
 
         <LinearLayout
             android:id="@+id/loginFieldsLayout"
@@ -26,40 +37,65 @@
             android:layout_below="@id/generic_user_img"
             android:orientation="vertical"
             android:padding="16dp"
-            android:visibility="visible">
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@+id/divider2">
 
             <!-- Aggiungi qui i campi per il login (es. EditText per l'email e la password) -->
 
             <EditText
                 android:id="@+id/campoUsername"
-                android:layout_width="match_parent"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:backgroundTint="#FBE236"
                 android:ems="10"
                 android:fontFamily="monospace"
                 android:hint="Username"
                 android:inputType="text"
-                android:textColorHint="@color/white" />
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textColorHighlight="#FBE236"
+                android:textColorHint="@color/white"
+                android:textColorLink="#FBE236"
+                android:textCursorDrawable="@drawable/custom_cursor_layout" />
 
             <EditText
                 android:id="@+id/campoPassword"
-                android:layout_width="match_parent"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:backgroundTint="#FBE236"
                 android:ems="10"
                 android:fontFamily="monospace"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:textColorHint="@color/white" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/green_button"
-                android:fontFamily="monospace"
-                android:text="Login"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textCursorDrawable="@drawable/custom_cursor_layout" />
 
         </LinearLayout>
-    </LinearLayout>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="@id/loginFieldsLayout" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/green_button"
+            android:fontFamily="monospace"
+            android:text="Login"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/divider4"
+            tools:layout_editor_absoluteX="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
