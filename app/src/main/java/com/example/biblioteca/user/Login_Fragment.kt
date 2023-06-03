@@ -58,8 +58,11 @@ class Login_Fragment : Fragment() {
                 username = binding.campoUsername.text.toString()
                 password = binding.campoPassword.text.toString()
                 val loginRequestLogin = RequestLogin(username=username, password=password)
-                Log.i("LOG", "chiamo la fun loginUtente passando: $loginRequestLogin ")
+                Log.i("LOG-Login_Fragment", "chiamo la fun loginUtente passando: $loginRequestLogin ")
                 loginUtente(loginRequestLogin)
+            }else{
+                Log.i("LOG-Login_Fragment", "L'utente non ha inserito le credenziali")
+                Toast.makeText(requireContext(),"Inserisci le credenziali", Toast.LENGTH_LONG).show()
             }
         }
         return binding.root
@@ -75,25 +78,36 @@ class Login_Fragment : Fragment() {
     private fun loginUtente (requestLogin: RequestLogin){
 
         val query = "select * from persona where username = '${requestLogin.username}' and password = '${requestLogin.password}';"
-        Log.i("LOG", "Query creata:$query ")
+        Log.i("LOG-Login_Fragment", "Query creata:$query ")
 
         ClientNetwork.retrofit.login(query).enqueue(
             object : Callback<JsonObject> {
 
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    //Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                    Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     if (response.isSuccessful) {
-                        getUser((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject)
-                        login()
-                        //Log.i("onResponse", "Sono dentro il primo if. dim response: ${(response.body()?.get("queryset") as JsonArray).size()}")
-                        if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
-                            Log.i("onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
-                        } else {
+                        try{
+                            getUser((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject)
+                            login()
+                            Log.i("LOG-Login_Fragment-onResponse", "LOGGATO")
+                            if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
+                                //Log.i("LOG-Login_Fragment-onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
+                            } else {
+                                Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
+                                Toast.makeText(requireContext(),"credenziali errate", Toast.LENGTH_LONG).show()
+                            }
+                        }catch (e:Exception){
+                            Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
                             Toast.makeText(requireContext(),"credenziali errate", Toast.LENGTH_LONG).show()
                         }
+
+                    }else{
+                        Toast.makeText(requireContext(),"Inserisci le credenziali", Toast.LENGTH_LONG).show()
+                        Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
                     }
                 }
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-Login_Fragment-onFailure", "Errore accesso ${t.message}")
                     Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -118,7 +132,7 @@ class Login_Fragment : Fragment() {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if(response.isSuccessful) {
                         if (response.body()!=null) {
-                            Log.i("LOGGATO", "LOGGATO")
+                            Log.i("LOG-Login_Fragment-getImageProfilo", "LOGGATO")
                         }
                     }
                 }

@@ -25,4 +25,8 @@ interface UserAPI {
 
     @GET
     fun getAvatar(@Url url: String) : Call<ResponseBody>
+
+    @POST("postSelect/")
+    @FormUrlEncoded
+    fun getlibri(@Field("query") query : String): Call<JsonObject>
 }

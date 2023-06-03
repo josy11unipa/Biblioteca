@@ -77,10 +77,10 @@ class MainActivity : AppCompatActivity() {
                 }else {
                     transaction.replace(R.id.fragmentSearchBar, TopBarFragment())
                     transaction.replace(R.id.fragmentMain, Profile_Fragment())
-                    Log.i("TAG","${user.count}")
+                    Log.i("LOG-MainActivity","user.count() = ${user.count}")
                 }
             }else{
-                Log.i("TAG","${user.count}")
+                Log.i("LOG-MainActivity","user.count() = ${user.count}")
                 transaction.replace(R.id.fragmentSearchBar, TopBarFragment())
                 transaction.replace(R.id.fragmentMain, Login_Fragment())
             }
@@ -128,9 +128,6 @@ class MainActivity : AppCompatActivity() {
         dbManager.close()
         super.onDestroy()
     }
-
-
-
 }
 
 

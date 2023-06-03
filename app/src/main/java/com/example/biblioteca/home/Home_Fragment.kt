@@ -33,7 +33,6 @@ class Home_Fragment(): Fragment() {
         getbook()
         return binding.root
     }
-
     private fun getbook () {
 
         val query =
@@ -51,7 +50,6 @@ class Home_Fragment(): Fragment() {
                         binding.recyclerView.adapter = CustomAdapterLista(j)
                     }
                 }
-
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
                 }
