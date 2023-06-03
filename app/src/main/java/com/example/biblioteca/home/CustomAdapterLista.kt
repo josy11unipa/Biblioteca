@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.databinding.CardViewBinding
@@ -18,6 +19,7 @@ import retrofit2.Response
 
 
 class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<CustomAdapterLista.ViewHolder>() {
+
     class ViewHolder(binding: CardViewBinding) : RecyclerView.ViewHolder(binding.root) {
         //val titolo = binding.titleBookCard
         //val autore = binding.autorBookCard
@@ -35,6 +37,10 @@ class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<Cu
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val oggetto: JsonObject = element.get(position) as JsonObject
+        holder.image.setOnClickListener{
+            val id=oggetto.get("id").asString
+            Toast.makeText(holder.image.context,"$id",Toast.LENGTH_SHORT).show()
+        }
         //holder.autore.text = oggetto.get("autore").asString
         //holder.titolo.text = oggetto.get("titolo").asString
         val url: String = oggetto.get("copertina").asString
@@ -59,5 +65,8 @@ class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<Cu
             }
         )
     }
+
+
+
 }
 
