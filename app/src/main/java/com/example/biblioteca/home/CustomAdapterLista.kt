@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.SearchView.OnCloseListener
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.FragmentManager
@@ -17,13 +18,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<CustomAdapterLista.ViewHolder>() {
-
+    private var onClickListener:OnClickListener?=null
     class ViewHolder(binding: CardViewBinding) : RecyclerView.ViewHolder(binding.root) {
         //val titolo = binding.titleBookCard
         //val autore = binding.autorBookCard
         val image = binding.bookIconCard
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,10 +37,13 @@ class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<Cu
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val oggetto: JsonObject = element.get(position) as JsonObject
         holder.image.setOnClickListener{
             val id=oggetto.get("id").asString
             Toast.makeText(holder.image.context,"$id",Toast.LENGTH_SHORT).show()
+            onClickListener?.onClick(position, JsonObject())
+
         }
         //holder.autore.text = oggetto.get("autore").asString
         //holder.titolo.text = oggetto.get("titolo").asString
@@ -54,11 +58,9 @@ class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<Cu
                         if (response.body() != null) {
                             val avatar = BitmapFactory.decodeStream(response.body()?.byteStream())
                             holder.image.setImageBitmap(avatar)
-
                         }
                     }
                 }
-
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     //Toast.makeText(requireContext(),"onFailure2", Toast.LENGTH_SHORT).show()
                 }
@@ -67,6 +69,11 @@ class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<Cu
     }
 
 
-
+    interface OnClickListener {
+        fun onClick(position: Int, model: JsonObject )
+    }
+    fun setOnClickListener(onClickListener:OnClickListener){
+        this.onClickListener = onClickListener
+    }
 }
 

@@ -29,6 +29,8 @@ class Home_Fragment(): Fragment() {
         getbook()
         return binding.root
     }
+
+
     private fun getbook () {
 
         val query =
@@ -42,11 +44,16 @@ class Home_Fragment(): Fragment() {
                     //Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     if (response.isSuccessful) {
                         val j=(response.body()?.get("queryset")as JsonArray)
-
                         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(),2)
                         val adapter= CustomAdapterLista(j)
                         binding.recyclerView.adapter=adapter
 
+                        adapter.setOnClickListener(object:
+                            CustomAdapterLista.OnClickListener {
+                            override fun onClick(position: Int, model: JsonObject) {
+                                //Log.i(TAG, "Index ${position+1} - Text ${model.text}")
+                            }
+                        })
                     }
                 }
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
