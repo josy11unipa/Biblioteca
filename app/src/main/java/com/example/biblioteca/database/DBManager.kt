@@ -47,7 +47,7 @@ class DBManager(val context: Context) {
 
     }
     fun getUser():Cursor{
-        val projection = arrayOf(LocalDBHelper.ID, LocalDBHelper.USERNAME, LocalDBHelper.QR, LocalDBHelper.TYPE)
+        val projection = arrayOf(LocalDBHelper.ID, LocalDBHelper.USERNAME,LocalDBHelper.NOME,LocalDBHelper.COGNOME, LocalDBHelper.QR, LocalDBHelper.TYPE)
         val cursor = db.query(
             LocalDBHelper.TABLE_NAME, projection, null, null, null, null, null
         )

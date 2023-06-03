@@ -57,7 +57,6 @@ class Login_Fragment : Fragment() {
             if (binding.campoUsername.text.toString() != ""  && binding.campoPassword.text.toString() != ""){
                 username = binding.campoUsername.text.toString()
                 password = binding.campoPassword.text.toString()
-                dbManager.insert(username,password,"U") //Test db locale
                 val loginRequestLogin = RequestLogin(username=username, password=password)
                 Log.i("LOG", "chiamo la fun loginUtente passando: $loginRequestLogin ")
                 loginUtente(loginRequestLogin)
