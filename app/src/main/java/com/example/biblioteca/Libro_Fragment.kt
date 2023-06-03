@@ -39,6 +39,7 @@ class Libro_Fragment:Fragment() {
             binding.annop.text=libro.get("anno").asString
             binding.genere.text=libro.get("genere").asString
             binding.descrizione1.text=libro.get("descrizione").asString
+            binding.ratingBar.rating = libro.get("valutazione").asFloat
             val url: String = libro.get("copertina").asString
             getImage(url)
 
