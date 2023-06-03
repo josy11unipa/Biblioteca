@@ -1,18 +1,30 @@
 package com.example.biblioteca.user
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.R
+import com.example.biblioteca.RequestLogin
 import com.example.biblioteca.TopBarFragment
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.databinding.LoginLayoutBinding
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Login_Fragment : Fragment() {
 
@@ -44,14 +56,10 @@ class Login_Fragment : Fragment() {
             if (binding.campoUsername.text.toString() != ""  && binding.campoPassword.text.toString() != ""){
                 username = binding.campoUsername.text.toString()
                 password = binding.campoPassword.text.toString()
-                dbManager.insert(username,password,"U")
-                if(true){
-                    login()
-                    //da implementare credenziali corrette o sbagliate
-                }else{
-                    //da implementare
-                }
-                //Log.d("TAG", "Button clicked")
+                //dbManager.insert(username,password,"U") //Test db locale
+                val loginRequestLogin = RequestLogin(username=username, password=password)
+                Log.i("LOG", "chiamo la fun loginUtente passando: $loginRequestLogin ")
+                loginUtente(loginRequestLogin)
             }
         }
         return binding.root
@@ -63,4 +71,56 @@ class Login_Fragment : Fragment() {
         transaction.replace(R.id.fragmentMain, Profile_Fragment())
         transaction.commit()
     }
+
+    private fun loginUtente (requestLogin: RequestLogin){
+
+        val query = "select * from persona where username = '${requestLogin.username}' and password = '${requestLogin.password}';"
+        Log.i("LOG", "Query creata:$query ")
+
+        ClientNetwork.retrofit.login(query).enqueue(
+            object : Callback<JsonObject> {
+
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                    if (response.isSuccessful) {
+                        login()
+                        Log.i("onResponse", "Sono dentro il primo if. dim response: ${(response.body()?.get("queryset") as JsonArray).size()}")
+                        if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
+                            Log.i("onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
+                            getImageProfilo((response.body()?.get("queryset") as JsonArray).get(0) as JsonObject)
+                        } else {
+                            Toast.makeText(requireContext(),"credenziali errate", Toast.LENGTH_LONG).show()
+                            //binding.progressBar.visibility = View.GONE
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    //Toast.makeText(this@MainActivity,"onFailure1", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+    }
+
+    private fun getImageProfilo(jsonObject: JsonObject){
+        val url: String = jsonObject.get("image").asString
+        ClientNetwork.retrofit.getAvatar(url).enqueue(
+            object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    if(response.isSuccessful) {
+                        var avatar: Bitmap? = null
+                        if (response.body()!=null) {
+                            avatar = BitmapFactory.decodeStream(response.body()?.byteStream())
+                            //binding.imageView.setImageBitmap(avatar)
+                            Toast.makeText(requireContext(), "LOGGATO", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Toast.makeText(requireContext(),"onFailure2", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+    }
+
 }
