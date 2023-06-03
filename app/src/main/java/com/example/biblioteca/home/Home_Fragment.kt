@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.RequestLogin
 import com.example.biblioteca.databinding.HomeLayoutBinding
@@ -46,7 +47,7 @@ class Home_Fragment(): Fragment() {
                     //Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     if (response.isSuccessful) {
                         val j=(response.body()?.get("queryset")as JsonArray)
-                        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+                        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(),2)
                         binding.recyclerView.adapter = CustomAdapterLista(j)
                     }
                 }

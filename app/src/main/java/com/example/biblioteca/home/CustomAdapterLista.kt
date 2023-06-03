@@ -19,8 +19,8 @@ import retrofit2.Response
 
 class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<CustomAdapterLista.ViewHolder>() {
     class ViewHolder(binding: CardViewBinding) : RecyclerView.ViewHolder(binding.root) {
-        val titolo = binding.titleBookCard
-        val autore = binding.autorBookCard
+        //val titolo = binding.titleBookCard
+        //val autore = binding.autorBookCard
         val image = binding.bookIconCard
     }
 
@@ -35,8 +35,8 @@ class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<Cu
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val oggetto: JsonObject = element.get(position) as JsonObject
-        holder.autore.text = oggetto.get("autore").asString
-        holder.titolo.text = oggetto.get("titolo").asString
+        //holder.autore.text = oggetto.get("autore").asString
+        //holder.titolo.text = oggetto.get("titolo").asString
         val url: String = oggetto.get("copertina").asString
         ClientNetwork.retrofit.getAvatar(url).enqueue(
             object : Callback<ResponseBody> {
