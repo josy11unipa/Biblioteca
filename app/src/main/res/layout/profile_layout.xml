@@ -119,7 +119,7 @@
             app:layout_constraintTop_toBottomOf="@id/dividerFineNome" />
 
         <TextView
-            android:id="@+id/Cognome"
+            android:id="@+id/cognome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
@@ -136,10 +136,10 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@id/Cognome" />
+            app:layout_constraintTop_toBottomOf="@id/cognome" />
 
         <TextView
-            android:id="@+id/puntiText"
+            android:id="@+id/usernameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
@@ -167,7 +167,7 @@
             app:layout_constraintTop_toBottomOf="@id/dividerFineCognome" />
 
         <TextView
-            android:id="@+id/point"
+            android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
