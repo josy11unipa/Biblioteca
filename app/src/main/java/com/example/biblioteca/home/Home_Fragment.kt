@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.biblioteca.ClientNetwork
+import com.example.biblioteca.Libro_Fragment
+import com.example.biblioteca.R
 import com.example.biblioteca.databinding.HomeLayoutBinding
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -51,7 +53,10 @@ class Home_Fragment(): Fragment() {
                         adapter.setOnClickListener(object:
                             CustomAdapterLista.OnClickListener {
                             override fun onClick(position: Int, model: JsonObject) {
-                                //Log.i(TAG, "Index ${position+1} - Text ${model.text}")
+                                val manager=parentFragmentManager
+                                val transaction=manager.beginTransaction()
+                                transaction.replace(R.id.fragmentMain,Libro_Fragment())
+                                transaction.commit()
                             }
                         })
                     }
