@@ -35,6 +35,7 @@ class Login_Fragment : Fragment() {
     var username =""
     var password = ""
 
+
     var flag=true
 
     override fun onCreateView(
@@ -56,7 +57,7 @@ class Login_Fragment : Fragment() {
             if (binding.campoUsername.text.toString() != ""  && binding.campoPassword.text.toString() != ""){
                 username = binding.campoUsername.text.toString()
                 password = binding.campoPassword.text.toString()
-                //dbManager.insert(username,password,"U") //Test db locale
+                dbManager.insert(username,password,"U") //Test db locale
                 val loginRequestLogin = RequestLogin(username=username, password=password)
                 Log.i("LOG", "chiamo la fun loginUtente passando: $loginRequestLogin ")
                 loginUtente(loginRequestLogin)
@@ -81,25 +82,34 @@ class Login_Fragment : Fragment() {
             object : Callback<JsonObject> {
 
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                    //Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     if (response.isSuccessful) {
+                        getUser((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject)
                         login()
-                        Log.i("onResponse", "Sono dentro il primo if. dim response: ${(response.body()?.get("queryset") as JsonArray).size()}")
+                        //Log.i("onResponse", "Sono dentro il primo if. dim response: ${(response.body()?.get("queryset") as JsonArray).size()}")
                         if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
                             Log.i("onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
-                            getImageProfilo((response.body()?.get("queryset") as JsonArray).get(0) as JsonObject)
                         } else {
                             Toast.makeText(requireContext(),"credenziali errate", Toast.LENGTH_LONG).show()
-                            //binding.progressBar.visibility = View.GONE
                         }
                     }
                 }
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    //Toast.makeText(this@MainActivity,"onFailure1", Toast.LENGTH_SHORT).show()
                     Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
                 }
             }
         )
+    }
+
+    private fun getUser(jsonObject: JsonObject){
+        val username=jsonObject.get("username").asString
+        val nome=jsonObject.get("nome").asString
+        val cognome=jsonObject.get("cognome").asString
+        val qr=jsonObject.get("qr").asString
+        val type=jsonObject.get("type").asString
+        dbManager.insert(username,nome,cognome,qr,type) //Test db locale
+
+
     }
 
     private fun getImageProfilo(jsonObject: JsonObject){
@@ -108,11 +118,8 @@ class Login_Fragment : Fragment() {
             object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if(response.isSuccessful) {
-                        var avatar: Bitmap? = null
                         if (response.body()!=null) {
-                            avatar = BitmapFactory.decodeStream(response.body()?.byteStream())
-                            //binding.imageView.setImageBitmap(avatar)
-                            Toast.makeText(requireContext(), "LOGGATO", Toast.LENGTH_SHORT).show()
+                            Log.i("LOGGATO", "LOGGATO")
                         }
                     }
                 }

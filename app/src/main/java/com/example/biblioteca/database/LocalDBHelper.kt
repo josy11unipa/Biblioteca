@@ -14,6 +14,8 @@ class LocalDBHelper(context: Context): SQLiteOpenHelper(context,
         const val DATABASE_VERSION=1
         const val TABLE_NAME="localUser"
         const val USERNAME="username"
+        const val NOME="nome"
+        const val COGNOME="cognome"
         const val TYPE="type"
         const val QR="qr"
         const val ID = "id"
@@ -21,6 +23,8 @@ class LocalDBHelper(context: Context): SQLiteOpenHelper(context,
             "CREATE TABLE" +
                     " ${TABLE_NAME} (${ID} INTEGER PRIMARY KEY, "+
                     "${USERNAME} TEXT, "+
+                    "${NOME} TEXT, "+
+                    "${COGNOME} TEXT, "+
                     "${TYPE} TEXT, "+
                     "${QR} TEXT );"
         const val SQL_DELETE="DROP TABLE "+
