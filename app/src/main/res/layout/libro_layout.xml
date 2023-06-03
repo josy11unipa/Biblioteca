@@ -5,139 +5,135 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:paddingVertical="20dp">
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/green_button"
-            android:fontFamily="monospace"
-            android:text="Prenota"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColorHint="#000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.897"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-            app:layout_constraintVertical_bias="0.216" />
+            android:background="@color/home"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="393dp"
-            android:layout_height="164dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/xffr0hz" />
+            <View
+                android:id="@+id/divider"
+                android:layout_width="391dp"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/copertina"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.06"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="233dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="9dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/copertina"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="391dp"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView9" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="393dp"
-            android:layout_height="132dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingBar">
-
-            <TextView
-                android:id="@+id/titolo1"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/green_button"
                 android:fontFamily="monospace"
-                android:text="TITOLO"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:text="Prenota"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColorHint="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.897"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+                app:layout_constraintVertical_bias="0.216" />
 
-            <TextView
-                android:id="@+id/autore"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/copertina"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Autore"
-                android:textSize="20sp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                tools:srcCompat="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/annop"
-                android:layout_width="match_parent"
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Anno pubblicazione"
-                android:textSize="20sp" />
+                android:numStars="5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/copertina" />
 
-            <TextView
-                android:id="@+id/genere"
-                android:layout_width="match_parent"
-                android:layout_height="39dp"
-                android:fontFamily="monospace"
-                android:text="Genere" />
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="393dp"
+                android:layout_height="132dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBar">
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="401dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+                <TextView
+                    android:id="@+id/titolo1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="TITOLO"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/descrizione"
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/autore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="Autore"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/annop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="Anno pubblicazione"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/genere"
+                    android:layout_width="match_parent"
+                    android:layout_height="39dp"
+                    android:fontFamily="monospace"
+                    android:text="Genere"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="401dp"
                 android:layout_height="wrap_content"
-                android:text="Descrizione"
-                android:textSize="24sp"
-                android:textStyle="bold|italic" />
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="263dp">
+                <TextView
+                    android:id="@+id/descrizione"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Descrizione"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    android:textStyle="bold|italic" />
 
                 <TextView
                     android:id="@+id/descrizione1"
-                    android:layout_width="match_parent"
+                    android:layout_width="388dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:fontFamily="sans-serif-smallcaps"
-                    android:text="aaadacaszn ahzbg az xvbhgz vbhgz gzxvgzv  gvgzvbszxcyhjbazxh ydsg7tsvdytavtyvt tfdtyftavytas dsfcyscyscybybcybvyvcybvycvysvysvdysvysvyvsyvsyvsysvysvsyvsyvsysvysvsyvsyvyvysvysvdysvdyvsydvysvdysvdyvydvysvdyvsyvdyvdyvsydvysvdysvyvydvysvdyvsdyvsvyvsydvysvysvdysvdydsvysvysdvsdvdsysdvysvdyvsdyuyb" />
-            </ScrollView>
+                    android:text="HelloWord"
+                    android:textColor="#FFFFFF" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </FrameLayout>
