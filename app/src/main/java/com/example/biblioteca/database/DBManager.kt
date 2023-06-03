@@ -19,9 +19,11 @@ class DBManager(val context: Context) {
         db_helper.close()
     }
 
-    fun insert(username: String, qr:String, type:String){
+    fun insert(username: String,nome: String, cognome: String,qr:String, type:String){
         val value = ContentValues().apply{
             put(LocalDBHelper.USERNAME,username)
+            put(LocalDBHelper.NOME,nome)
+            put(LocalDBHelper.COGNOME,cognome)
             put(LocalDBHelper.QR,qr)
             put(LocalDBHelper.TYPE,type)
         }

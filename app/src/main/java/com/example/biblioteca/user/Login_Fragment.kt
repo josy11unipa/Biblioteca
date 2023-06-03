@@ -83,11 +83,11 @@ class Login_Fragment : Fragment() {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     if (response.isSuccessful) {
+                        getUser((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject)
                         login()
                         Log.i("onResponse", "Sono dentro il primo if. dim response: ${(response.body()?.get("queryset") as JsonArray).size()}")
                         if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
                             Log.i("onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
-                            getImageProfilo((response.body()?.get("queryset") as JsonArray).get(0) as JsonObject)
                         } else {
                             Toast.makeText(requireContext(),"credenziali errate", Toast.LENGTH_LONG).show()
                             //binding.progressBar.visibility = View.GONE
@@ -100,6 +100,17 @@ class Login_Fragment : Fragment() {
                 }
             }
         )
+    }
+
+    private fun getUser(jsonObject: JsonObject){
+        val username=jsonObject.get("username").asString
+        val nome=jsonObject.get("nome").asString
+        val cognome=jsonObject.get("cognome").asString
+        val qr=jsonObject.get("qr").asString
+        val type=jsonObject.get("type").asString
+        dbManager.insert(username,nome,cognome,qr,type) //Test db locale
+
+
     }
 
     private fun getImageProfilo(jsonObject: JsonObject){

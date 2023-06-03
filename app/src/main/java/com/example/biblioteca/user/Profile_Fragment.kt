@@ -45,10 +45,11 @@ class Profile_Fragment:Fragment() {
         setFragmentResult("key", bundleOf("keyBundle" to result))
         if (cursor.count!=0) {
             val username = cursor.getString(cursor.getColumnIndex("username"))
-            val type = cursor.getString(cursor.getColumnIndex("type"))
+            val nome = cursor.getString(cursor.getColumnIndex("nome"))
+            val cognome = cursor.getString(cursor.getColumnIndex("cognome"))
             val qr = cursor.getString(cursor.getColumnIndex("qr"))
             //binding.nome.text = "NOME: " + username.toString() //Mod JJ
-            binding.nome.text = username.toString()
+            binding.nome.text = nome.toString()
 
             //qrcode
             val code = username.toString() // Codice da convertire in QR Code
