@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.Libro_Fragment
@@ -53,7 +55,9 @@ class Home_Fragment(): Fragment() {
                         adapter.setOnClickListener(object:
                             CustomAdapterLista.OnClickListener {
                             override fun onClick(position: Int, model: JsonObject) {
+
                                 val manager=parentFragmentManager
+                                setFragmentResult("keyId", bundleOf("keyBundleId" to model.toString() ))
                                 val transaction=manager.beginTransaction()
                                 transaction.replace(R.id.fragmentMain,Libro_Fragment())
                                 transaction.commit()
