@@ -56,7 +56,6 @@ class Home_Fragment(): Fragment() {
                             CustomAdapterLista.OnClickListener {
                             override fun onClick(position: Int, model: JsonObject) {
                                 binding.textView.text=model.get("autore").toString()
-                                Log.i("TAGGGG","${model}")
                                 val manager=parentFragmentManager
                                 setFragmentResult("keyId", bundleOf("keyBundleId" to model.toString() ))
                                 val transaction=manager.beginTransaction()

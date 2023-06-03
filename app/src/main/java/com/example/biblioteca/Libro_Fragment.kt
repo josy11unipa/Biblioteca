@@ -1,5 +1,6 @@
 package com.example.biblioteca
 
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,10 @@ import com.google.gson.JsonObject
 import com.google.gson.Gson
 
 import com.google.gson.JsonParser
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Libro_Fragment:Fragment() {
     private lateinit var binding: LibroLayoutBinding
@@ -34,9 +39,32 @@ class Libro_Fragment:Fragment() {
             binding.annop.text=libro.get("anno").asString
             binding.genere.text=libro.get("genere").asString
             binding.descrizione1.text=libro.get("descrizione").asString
-
+            val url: String = libro.get("copertina").asString
+            getImage(url)
 
         }
         return binding.root
+    }
+
+    private fun getImage(url: String) {
+        ClientNetwork.retrofit.getAvatar(url).enqueue(
+            object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        if (response.body() != null) {
+                            val avatar = BitmapFactory.decodeStream(response.body()?.byteStream())
+                            binding.copertina.setImageBitmap(avatar)
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    //Toast.makeText(requireContext(),"onFailure2", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+
     }
 }
