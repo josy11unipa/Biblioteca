@@ -1,5 +1,6 @@
 package com.example.biblioteca
 
+import com.google.gson.JsonArray
 import retrofit2.Call
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
@@ -13,6 +14,10 @@ interface UserAPI {
     @POST("postSelect/")
     @FormUrlEncoded
     fun login(@Field("query") query : String): Call<JsonObject>
+
+    @POST("postSelect/")
+    @FormUrlEncoded
+    fun getLibri(@Field("query") query : String): Call<JsonObject>
 
     @POST("postUpdate/")
     @FormUrlEncoded

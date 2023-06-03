@@ -51,8 +51,8 @@ class Profile_Fragment:Fragment() {
             //binding.nome.text = "NOME: " + username.toString() //Mod JJ
 
             binding.nome.text = nome.toString()
-            binding.cognomeText.text=cognome.toString()
-            binding.usernameText.text=username.toString()
+            binding.cognome.text=cognome.toString()
+            binding.username.text=username.toString()
 
             //qrcode
             val code = username.toString() // Codice da convertire in QR Code
