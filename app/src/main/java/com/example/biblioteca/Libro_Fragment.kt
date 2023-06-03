@@ -2,6 +2,7 @@ package com.example.biblioteca
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,10 +27,15 @@ class Libro_Fragment:Fragment() {
         binding=LibroLayoutBinding.inflate(inflater)
 
         setFragmentResultListener("keyId"){ requestKey, bundle ->
-           val libroS=bundle.getString("keyBundleId")
-            val parser=JsonParser()
-            val libro:JsonObject =libroS as JsonObject
-            binding.autore.text= libro.get("autore").asString
+            val libroS=bundle.getString("keyBundleId")
+            val libro=JsonParser().parse(libroS) as JsonObject
+            binding.autore.text=libro.get("autore").asString
+            binding.titolo1.text=libro.get("titolo").asString
+            binding.annop.text=libro.get("anno").asString
+            binding.genere.text=libro.get("genere").asString
+            binding.descrizione1.text=libro.get("descrizione").asString
+
+
         }
         return binding.root
     }

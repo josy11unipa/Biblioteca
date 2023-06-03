@@ -37,7 +37,7 @@
             app:srcCompat="@drawable/xffr0hz" />
 
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/copertina"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
             android:layout_marginStart="9dp"
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView10"
+            app:layout_constraintStart_toEndOf="@+id/copertina"
             app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
         <View
@@ -75,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ratingBar">
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/titolo1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
@@ -92,7 +92,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/annop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
@@ -100,7 +100,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/genere"
                 android:layout_width="match_parent"
                 android:layout_height="39dp"
                 android:fontFamily="monospace"
@@ -129,7 +129,7 @@
                 android:layout_height="263dp">
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/descrizione1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-smallcaps"

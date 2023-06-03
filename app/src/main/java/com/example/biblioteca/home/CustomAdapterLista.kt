@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.databinding.CardViewBinding
 import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -42,7 +43,7 @@ class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<Cu
         holder.image.setOnClickListener{
             val id=oggetto.get("id").asString
             Toast.makeText(holder.image.context,"$id",Toast.LENGTH_SHORT).show()
-            onClickListener?.onClick(position, JsonObject())
+            onClickListener?.onClick(position, oggetto)
 
         }
         //holder.autore.text = oggetto.get("autore").asString
