@@ -31,8 +31,6 @@ class Libro_Fragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=LibroLayoutBinding.inflate(inflater)
-        var text = FragmentSearch.text
-        Log.i("TEXT in libro","parola cercata: ${FragmentSearch.text}")
 
         setFragmentResultListener("keyId"){ requestKey, bundle ->
             val libroS=bundle.getString("keyBundleId")

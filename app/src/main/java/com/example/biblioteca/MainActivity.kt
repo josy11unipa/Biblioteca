@@ -39,25 +39,18 @@ class MainActivity : AppCompatActivity() {
         val info_binding = binding.tastoInfo
         val profile_bindng = binding.tastoUser
         val debug = binding.tastoDebugBackstack
-        val query="select * from libro;"
         val manager=supportFragmentManager
-        manager.setFragmentResult("queryK", bundleOf("queryHome" to query ))
 
         dbManager = DBManager(this)
         dbManager.open()
-
 
         home_binding.setOnClickListener{
 
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Home_Fragment) {
-                manager.setFragmentResult("queryK", bundleOf("queryHome" to query ))
             }else{
                 transaction.replace(R.id.fragmentMain, Home_Fragment())
-                manager.setFragmentResult("queryK", bundleOf("queryHome" to query ))
-                transaction.replace(R.id.fragmentSearchBar,FragmentSearch())
-
             }
             transaction.commit()
         }
@@ -68,7 +61,6 @@ class MainActivity : AppCompatActivity() {
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Info_Fragment) {
             }else{
-                transaction.replace(R.id.fragmentSearchBar,TopBarFragment())
                 transaction.replace(R.id.fragmentMain, Info_Fragment())
             }
             transaction.commit()
@@ -82,13 +74,11 @@ class MainActivity : AppCompatActivity() {
             if(user.count!=0) {
                 if (verifica is Profile_Fragment) {
                 }else {
-                    transaction.replace(R.id.fragmentSearchBar, TopBarFragment())
                     transaction.replace(R.id.fragmentMain, Profile_Fragment())
                     Log.i("LOG-MainActivity","user.count() = ${user.count}")
                 }
             }else{
                 Log.i("LOG-MainActivity","user.count() = ${user.count}")
-                transaction.replace(R.id.fragmentSearchBar, TopBarFragment())
                 transaction.replace(R.id.fragmentMain, Login_Fragment())
             }
             transaction.commit()
@@ -99,8 +89,7 @@ class MainActivity : AppCompatActivity() {
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Librarian_Fragment) {
             }else{
-                transaction.replace(R.id.fragmentMain, TopBarFragment())
-                transaction.replace(R.id.fragmentSearchBar,Librarian_Fragment())
+                transaction.replace(R.id.fragmentMain, Librarian_Fragment())
             }
             transaction.commit()
         }
@@ -112,29 +101,20 @@ class MainActivity : AppCompatActivity() {
         val verifica=fragmentManager.findFragmentById(R.id.fragmentMain)
 
         if(verifica is Home_Fragment){
-            if(FragmentSearch.text!=""){
-                transaction.replace(R.id.fragmentMain, Home_Fragment())
-                transaction.replace(R.id.fragmentSearchBar, FragmentSearch())
-                FragmentSearch.text = ""
-                transaction.commit()
-            }else{
-                val dialogBuilder = android.app.AlertDialog.Builder(this)
-                dialogBuilder.setMessage("Vuoi uscire dall'app?")
-                dialogBuilder.setTitle("Uscita autorizzata")
-
-                dialogBuilder.setPositiveButton("Si"){
-                        _, _ ->
-                    super.onBackPressed()
-                }
-                dialogBuilder.setNegativeButton("No"){
-                        _, _ ->
-                }
-                val dialog = dialogBuilder.create()
-                dialog.show()
+            val dialogBuilder = android.app.AlertDialog.Builder(this)
+            dialogBuilder.setMessage("Vuoi uscire dall'app?")
+            dialogBuilder.setTitle("Uscita autorizzata")
+            dialogBuilder.setPositiveButton("Si"){
+                    _, _ ->
+                super.onBackPressed()
             }
+            dialogBuilder.setNegativeButton("No"){
+                    _, _ ->
+            }
+            val dialog = dialogBuilder.create()
+            dialog.show()
         }else if(verifica is Info_Fragment || verifica is Profile_Fragment || verifica is Register_Fragment || verifica is Login_Fragment){
             transaction.replace(R.id.fragmentMain, Home_Fragment())
-            transaction.replace(R.id.fragmentSearchBar, FragmentSearch())
             transaction.commit()
         }else if(verifica is Libro_Fragment){
             transaction.replace(R.id.fragmentMain, Home_Fragment())

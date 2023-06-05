@@ -34,10 +34,7 @@ class Login_Fragment : Fragment() {
     private lateinit var dbManager: DBManager
     var username =""
     var password = ""
-
-
     var flag=true
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,9 +46,6 @@ class Login_Fragment : Fragment() {
 
         coinImageView = binding.genericUserImg
         loginFieldsLayout = binding.loginFieldsLayout
-        val result = "Login"
-        setFragmentResult("key", bundleOf("keyBundle" to result))
-      //per cambiare searchBar
 
         binding.button2.setOnClickListener {
             if (binding.campoUsername.text.toString() != ""  && binding.campoPassword.text.toString() != ""){
@@ -70,11 +64,9 @@ class Login_Fragment : Fragment() {
     fun login(){
         val fragmentmanager=parentFragmentManager
         val transaction=fragmentmanager.beginTransaction()
-        transaction.replace(R.id.fragmentSearchBar, TopBarFragment())
         transaction.replace(R.id.fragmentMain, Profile_Fragment())
         transaction.commit()
     }
-
     private fun loginUtente (requestLogin: RequestLogin){
 
         val query = "select * from persona where username = '${requestLogin.username}' and password = '${requestLogin.password}';"
@@ -82,7 +74,6 @@ class Login_Fragment : Fragment() {
 
         ClientNetwork.retrofit.login(query).enqueue(
             object : Callback<JsonObject> {
-
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     if (response.isSuccessful) {
@@ -113,7 +104,6 @@ class Login_Fragment : Fragment() {
             }
         )
     }
-
     private fun getUser(jsonObject: JsonObject){
         val username=jsonObject.get("username").asString
         val nome=jsonObject.get("nome").asString
@@ -121,8 +111,6 @@ class Login_Fragment : Fragment() {
         val qr=jsonObject.get("qr").asString
         val type=jsonObject.get("type").asString
         dbManager.insert(username,nome,cognome,qr,type) //Test db locale
-
-
     }
 
     private fun getImageProfilo(jsonObject: JsonObject){
@@ -142,5 +130,4 @@ class Login_Fragment : Fragment() {
             }
         )
     }
-
 }

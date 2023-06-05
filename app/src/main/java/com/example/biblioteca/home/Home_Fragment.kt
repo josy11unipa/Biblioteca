@@ -1,19 +1,16 @@
 package com.example.biblioteca.home
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.biblioteca.ClientNetwork
-import com.example.biblioteca.FragmentSearch
 import com.example.biblioteca.Libro_Fragment
 import com.example.biblioteca.R
 import com.example.biblioteca.databinding.HomeLayoutBinding
@@ -31,19 +28,29 @@ class Home_Fragment(): Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var queryL="Select * from libro order by titolo;"
-        var text = FragmentSearch.text.toString()
-        if(text!=""){
-            queryL="select * from libro where autore LIKE '%$text%' or titolo LIKE '%$text%' or anno LIKE'%$text%' or genere LIKE'$text';\""
-        }
+        var query="Select * from libro order by titolo;"
         binding = HomeLayoutBinding.inflate(inflater)
-        Log.i("queryL","queryL:$queryL")
-        setFragmentResultListener("queryK"){requestKey, bundle ->
-            //queryL=bundle.getString("queryHome").toString()
-            queryL=bundle.getString("queryB").toString()
-            getbook(queryL)
+
+        binding.searchBar.setOnClickListener{
+            binding.searchBar.isIconified = false
         }
-        getbook(queryL)
+
+        binding.searchBar.setOnQueryTextListener (object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(parola: String?): Boolean {
+                val query =
+                    "select * from libro where autore LIKE '%$parola%' " +
+                            "or titolo LIKE '%$parola%' " +
+                            "or anno LIKE'%$parola%' " +
+                            "or genere LIKE'$parola';"
+                getbook(query)
+                return true
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+        getbook(query)
         return binding.root
     }
     private fun getbook (query:String) {
