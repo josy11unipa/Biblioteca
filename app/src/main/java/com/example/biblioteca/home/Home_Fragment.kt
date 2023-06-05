@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.Libro_Fragment
@@ -29,17 +30,24 @@ class Home_Fragment(): Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var queryL="Select * from libro order by titolo;"
         binding = HomeLayoutBinding.inflate(inflater)
-        getbook()
+
+        setFragmentResultListener("queryK"){requestKey, bundle ->
+            queryL=bundle.getString("queryHome").toString()
+
+            queryL=bundle.getString("queryB").toString()
+            getbook(queryL)
+        }
+
+       // getbook(queryL)
         return binding.root
     }
 
 
-    private fun getbook () {
+    private fun getbook (query:String) {
 
-        val query =
-            "select * from libro;"
-        Log.i("LOG", "Query creata:$query ")
+
 
         ClientNetwork.retrofit.getLibri(query).enqueue(
             object : Callback<JsonObject> {
@@ -59,6 +67,7 @@ class Home_Fragment(): Fragment() {
                                 setFragmentResult("keyId", bundleOf("keyBundleId" to model.toString() ))
                                 val transaction=manager.beginTransaction()
                                 transaction.replace(R.id.fragmentMain,Libro_Fragment())
+                                transaction.addToBackStack("libri")
                                 transaction.commit()
                             }
                         })

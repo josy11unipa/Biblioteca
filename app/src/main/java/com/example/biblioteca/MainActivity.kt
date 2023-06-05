@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import com.example.biblioteca.bibliotecario.Librarian_Fragment
 import com.example.biblioteca.databinding.ActivityMainBinding
 import com.example.biblioteca.database.DBManager
@@ -37,20 +38,25 @@ class MainActivity : AppCompatActivity() {
         val info_binding = binding.tastoInfo
         val profile_bindng = binding.tastoUser
         val debug = binding.tastoDebugBackstack
-
+        val query="select * from libro;"
         val manager=supportFragmentManager
+        manager.setFragmentResult("queryK", bundleOf("queryHome" to query ))
 
         dbManager = DBManager(this)
         dbManager.open()
 
 
         home_binding.setOnClickListener{
+
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Home_Fragment) {
+                manager.setFragmentResult("queryK", bundleOf("queryHome" to query ))
             }else{
                 transaction.replace(R.id.fragmentMain, Home_Fragment())
+                manager.setFragmentResult("queryK", bundleOf("queryHome" to query ))
                 transaction.replace(R.id.fragmentSearchBar,FragmentSearch())
+
             }
             transaction.commit()
         }
@@ -119,9 +125,7 @@ class MainActivity : AppCompatActivity() {
             val dialog = dialogBuilder.create()
             dialog.show()
         }else{
-            transaction.replace(R.id.fragmentMain, Home_Fragment())
-            transaction.replace(R.id.fragmentSearchBar,FragmentSearch())
-            transaction.commit()
+            super.onBackPressed()
         }
     }
     override fun onDestroy() {
