@@ -1,5 +1,6 @@
 package com.example.biblioteca
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,7 @@ class CustomAdapterCrono(private val element: JsonArray) :RecyclerView.Adapter<C
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val oggetto: JsonObject = element.get(position) as JsonObject
+        Log.i("TAG-CRONO", "oggetto be like: $oggetto")
         holder.titolo.text=oggetto.get("titolo").asString
         holder.dataI.text=oggetto.get("dataInizio").asString
         holder.dataF.text=oggetto.get("dataFine").asString
