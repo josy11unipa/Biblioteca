@@ -87,9 +87,9 @@ class MainActivity : AppCompatActivity() {
         debug.setOnClickListener{
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
-            if(verifica is Librarian_Fragment) {
+            if(verifica is HamburgerMenu) {
             }else{
-                transaction.replace(R.id.fragmentMain, Librarian_Fragment())
+                transaction.replace(R.id.fragmentMain, HamburgerMenu())
             }
             transaction.commit()
         }

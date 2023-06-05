@@ -18,7 +18,7 @@ class HamburgerMenu:Fragment() {
         binding=MenuLayoutBinding.inflate(inflater)
         val manager=parentFragmentManager
         val transaction=manager.beginTransaction()
-        binding.button4.setOnClickListener{
+        binding.buttonCronologia.setOnClickListener{
             transaction.replace(R.id.fragmentMain,Cronologia_Fragment());
             transaction.commit();
         }
