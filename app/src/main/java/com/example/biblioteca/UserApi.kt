@@ -19,6 +19,10 @@ interface UserAPI {
     @FormUrlEncoded
     fun getLibri(@Field("query") query : String): Call<JsonObject>
 
+    @POST("postSelect/")
+    @FormUrlEncoded
+    fun getCronologia(@Field("query") query : String): Call<JsonObject>
+
     @POST("postUpdate/")
     @FormUrlEncoded
     fun modifica(@Field("query") query: String): Call<JsonObject>
