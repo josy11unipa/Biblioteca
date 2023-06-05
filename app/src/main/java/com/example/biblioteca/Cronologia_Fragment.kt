@@ -46,7 +46,7 @@ class Cronologia_Fragment:Fragment() {
 
     private fun getCrono(username:String){
 
-        val query="select libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato from prenotazione,libro where libro.id=prenotazione.idL AND $username=prenotazione.usernameU;"
+        val query="select libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND $username=prenotazione.usernameU;"
         ClientNetwork.retrofit.getCronologia(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
