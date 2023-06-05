@@ -30,23 +30,23 @@ class Cronologia_Fragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding= CronologiaLayoutBinding.inflate(inflater)
-        val data = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val dataS=data.format(Date()).toString()
+        //val data = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        //val dataS=data.format(Date()).toString()
 
        val dbManager = DBManager(requireContext())
         dbManager.open()
         val cursor=dbManager.getUser()
         val username = cursor.getString(cursor.getColumnIndex("username"))
-        getCrono(dataS,username)
+        getCrono(username)
 
 
 
         return binding.root
     }
 
-    private fun getCrono(data:String,username:String){
+    private fun getCrono(username:String){
 
-        val query="select libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL;"
+        val query="select libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato from prenotazione,libro where libro.id=prenotazione.idL AND $username=prenotazione.usernameU;"
         ClientNetwork.retrofit.getCronologia(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
