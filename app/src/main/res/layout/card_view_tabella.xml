@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/home"
+    android:layout_marginVertical="3dp"
+    android:backgroundTint="@color/text"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
@@ -19,19 +20,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Titolo Libro"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/divider6"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintStart_toEndOf="@+id/titolo"
-            tools:layout_editor_absoluteY="8dp" />
 
         <TextView
             android:id="@+id/dataI"
@@ -39,10 +32,10 @@
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
             android:text="Data Inizio"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/divider6"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -51,10 +44,10 @@
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
             android:text="Data Fine"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/divider6"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dataI" />
 
         <TextView
@@ -63,10 +56,10 @@
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
             android:text="Consegnato"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/divider6"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dataF" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

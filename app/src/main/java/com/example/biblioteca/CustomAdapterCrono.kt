@@ -32,7 +32,7 @@ class CustomAdapterCrono(private val element: JsonArray) :RecyclerView.Adapter<C
         val oggetto: JsonObject = element.get(position) as JsonObject
         Log.i("TAG-CRONO", "oggetto be like: $oggetto")
         holder.titolo.text=oggetto.get("titolo").asString
-        holder.dataI.text=oggetto.get("dataInizio").asString
+        holder.dataI.text="Data Ritiro:  "+oggetto.get("dataInizio").asString
         holder.dataF.text=oggetto.get("dataFine").asString
         holder.consegna.text=oggetto.get("consegnato").asString
     }

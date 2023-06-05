@@ -38,30 +38,30 @@ class Cronologia_Fragment:Fragment() {
         val cursor=dbManager.getUser()
         val username = cursor.getString(cursor.getColumnIndex("username"))
         getCrono(username)
-
-
-
         return binding.root
     }
 
     private fun getCrono(username:String){
 
-        val query="select libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND $username=prenotazione.usernameU;"
+        val query="select libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND '$username'=prenotazione.usernameU;"
         ClientNetwork.retrofit.getCronologia(query).enqueue(
             object : Callback<JsonObject> {
+
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+
+                    Log.i("TAG-CRONOLOGIA", "response=${response.isSuccessful}")
+                    Log.i("TAG-CRONOLOGIA", "response=$username")
 
                     if (response.isSuccessful) {
                         val crono = (response.body()?.get("queryset") as JsonArray)
                         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
                         val adapter = CustomAdapterCrono(crono)
                         binding.recyclerView.adapter = adapter
-
                     }
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    //
+                    Log.i("TAG-CRONOLOGIA", "sono nella onFailure = ${t.message}")
                 }
             })
 
