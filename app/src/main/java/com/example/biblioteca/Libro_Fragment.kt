@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.example.biblioteca.databinding.LibroLayoutBinding
+import com.example.biblioteca.home.Home_Fragment
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.Gson
@@ -30,6 +31,8 @@ class Libro_Fragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=LibroLayoutBinding.inflate(inflater)
+        var text = FragmentSearch.text
+        Log.i("TEXT in libro","parola cercata: ${FragmentSearch.text}")
 
         setFragmentResultListener("keyId"){ requestKey, bundle ->
             val libroS=bundle.getString("keyBundleId")

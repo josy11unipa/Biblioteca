@@ -15,6 +15,7 @@ import com.example.biblioteca.home.Home_Fragment
 import com.example.biblioteca.info.Info_Fragment
 import com.example.biblioteca.user.Login_Fragment
 import com.example.biblioteca.user.Profile_Fragment
+import com.example.biblioteca.user.Register_Fragment
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
@@ -111,19 +112,33 @@ class MainActivity : AppCompatActivity() {
         val verifica=fragmentManager.findFragmentById(R.id.fragmentMain)
 
         if(verifica is Home_Fragment){
-            val dialogBuilder = android.app.AlertDialog.Builder(this)
-            dialogBuilder.setMessage("Vuoi uscire dall'app?")
-            dialogBuilder.setTitle("Uscita autorizzata")
+            if(FragmentSearch.text!=""){
+                transaction.replace(R.id.fragmentMain, Home_Fragment())
+                transaction.replace(R.id.fragmentSearchBar, FragmentSearch())
+                FragmentSearch.text = ""
+                transaction.commit()
+            }else{
+                val dialogBuilder = android.app.AlertDialog.Builder(this)
+                dialogBuilder.setMessage("Vuoi uscire dall'app?")
+                dialogBuilder.setTitle("Uscita autorizzata")
 
-            dialogBuilder.setPositiveButton("Si"){
-                    _, _ ->
-                super.onBackPressed()
+                dialogBuilder.setPositiveButton("Si"){
+                        _, _ ->
+                    super.onBackPressed()
+                }
+                dialogBuilder.setNegativeButton("No"){
+                        _, _ ->
+                }
+                val dialog = dialogBuilder.create()
+                dialog.show()
             }
-            dialogBuilder.setNegativeButton("No"){
-                    _, _ ->
-            }
-            val dialog = dialogBuilder.create()
-            dialog.show()
+        }else if(verifica is Info_Fragment || verifica is Profile_Fragment || verifica is Register_Fragment || verifica is Login_Fragment){
+            transaction.replace(R.id.fragmentMain, Home_Fragment())
+            transaction.replace(R.id.fragmentSearchBar, FragmentSearch())
+            transaction.commit()
+        }else if(verifica is Libro_Fragment){
+            transaction.replace(R.id.fragmentMain, Home_Fragment())
+            transaction.commit()
         }else{
             super.onBackPressed()
         }
@@ -133,9 +148,3 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 }
-
-
-
-
-
-

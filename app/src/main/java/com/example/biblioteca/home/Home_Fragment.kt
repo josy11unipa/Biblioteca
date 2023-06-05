@@ -13,6 +13,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.biblioteca.ClientNetwork
+import com.example.biblioteca.FragmentSearch
 import com.example.biblioteca.Libro_Fragment
 import com.example.biblioteca.R
 import com.example.biblioteca.databinding.HomeLayoutBinding
@@ -31,12 +32,16 @@ class Home_Fragment(): Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var queryL="Select * from libro order by titolo;"
+        var text = FragmentSearch.text.toString()
+        if(text!=""){
+            queryL="select * from libro where autore LIKE '%$text%' or titolo LIKE '%$text%' or anno LIKE'%$text%' or genere LIKE'$text';\""
+        }
         binding = HomeLayoutBinding.inflate(inflater)
-
+        Log.i("queryL","queryL:$queryL")
         setFragmentResultListener("queryK"){requestKey, bundle ->
-            queryL=bundle.getString("queryHome").toString()
-
+            //queryL=bundle.getString("queryHome").toString()
             queryL=bundle.getString("queryB").toString()
+            getbook(queryL)
         }
         getbook(queryL)
         return binding.root
