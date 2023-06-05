@@ -15,6 +15,7 @@
         <TableRow>
 
             <TextView
+                android:id="@+id/titoloLibro"
                 android:padding="8dp"
                 android:text="Titolo Libro"
                 android:textAlignment="center"
@@ -22,6 +23,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/dataInizio"
                 android:padding="8dp"
                 android:text="Data Inizio"
                 android:textAlignment="center"
@@ -29,6 +31,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/dataFine"
                 android:padding="8dp"
                 android:text="Data Fine"
                 android:textAlignment="center"
@@ -36,6 +39,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/Consegnato"
                 android:padding="8dp"
                 android:text="Consegnato"
                 android:textAlignment="center"
@@ -47,24 +51,28 @@
         <TableRow>
 
             <TextView
+                android:id="@+id/campoTitolo"
                 android:padding="8dp"
                 android:text="Titolo del Libro"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF" />
 
             <TextView
+                android:id="@+id/campoDataInizio"
                 android:padding="8dp"
                 android:text="Data di Inizio"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF" />
 
             <TextView
+                android:id="@+id/campoDataFine"
                 android:padding="8dp"
                 android:text="Data di Fine"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF" />
 
             <TextView
+                android:id="@+id/campoConsegnato"
                 android:padding="8dp"
                 android:text="Sì"
                 android:textAlignment="center"
