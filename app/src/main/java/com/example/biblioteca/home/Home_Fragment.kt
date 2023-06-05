@@ -1,6 +1,7 @@
 package com.example.biblioteca.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,10 @@ import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class Home_Fragment(): Fragment() {
@@ -50,6 +55,7 @@ class Home_Fragment(): Fragment() {
             }
 
         })
+
         getbook(query)
         return binding.root
     }

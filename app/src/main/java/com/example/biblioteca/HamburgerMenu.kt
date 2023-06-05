@@ -15,6 +15,15 @@ class HamburgerMenu:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding=MenuLayoutBinding.inflate(inflater)
+        val manager=parentFragmentManager
+        val transaction=manager.beginTransaction()
+        binding.button4.setOnClickListener{
+            transaction.replace(R.id.fragmentMain,Cronologia_Fragment());
+            transaction.commit();
+        }
+
+
         return binding.root
     }
 }
