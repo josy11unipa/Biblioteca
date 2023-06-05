@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/home"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="4dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Intestazione della tabella -->
+        <TableRow>
+
+            <TextView
+                android:padding="8dp"
+                android:text="Titolo Libro"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <TextView
+                android:padding="8dp"
+                android:text="Data Inizio"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <TextView
+                android:padding="8dp"
+                android:text="Data Fine"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <TextView
+                android:padding="8dp"
+                android:text="Consegnato"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <!-- Riga dei dati -->
+        <TableRow>
+
+            <TextView
+                android:padding="8dp"
+                android:text="Titolo del Libro"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:padding="8dp"
+                android:text="Data di Inizio"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:padding="8dp"
+                android:text="Data di Fine"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:padding="8dp"
+                android:text="Sì"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF" />
+        </TableRow>
+
+    </TableLayout>
+
+</androidx.cardview.widget.CardView>
