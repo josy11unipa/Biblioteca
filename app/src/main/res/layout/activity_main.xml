@@ -65,7 +65,7 @@
             android:layout_marginTop="0dp"
             android:layout_weight="1"
             android:backgroundTint="@color/black"
-            app:srcCompat="@android:drawable/ic_menu_help" />
+            app:srcCompat="@drawable/menu" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
