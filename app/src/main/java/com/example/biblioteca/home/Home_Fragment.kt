@@ -37,21 +37,13 @@ class Home_Fragment(): Fragment() {
             queryL=bundle.getString("queryHome").toString()
 
             queryL=bundle.getString("queryB").toString()
-            getbook(queryL)
         }
-
-       // getbook(queryL)
+        getbook(queryL)
         return binding.root
     }
-
-
     private fun getbook (query:String) {
-
-
-
         ClientNetwork.retrofit.getLibri(query).enqueue(
             object : Callback<JsonObject> {
-
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     //Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     if (response.isSuccessful) {
