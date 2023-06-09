@@ -12,5 +12,4 @@ object ClientNetwork {
             .build()
             .create(UserAPI::class.java)
     }
-
 }

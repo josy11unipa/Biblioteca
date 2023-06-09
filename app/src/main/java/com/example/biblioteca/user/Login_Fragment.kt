@@ -29,7 +29,6 @@ class Login_Fragment : Fragment() {
     private lateinit var dbManager: DBManager
     var username =""
     var password = ""
-    var flag=true
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,6 +53,14 @@ class Login_Fragment : Fragment() {
                 Toast.makeText(requireContext(),"Inserisci le credenziali", Toast.LENGTH_LONG).show()
             }
         }
+
+        binding.button4.setOnClickListener{
+            val fragmentmanager=parentFragmentManager
+            val transaction=fragmentmanager.beginTransaction()
+            transaction.replace(R.id.fragmentMain, Register_Fragment())
+            transaction.commit()
+        }
+
         return binding.root
     }
     fun login(){

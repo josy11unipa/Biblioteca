@@ -60,13 +60,6 @@ class Profile_Fragment:Fragment() {
             binding.imageView3.setImageBitmap(bitmap)
         }
 
-        binding.button.setOnClickListener {
-            val scanner = IntentIntegrator.forSupportFragment(this)
-            scanner.setDesiredBarcodeFormats("qrCode")
-            scanner.setCaptureActivity(CustomCaptureActivity::class.java) // Imposta la tua activity personalizzata
-            scanner.initiateScan()
-        }
-
         binding.logoutButton.setOnClickListener{
            dbManager.delete()
             val manager=parentFragmentManager
@@ -77,19 +70,6 @@ class Profile_Fragment:Fragment() {
 
         }
         return binding.root
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val result=IntentIntegrator.parseActivityResult(requestCode,resultCode,data)
-        if(resultCode==Activity.RESULT_OK){
-            if(result.contents==null){
-                Toast.makeText(this.requireContext(),"cancelled",Toast.LENGTH_SHORT).show()
-                Log.i("QRCODE","${result.contents}")
-            }else{
-                Toast.makeText(this.requireContext(),"scanned ->"+result.contents,Toast.LENGTH_SHORT).show()
-                risult=result.contents.toString()
-                binding.button.text=risult
-            }
-        }
     }
     private fun generateQRCode(code: String): Bitmap? {
         val qrCodeWriter = QRCodeWriter()

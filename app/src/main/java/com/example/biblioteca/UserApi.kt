@@ -15,6 +15,11 @@ interface UserAPI {
     @FormUrlEncoded
     fun login(@Field("query") query : String): Call<JsonObject>
 
+    @POST("postInsert/")
+    @FormUrlEncoded
+    fun register(@Field("query") query: String): Call<JsonObject>
+
+
     @POST("postSelect/")
     @FormUrlEncoded
     fun getLibri(@Field("query") query : String): Call<JsonObject>

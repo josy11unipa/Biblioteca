@@ -16,35 +16,63 @@ tools:context=".user.Register_Fragment">
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="16dp"/>
 
-<EditText
-    android:id="@+id/edit_text_nome"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Nome"
-    android:inputType="textPersonName"
-    android:padding="8dp"
-    android:layout_marginBottom="8dp"/>
+    <EditText
+        android:id="@+id/campoRegisterNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="Nome"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#9C9C9C" />
 
-<EditText
-    android:id="@+id/edit_text_cognome"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Cognome"
-    android:inputType="textPersonName"
-    android:padding="8dp"
-    android:layout_marginBottom="8dp"/>
+    <EditText
+        android:id="@+id/campoRegisterCognome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="Cognome"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#9C9C9C" />
 
-<EditText
-    android:id="@+id/edit_text_eta"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Età"
-    android:inputType="number"
-    android:padding="8dp"
-    android:layout_marginBottom="8dp"/>
+    <EditText
+        android:id="@+id/campoRegisterUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="Nome Utente"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#9C9C9C" />
+
+    <EditText
+        android:id="@+id/campoRegisterPassword1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="Password"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#9C9C9C" />
+
+    <EditText
+        android:id="@+id/campoRegisterPassword2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="Conferma Password"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#9C9C9C" />
 
     <Button
-        android:id="@+id/button_login"
+        android:id="@+id/button_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
