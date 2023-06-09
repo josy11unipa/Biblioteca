@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.biblioteca.databinding.LibroLayoutBinding
 import com.example.biblioteca.databinding.MenuLayoutBinding
+import com.example.biblioteca.user.Profile_Fragment
 
 class HamburgerMenu:Fragment() {
     private lateinit var binding: MenuLayoutBinding
@@ -22,7 +23,7 @@ class HamburgerMenu:Fragment() {
             transaction.replace(R.id.fragmentMain,Cronologia_Fragment());
             transaction.commit();
         }
-
+        binding.button6.text= Profile_Fragment.isLogged.toString()
 
         return binding.root
     }

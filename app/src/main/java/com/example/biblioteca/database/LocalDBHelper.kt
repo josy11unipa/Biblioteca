@@ -19,6 +19,8 @@ class LocalDBHelper(context: Context): SQLiteOpenHelper(context,
         const val TYPE="type"
         const val QR="qr"
         const val ID = "id"
+        //const val ISLOGGED = "flag"
+
         private const val DB_CREATE=
             "CREATE TABLE" +
                     " ${TABLE_NAME} (${ID} INTEGER PRIMARY KEY, "+
@@ -26,6 +28,7 @@ class LocalDBHelper(context: Context): SQLiteOpenHelper(context,
                     "${NOME} TEXT, "+
                     "${COGNOME} TEXT, "+
                     "${TYPE} TEXT, "+
+                    //"${ISLOGGED} BOOLEAN, "+
                     "${QR} TEXT );"
         const val SQL_DELETE="DROP TABLE "+
                 "IF EXISTS $TABLE_NAME;"

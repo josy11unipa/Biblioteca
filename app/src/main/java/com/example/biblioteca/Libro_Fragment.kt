@@ -7,15 +7,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.example.biblioteca.databinding.LibroLayoutBinding
-import com.example.biblioteca.home.Home_Fragment
+import com.example.biblioteca.user.Profile_Fragment
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import com.google.gson.Gson
-
+import java.time.LocalDate
 import com.google.gson.JsonParser
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -31,7 +31,7 @@ class Libro_Fragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=LibroLayoutBinding.inflate(inflater)
-
+        var button = binding.buttonPrenota
         setFragmentResultListener("keyId"){ requestKey, bundle ->
             val libroS=bundle.getString("keyBundleId")
             val libro=JsonParser().parse(libroS) as JsonObject
@@ -44,11 +44,55 @@ class Libro_Fragment:Fragment() {
             binding.nCopie.text = "Copie rimanenti : " + libro.get("nCopie").asInt.toString()
             val url: String = libro.get("copertina").asString
             getImage(url)
+            val idL = libro.get("id").asInt
+            button.setOnClickListener{
+                val query = "SELECT nCopie FROM libro WHERE id = '$idL';"
+                Log.i("TAG-Prenotazione", "queryP be like: $query")
+                ClientNetwork.retrofit.login(query).enqueue(
+                    object : Callback<JsonObject> {
+                        override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                            Log.i("LOG-Login_Fragment-onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                            if (response.isSuccessful) {
+                                //Profile_Fragment.isLogged=true
+                                if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
+                                    //Log.i("LOG-Login_Fragment-onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
+                                    var n = ((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject).get("nCopie").asInt
+                                    Log.i("LOG-Login_Fragment-onResponse", "nCopie: $n")
+                                    if(n>=1){
+                                        Log.i("LOG-Login_Fragment-onResponse", "n: $n")
+                                        if(Profile_Fragment.isLogged){
+                                            Toast.makeText(requireContext(),"Puoi effettuare la prenotazione", Toast.LENGTH_LONG).show()
+                                            alreadyTake(idL,Profile_Fragment.usernameUtente)
+                                        }else{
+                                            Log.i("LOG-Login_Fragment-onResponse", "Utente non autenticato")
+                                            Toast.makeText(requireContext(),"Autenticati per richiedere una copia", Toast.LENGTH_LONG).show()
+                                        }
+                                    }else{
+                                        Log.i("LOG-Login_Fragment-onResponse", "Copie esaurite")
+                                    }
+                                } else {
+                                    Log.i("LOG-Libro_Fragment-onResponse", "Copie non disponibili")
+                                    Toast.makeText(requireContext(),"Copie non disponibili", Toast.LENGTH_LONG).show()
+                                }
 
+                            }else{
+                                //Toast.makeText(requireContext(),"Errore richiestaDB", Toast.LENGTH_LONG).show()
+                                Log.i("LOG-Login_Fragment-onResponse", "Errore richiestaDB")
+                            }
+                        }
+                        override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                            Log.i("LOG-Login_Fragment-onFailure", "Errore prenotazione: ${t.message}")
+                            Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                )
+
+
+            }
         }
         return binding.root
-    }
 
+    }
     private fun getImage(url: String) {
         ClientNetwork.retrofit.getAvatar(url).enqueue(
             object : Callback<ResponseBody> {
@@ -68,6 +112,97 @@ class Libro_Fragment:Fragment() {
                 }
             }
         )
+    }
+
+    private fun alreadyTake(idL: Int, usernameUtente:String){
+        Log.i("LOG-alreadyTake", "idL: $idL")
+        val currentDate = LocalDate.now()
+        Log.i("LOG-alreadyTake", "LocalDate: $currentDate")
+
+        val query = "SELECT * FROM prenotazione WHERE '$idL' = idL AND '$usernameUtente' = usernameU AND '$currentDate' <= dataFine;"
+        ClientNetwork.retrofit.login(query).enqueue(
+            object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    Log.i("LOG-alreadyTake", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                    if (response.isSuccessful) {
+                        if ((response.body()?.get("queryset") as JsonArray).size() >0) {
+                            Log.i("LOG-alreadyTake", "Hai già una prenotazione in corso per questo libro")
+                            Log.i("LOG-alreadyTake", "reponse.body: ${response.body()}")
+                            Toast.makeText(requireContext(),"Hai già una prenotazione in corso per questo libro", Toast.LENGTH_LONG).show()
+
+                        } else {
+                            effettuaPrenotazione(idL,usernameUtente)
+                        }
+
+                    }else{
+                        //Toast.makeText(requireContext(),"Errore richiestaDB", Toast.LENGTH_LONG).show()
+                        Log.i("LOG-Login_Fragment-onResponse", "Errore richiestaDB")
+                    }
+                }
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-Login_Fragment-onFailure", "Errore prenotazione: ${t.message}")
+                    Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+
 
     }
+    private fun effettuaPrenotazione(idL: Int,usernameUtente:String){
+        val currentDate = LocalDate.now()
+        val dataFinePrestito = currentDate.plusDays(15)
+        val query = "INSERT INTO prenotazione (usernameU, dataInizio, dataFine, idL) VALUES ('$usernameUtente', '$currentDate', '$dataFinePrestito', '$idL');"
+        Log.i("LOG-effettuaPrenotazione", "QUERY: $query")
+
+        ClientNetwork.retrofit.register(query).enqueue(
+            object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    Log.i("LOG-effettuaPrenotazione-onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                    Log.i("LOG-effettuaPrenotazione-onResponse", "Response be like: ${response.body()}")
+                    if (response.isSuccessful) {
+                        // Registrazione della prenotazione effettuata con successo
+                        modCopie(idL)
+                        Toast.makeText(requireContext(), "Registrazione della prenotazione effettuata effettuata con successo", Toast.LENGTH_LONG).show()
+                        Log.i("LOG-effettuaPrenotazione-onResponse", "Registrazione della prenotazione effettuata effettuata con successo")
+                    } else {
+                        Toast.makeText(requireContext(), "Errore durante la registrazione della prenotazione", Toast.LENGTH_LONG).show()
+                        Log.i("LOG-effettuaPrenotazione-onResponse", "Errore durante la registrazione della prenotazione")
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-effettuaPrenotazione-onFailure", "Errore durante la registrazione: ${t.message}")
+                    Toast.makeText(requireContext(), "Errore durante la registrazione: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        )
+    }
+
+    private fun modCopie(idl:Int){
+        val query = "UPDATE libro SET nCopie = nCopie - 1 WHERE id = $idl"
+
+        ClientNetwork.retrofit.register(query).enqueue(
+            object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    Log.i("LOG-modCopie-onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                    Log.i("LOG-modCopie-onResponse", "Response be like: ${response.body()}")
+                    if (response.isSuccessful) {
+                        Log.i("LOG-modCopie-onResponse", "Diminuzione delle copie effettuata effettuata con successo")
+                    } else {
+                        Log.i("LOG-modCopie-onResponse", "Errore durante la diminuzione delle copie")
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-modCopie-onFailure", "Errore durante la diminuzione delle copie: ${t.message}")
+                    Toast.makeText(requireContext(), "Errore durante la diminuzione delle copie: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        )
+
+
+    }
+
 }

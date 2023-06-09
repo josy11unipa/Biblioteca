@@ -10,19 +10,34 @@ import com.example.biblioteca.home.CustomAdapterLista
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 
-class CustomAdapterCrono(private val element: JsonArray) :RecyclerView.Adapter<CustomAdapterCrono.ViewHolder>(){
-    class ViewHolder(binding: CardViewTabellaBinding) : RecyclerView.ViewHolder(binding.root) {
-        val titolo=binding.titolo
-        val dataI=binding.dataI
-        val dataF=binding.dataF
-        val consegna=binding.consegnato
-
+class CustomAdapterCrono(private val element: JsonArray, private val listener: OnItemClickListener) :RecyclerView.Adapter<CustomAdapterCrono.ViewHolder>(){
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
+    class ViewHolder(binding: CardViewTabellaBinding, private val listener: OnItemClickListener) : RecyclerView.ViewHolder(binding.root) {
+        val titolo = binding.titolo
+        val dataI = binding.dataI
+        val dataF = binding.dataF
+        val consegna = binding.consegnato
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(position)
+                }
+            }
+        }
+    }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = CardViewTabellaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CustomAdapterCrono.ViewHolder(view)
+        return ViewHolder(view, listener)
     }
+
+
 
     override fun getItemCount(): Int {
       return  element.size()
