@@ -1,24 +1,16 @@
 package com.example.biblioteca.user
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import com.example.biblioteca.R
-import androidx.core.os.bundleOf
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.widget.Toast
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import com.example.biblioteca.CustomCaptureActivity
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.databinding.ProfileLayoutBinding
-import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.WriterException
@@ -26,6 +18,11 @@ import com.google.zxing.BarcodeFormat
 
 
 class Profile_Fragment:Fragment() {
+    companion object {
+        var isLogged: Boolean = false
+        var usernameUtente :String =""
+    }
+
     private lateinit var binding:ProfileLayoutBinding
     private lateinit var dbManager: DBManager
     var risult:String=""
@@ -39,20 +36,22 @@ class Profile_Fragment:Fragment() {
         binding=ProfileLayoutBinding.inflate(inflater)
         dbManager = DBManager(requireContext())
         dbManager.open()
-        val result = "Area Personale"
+        //val result = "Area Personale"
         val cursor=dbManager.getUser()
 
-        setFragmentResult("key", bundleOf("keyBundle" to result))
+        //setFragmentResult("key", bundleOf("keyBundle" to result))
         if (cursor.count!=0) {
             val username = cursor.getString(cursor.getColumnIndex("username"))
             val nome = cursor.getString(cursor.getColumnIndex("nome"))
             val cognome = cursor.getString(cursor.getColumnIndex("cognome"))
             val qr = cursor.getString(cursor.getColumnIndex("qr"))
+            //val isLogged = cursor.getString(cursor.getColumnIndex("flag"))
             //binding.nome.text = "NOME: " + username.toString() //Mod JJ
 
             binding.nome.text = nome.toString()
             binding.cognome.text=cognome.toString()
             binding.username.text=username.toString()
+            usernameUtente=username.toString()
 
             //qrcode
             val code = username.toString() // Codice da convertire in QR Code
@@ -67,7 +66,7 @@ class Profile_Fragment:Fragment() {
 
             transaction.replace(R.id.fragmentMain,Login_Fragment())
             transaction.commit()
-
+            isLogged=false
         }
         return binding.root
     }

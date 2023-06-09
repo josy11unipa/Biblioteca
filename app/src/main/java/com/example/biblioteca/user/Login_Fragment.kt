@@ -68,6 +68,10 @@ class Login_Fragment : Fragment() {
         val transaction=fragmentmanager.beginTransaction()
         transaction.replace(R.id.fragmentMain, Profile_Fragment())
         transaction.commit()
+
+
+        Profile_Fragment.isLogged=true
+
     }
     private fun loginUtente (requestLogin: RequestLogin){
 
@@ -83,6 +87,9 @@ class Login_Fragment : Fragment() {
                             getUser((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject)
                             login()
                             Log.i("LOG-Login_Fragment-onResponse", "LOGGATO")
+
+                            //Profile_Fragment.isLogged=true
+
                             if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
                                 //Log.i("LOG-Login_Fragment-onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
                             } else {
