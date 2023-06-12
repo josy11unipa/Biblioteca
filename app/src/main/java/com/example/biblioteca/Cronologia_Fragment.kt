@@ -31,9 +31,6 @@ class Cronologia_Fragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding= CronologiaLayoutBinding.inflate(inflater)
-        //val data = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        //val dataS=data.format(Date()).toString()
-
        val dbManager = DBManager(requireContext())
         dbManager.open()
         val cursor=dbManager.getUser()

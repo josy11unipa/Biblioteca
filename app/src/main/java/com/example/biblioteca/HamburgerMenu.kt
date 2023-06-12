@@ -20,8 +20,13 @@ class HamburgerMenu:Fragment() {
         val manager=parentFragmentManager
         val transaction=manager.beginTransaction()
         binding.buttonCronologia.setOnClickListener{
-            transaction.replace(R.id.fragmentMain,Cronologia_Fragment());
+            transaction.replace(R.id.fragmentMain,Cronologia_Fragment())
             transaction.commit();
+        }
+        binding.buttonPrestiti.setOnClickListener{
+            transaction.replace(R.id.fragmentMain,Prenotazioni_Fragment())
+            transaction.commit()
+
         }
         binding.button6.text= Profile_Fragment.isLogged.toString()
 
