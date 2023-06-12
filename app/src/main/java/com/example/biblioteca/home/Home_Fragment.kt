@@ -1,7 +1,7 @@
 package com.example.biblioteca.home
 
 import android.os.Bundle
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,11 +20,6 @@ import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
-
 
 class Home_Fragment(): Fragment() {
     private lateinit var binding: HomeLayoutBinding
@@ -39,7 +34,6 @@ class Home_Fragment(): Fragment() {
         binding.searchBar.setOnClickListener{
             binding.searchBar.isIconified = false
         }
-
         binding.searchBar.setOnQueryTextListener (object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(parola: String?): Boolean {
                 val query =
@@ -53,9 +47,7 @@ class Home_Fragment(): Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
-
         })
-
         getbook(query)
         return binding.root
     }
@@ -89,6 +81,4 @@ class Home_Fragment(): Fragment() {
             }
         )
     }
-
-
 }

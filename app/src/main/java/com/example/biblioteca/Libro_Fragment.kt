@@ -1,5 +1,6 @@
 package com.example.biblioteca
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +12,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import com.example.biblioteca.database.DBManager
+import com.example.biblioteca.database.LocalDBHelper
 import com.example.biblioteca.databinding.LibroLayoutBinding
 import com.example.biblioteca.user.Profile_Fragment
 import com.google.gson.JsonArray
@@ -24,6 +27,8 @@ import retrofit2.Response
 
 class Libro_Fragment:Fragment() {
     private lateinit var binding: LibroLayoutBinding
+    private lateinit var dbManager: DBManager
+    private lateinit var user: LocalDBHelper
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +36,8 @@ class Libro_Fragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=LibroLayoutBinding.inflate(inflater)
+        dbManager = DBManager(requireContext())
+        dbManager.open()
         var button = binding.buttonPrenota
         setFragmentResultListener("keyId"){ requestKey, bundle ->
             val libroS=bundle.getString("keyBundleId")
@@ -46,52 +53,47 @@ class Libro_Fragment:Fragment() {
             getImage(url)
             val idL = libro.get("id").asInt
             button.setOnClickListener{
-                val query = "SELECT nCopie FROM libro WHERE id = '$idL';"
-                Log.i("TAG-Prenotazione", "queryP be like: $query")
-                ClientNetwork.retrofit.login(query).enqueue(
-                    object : Callback<JsonObject> {
-                        override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                            Log.i("LOG-Login_Fragment-onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
-                            if (response.isSuccessful) {
-                                //Profile_Fragment.isLogged=true
-                                if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
-                                    //Log.i("LOG-Login_Fragment-onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
-                                    var n = ((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject).get("nCopie").asInt
-                                    Log.i("LOG-Login_Fragment-onResponse", "nCopie: $n")
-                                    if(n>=1){
-                                        Log.i("LOG-Login_Fragment-onResponse", "n: $n")
-                                        if(Profile_Fragment.isLogged){
+                val user=dbManager.getUser()
+                if(user.count !=0){
+                    val query = "SELECT nCopie FROM libro WHERE id = '$idL';"
+                    Log.i("TAG-Prenotazione", "queryP be like: $query")
+                    ClientNetwork.retrofit.login(query).enqueue(
+                        object : Callback<JsonObject> {
+                            @SuppressLint("Range")
+                            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                                Log.i("LOG-Login_Fragment-onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                                if (response.isSuccessful) {
+                                    //Profile_Fragment.isLogged=true
+                                    if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
+                                        //Log.i("LOG-Login_Fragment-onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
+                                        var n = ((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject).get("nCopie").asInt
+                                        Log.i("LOG-Login_Fragment-onResponse", "nCopie: $n")
+                                        if(n>=1){
+                                            Log.i("LOG-Login_Fragment-onResponse", "n: $n")
                                             Toast.makeText(requireContext(),"Puoi effettuare la prenotazione", Toast.LENGTH_LONG).show()
-                                            alreadyTake(idL,Profile_Fragment.usernameUtente)
+                                            alreadyTake(idL,user.getString(user.getColumnIndex("username")))
                                         }else{
-                                            Log.i("LOG-Login_Fragment-onResponse", "Utente non autenticato")
-                                            Toast.makeText(requireContext(),"Autenticati per richiedere una copia", Toast.LENGTH_LONG).show()
+                                            Log.i("LOG-Login_Fragment-onResponse", "Copie esaurite")
                                         }
-                                    }else{
-                                        Log.i("LOG-Login_Fragment-onResponse", "Copie esaurite")
+                                    }else {
+                                        Log.i("LOG-Libro_Fragment-onResponse", "Copie non disponibili")
+                                        Toast.makeText(requireContext(),"Copie non disponibili", Toast.LENGTH_LONG).show()
                                     }
-                                } else {
-                                    Log.i("LOG-Libro_Fragment-onResponse", "Copie non disponibili")
-                                    Toast.makeText(requireContext(),"Copie non disponibili", Toast.LENGTH_LONG).show()
+                                }else{
+                                    //Toast.makeText(requireContext(),"Errore richiestaDB", Toast.LENGTH_LONG).show()
+                                    Log.i("LOG-Login_Fragment-onResponse", "Errore richiestaDB")
                                 }
-
-                            }else{
-                                //Toast.makeText(requireContext(),"Errore richiestaDB", Toast.LENGTH_LONG).show()
-                                Log.i("LOG-Login_Fragment-onResponse", "Errore richiestaDB")
+                            }
+                            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                                Log.i("LOG-Login_Fragment-onFailure", "Errore prenotazione: ${t.message}")
+                                Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
                             }
                         }
-                        override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                            Log.i("LOG-Login_Fragment-onFailure", "Errore prenotazione: ${t.message}")
-                            Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                )
-
-
+                    )
+                }
             }
         }
         return binding.root
-
     }
     private fun getImage(url: String) {
         ClientNetwork.retrofit.getAvatar(url).enqueue(
@@ -129,11 +131,9 @@ class Libro_Fragment:Fragment() {
                             Log.i("LOG-alreadyTake", "Hai già una prenotazione in corso per questo libro")
                             Log.i("LOG-alreadyTake", "reponse.body: ${response.body()}")
                             Toast.makeText(requireContext(),"Hai già una prenotazione in corso per questo libro", Toast.LENGTH_LONG).show()
-
                         } else {
                             effettuaPrenotazione(idL,usernameUtente)
                         }
-
                     }else{
                         //Toast.makeText(requireContext(),"Errore richiestaDB", Toast.LENGTH_LONG).show()
                         Log.i("LOG-Login_Fragment-onResponse", "Errore richiestaDB")

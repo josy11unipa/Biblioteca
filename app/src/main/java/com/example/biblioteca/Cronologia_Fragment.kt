@@ -7,11 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.databinding.CronologiaLayoutBinding
+import com.example.biblioteca.home.CustomAdapterLista
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -31,9 +35,6 @@ class Cronologia_Fragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding= CronologiaLayoutBinding.inflate(inflater)
-        //val data = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        //val dataS=data.format(Date()).toString()
-
        val dbManager = DBManager(requireContext())
         dbManager.open()
         val cursor=dbManager.getUser()
@@ -55,17 +56,33 @@ class Cronologia_Fragment:Fragment() {
                     Log.i("TAG-CRONOLOGIA", "response=$username")
 
                     if (response.isSuccessful) {
-                        val crono = (response.body()?.get("queryset") as JsonArray)
+                        /*val crono = (response.body()?.get("queryset") as JsonArray)
                         val adapter = CustomAdapterCrono(crono, object : CustomAdapterCrono.OnItemClickListener {
                             override fun onItemClick(position: Int) {
                                 val oggetto: JsonObject = crono.get(position) as JsonObject
                                 Toast.makeText(requireContext(),"Hai premuto: ${oggetto.get("titolo")}", Toast.LENGTH_LONG).show()
                                 Log.i("TAG-OGGETTO CLICCATO", "OGGETTO CLICCATO: $oggetto")
+                                //setFragmentResult("keyId", bundleOf("keyBundleId" to model.toString() ))
+
+                            }
+                        })*/
+                        val j=(response.body()?.get("queryset")as JsonArray)
+                        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(),2)
+                        val adapter= CustomAdapterLista(j)
+                        binding.recyclerView.adapter=adapter
+
+                        adapter.setOnClickListener(object:
+                            CustomAdapterLista.OnClickListener {
+                            override fun onClick(position: Int, model: JsonObject) {
+                                val oggetto: JsonObject = j.get(position) as JsonObject
+                                Toast.makeText(requireContext(),"Hai premuto: ${oggetto.get("titolo")}", Toast.LENGTH_LONG).show()
+                                Log.i("TAG-OGGETTO CLICCATO", "OGGETTO CLICCATO: $oggetto")
                             }
                         })
+
+
                         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
                         binding.recyclerView.adapter = adapter
-
                     }
                 }
 

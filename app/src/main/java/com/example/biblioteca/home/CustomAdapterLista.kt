@@ -1,18 +1,13 @@
 package com.example.biblioteca.home
 
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.SearchView.OnCloseListener
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.databinding.CardViewBinding
 import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -23,28 +18,22 @@ class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<Cu
     private var onClickListener:OnClickListener?=null
     class ViewHolder(binding: CardViewBinding) : RecyclerView.ViewHolder(binding.root) {
         val image = binding.bookIconCard
-
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = CardViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
     }
-
     override fun getItemCount(): Int {
         return element.size()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         val oggetto: JsonObject = element.get(position) as JsonObject
         holder.image.setOnClickListener{
             val id=oggetto.get("id").asString
             Toast.makeText(holder.image.context,"$id",Toast.LENGTH_SHORT).show()
             onClickListener?.onClick(position, oggetto)
-
         }
-
         val url: String = oggetto.get("copertina").asString
         ClientNetwork.retrofit.getAvatar(url).enqueue(
             object : Callback<ResponseBody> {
@@ -65,8 +54,6 @@ class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<Cu
             }
         )
     }
-
-
     interface OnClickListener {
         fun onClick(position: Int, model: JsonObject )
     }

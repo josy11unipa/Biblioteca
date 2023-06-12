@@ -27,6 +27,9 @@ interface UserAPI {
     @POST("postSelect/")
     @FormUrlEncoded
     fun getCronologia(@Field("query") query : String): Call<JsonObject>
+    @POST("postSelect/")
+    @FormUrlEncoded
+    fun getPrenotazione(@Field("query") query : String): Call<JsonObject>
 
     @POST("postUpdate/")
     @FormUrlEncoded
@@ -38,4 +41,5 @@ interface UserAPI {
     @POST("postSelect/")
     @FormUrlEncoded
     fun getlibri(@Field("query") query : String): Call<JsonObject>
+
 }
