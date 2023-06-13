@@ -17,8 +17,8 @@
         android:background="@drawable/barra_ricerca"
         android:backgroundTint="#D3D3D3"
         android:textColor="@android:color/white"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="5dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="5dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

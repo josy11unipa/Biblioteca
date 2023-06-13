@@ -22,20 +22,34 @@ class HamburgerMenu:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding=MenuLayoutBinding.inflate(inflater)
         dbManager = DBManager(requireContext())
         dbManager.open()
+        val user=dbManager.getUser()
         val manager=parentFragmentManager
         val transaction=manager.beginTransaction()
         binding.buttonCronologia.setOnClickListener{
-            val user=dbManager.getUser()
+
             if(user.count !=0){
                 transaction.replace(R.id.fragmentMain,Cronologia_Fragment())
+                transaction.addToBackStack("crono")
                 transaction.commit()
             }else{
                 Log.i("LOG-Hamburger", "Effettua l'accesso per accedere alla cronologia")
                 Toast.makeText(requireContext(),"Effettua l'accesso per accedere alla cronologia", Toast.LENGTH_LONG).show()
             }
+        }
+        binding.buttonPrestiti.setOnClickListener{
+            if(user.count !=0) {
+                transaction.replace(R.id.fragmentMain, Prenotazioni_Fragment())
+                transaction.addToBackStack("prestiti")
+                transaction.commit()
+            }else{
+                Log.i("LOG-Hamburger", "Effettua l'accesso per accedere ai prestiti")
+                Toast.makeText(requireContext(),"Effettua l'accesso per accedere ai prestiti", Toast.LENGTH_LONG).show()
+            }
+
         }
         binding.button6.text= Profile_Fragment.isLogged.toString()
 

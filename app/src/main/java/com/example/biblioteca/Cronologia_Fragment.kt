@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.os.bundleOf
 
@@ -67,12 +68,12 @@ class Cronologia_Fragment:Fragment() {
                             }
                         })*/
                         val j=(response.body()?.get("queryset")as JsonArray)
-                        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(),2)
-                        val adapter= CustomAdapterLista(j)
-                        binding.recyclerView.adapter=adapter
+                        binding.recyclerViewCrono.layoutManager = LinearLayoutManager(requireContext())
+                        val adapter= CustomAdapterCrono(j)
+                        binding.recyclerViewCrono.adapter=adapter
 
                         adapter.setOnClickListener(object:
-                            CustomAdapterLista.OnClickListener {
+                            CustomAdapterCrono.OnClickListener {
                             override fun onClick(position: Int, model: JsonObject) {
                                 val oggetto: JsonObject = j.get(position) as JsonObject
                                 Toast.makeText(requireContext(),"Hai premuto: ${oggetto.get("titolo")}", Toast.LENGTH_LONG).show()
@@ -81,8 +82,8 @@ class Cronologia_Fragment:Fragment() {
                         })
 
 
-                        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                        binding.recyclerView.adapter = adapter
+                        binding.recyclerViewCrono.layoutManager = LinearLayoutManager(requireContext())
+                        binding.recyclerViewCrono.adapter = adapter
                     }
                 }
 

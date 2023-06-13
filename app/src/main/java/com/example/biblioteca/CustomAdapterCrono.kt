@@ -10,31 +10,23 @@ import com.example.biblioteca.home.CustomAdapterLista
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 
-class CustomAdapterCrono(private val element: JsonArray, private val listener: OnItemClickListener) :RecyclerView.Adapter<CustomAdapterCrono.ViewHolder>(){
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
-    }
-    class ViewHolder(binding: CardViewTabellaBinding, private val listener: OnItemClickListener) : RecyclerView.ViewHolder(binding.root) {
+class CustomAdapterCrono(private val element: JsonArray) :RecyclerView.Adapter<CustomAdapterCrono.ViewHolder>(){
+    private var onClickListener: OnClickListener?=null
+    class ViewHolder(binding: CardViewTabellaBinding) : RecyclerView.ViewHolder(binding.root) {
         val titolo = binding.titolo
         val dataI = binding.dataI
         val dataF = binding.dataF
         val consegna = binding.consegnato
+        val card=binding.cardViewT
 
-        init {
-            itemView.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    listener.onItemClick(position)
-                }
-            }
-        }
+
     }
 
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = CardViewTabellaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(view, listener)
+        return ViewHolder(view)
     }
 
 
@@ -50,6 +42,15 @@ class CustomAdapterCrono(private val element: JsonArray, private val listener: O
         holder.dataI.text="Data Ritiro:  "+oggetto.get("dataInizio").asString
         holder.dataF.text=oggetto.get("dataFine").asString
         holder.consegna.text=oggetto.get("consegnato").asString
+        holder.card.setOnClickListener{
+            onClickListener?.onClick(position,oggetto)
+        }
+    }
+    interface OnClickListener {
+        fun onClick(position: Int, model: JsonObject )
+    }
+    fun setOnClickListener(onClickListener:OnClickListener){
+        this.onClickListener = onClickListener
     }
 
 }

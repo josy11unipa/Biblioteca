@@ -23,6 +23,9 @@ interface UserAPI {
     @POST("postSelect/")
     @FormUrlEncoded
     fun getLibri(@Field("query") query : String): Call<JsonObject>
+    @POST("postSelect/")
+    @FormUrlEncoded
+    fun getValutazione(@Field("query") query : String): Call<JsonObject>
 
     @POST("postSelect/")
     @FormUrlEncoded

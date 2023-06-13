@@ -93,7 +93,7 @@
                 app:layout_constraintTop_toBottomOf="@id/linearLayout3">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/textValutazione"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lascia una valutazione"
@@ -104,7 +104,7 @@
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:isIndicator="true"
+                    android:isIndicator="false"
                     android:numStars="5"
                     android:progressBackgroundTint="#D2D2D2"
                     android:progressTint="#FBE236" />
@@ -120,6 +120,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+            <EditText
+                android:id="@+id/codice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="codice"
+                android:inputType="text"
+                android:textColorHint="#656363"
+                app:layout_constraintBottom_toTopOf="@+id/buttonConsegna"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonVota" />
 
             <Button
                 android:id="@+id/buttonConsegna"
