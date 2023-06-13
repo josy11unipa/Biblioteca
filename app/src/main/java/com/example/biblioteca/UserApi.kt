@@ -15,6 +15,10 @@ interface UserAPI {
     @FormUrlEncoded
     fun login(@Field("query") query : String): Call<JsonObject>
 
+    @POST("postSelect/")
+    @FormUrlEncoded
+    fun verificaCodice(@Field("query") query : String): Call<JsonObject>
+
     @POST("postInsert/")
     @FormUrlEncoded
     fun register(@Field("query") query: String): Call<JsonObject>
@@ -23,9 +27,7 @@ interface UserAPI {
     @POST("postSelect/")
     @FormUrlEncoded
     fun getLibri(@Field("query") query : String): Call<JsonObject>
-    @POST("postSelect/")
-    @FormUrlEncoded
-    fun getValutazione(@Field("query") query : String): Call<JsonObject>
+
 
     @POST("postSelect/")
     @FormUrlEncoded
@@ -36,7 +38,7 @@ interface UserAPI {
 
     @POST("postUpdate/")
     @FormUrlEncoded
-    fun modifica(@Field("query") query: String): Call<JsonObject>
+    fun modificaValutazione(@Field("query") query: String): Call<JsonObject>
 
     @GET
     fun getAvatar(@Url url: String) : Call<ResponseBody>

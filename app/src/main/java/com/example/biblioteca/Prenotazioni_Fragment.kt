@@ -40,7 +40,7 @@ class Prenotazioni_Fragment:Fragment() {
     }
 
     private fun getPrenotazioni(username: String?) {
-        val query="select prenotazione.id,prenotazione.codeConsegna,libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato,libro.anno,libro.genere,libro.autore,libro.copertina from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND '$username'=prenotazione.usernameU AND prenotazione.consegnato=0;"
+        val query="select prenotazione.id,prenotazione.codeConsegna,libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato,libro.anno,libro.genere,libro.autore,libro.copertina,libro.valutazione,libro.nValutazioni ,prenotazione.idL from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND '$username'=prenotazione.usernameU AND prenotazione.consegnato=0;"
         ClientNetwork.retrofit.getPrenotazione(query).enqueue(
             object : Callback<JsonObject> {
 
@@ -55,8 +55,19 @@ class Prenotazioni_Fragment:Fragment() {
                         adapter.setOnClickListener(object:
                             CustomAdapterPrenotazione.OnClickListener {
                             override fun onClick(position: Int, model: JsonObject) {
+                                val consegna=JsonObject()
+                                consegna.addProperty("titolo",model.get("titolo").asString)
+                                consegna.addProperty("autore",model.get("autore").asString)
+                                consegna.addProperty("anno",model.get("anno").asString)
+                                consegna.addProperty("genere",model.get("genere").asString)
+                                consegna.addProperty("codeConsegna",model.get("codeConsegna").asString)
+                                consegna.addProperty("copertina",model.get("copertina").asString)
+                                consegna.addProperty("id",model.get("id").asString)
+                                consegna.addProperty("idL",model.get("idL").asString)
+                                consegna.addProperty("valutazione",model.get("valutazione").asString)
+                                consegna.addProperty("nValutazioni",model.get("nValutazioni").asString)
                                 val manager=parentFragmentManager
-                                setFragmentResult("keyId", bundleOf("chiaveBundle" to model.toString() ))
+                                setFragmentResult("keyId", bundleOf("chiaveBundle" to consegna.toString() ))
                                 val transaction=manager.beginTransaction()
                                 transaction.replace(R.id.fragmentMain,Consegna_Fragment())
                                 transaction.addToBackStack("prenotazioni")

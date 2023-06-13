@@ -28,19 +28,23 @@ class Consegna_Fragment:Fragment() {
 
         binding= ConsegnaLayoutBinding.inflate(inflater)
         setFragmentResultListener("keyId") { requestKey, bundle ->
-            val prenotazione = bundle.getString("chiaveBundle")
-            Log.i("BUNDLE", "$prenotazione")
-            val prenotazioneS = JsonParser().parse(prenotazione) as JsonObject
-            val titolo=prenotazioneS.get("titolo").asString
-            val autore=prenotazioneS.get("autore").asString
+            val prenotazioneS = bundle.getString("chiaveBundle")
+            Log.i("BUNDLE", "$prenotazioneS")
+            val prenotazione = JsonParser().parse(prenotazioneS) as JsonObject
+            val titolo=prenotazione.get("titolo").asString
+            val idL=prenotazione.get("idL").asString
+            val autore=prenotazione.get("autore").asString
+            val valutazione=prenotazione.get("valutazione").asFloat
+            val nValutazioni=prenotazione.get("nValutazioni").asInt
+            val id=prenotazione.get("id").asInt
             binding.titolo1.text=titolo.toString()
-            binding.annop.text=prenotazioneS.get("anno").asString
-            binding.genere.text=prenotazioneS.get("genere").asString
+            binding.annop.text=prenotazione.get("anno").asString
+            binding.genere.text=prenotazione.get("genere").asString
             binding.autore.text=autore
-            val url: String = prenotazioneS.get("copertina").asString
+            val url: String = prenotazione.get("copertina").asString
             getImage(url)
             // val code=prenotazioneS.get("codeConsegna").asString  //codice di consegna
-            val id=prenotazioneS.get("id").asInt
+
 
             binding.buttonConsegna.setOnClickListener {
                 val codice = binding.codice.text.toString()
@@ -60,7 +64,7 @@ class Consegna_Fragment:Fragment() {
                     binding.buttonVota.visibility = View.GONE
                     binding.ratingBar.setIsIndicator(true)
                     Toast.makeText(requireContext(), "hai valutato : $rating", Toast.LENGTH_LONG).show()
-                    registraValutazione(rating,titolo,autore)
+                    registraValutazione(idL,rating,valutazione,nValutazioni)
 
                 }
             }
@@ -68,19 +72,40 @@ class Consegna_Fragment:Fragment() {
         return binding.root
     }
 
-    private fun registraValutazione(rating: Float, titolo: String?, autore: String?) {
+    private fun registraValutazione(idL: String?, nuovaValutazione: Float, valutazione: Float, nValutazioni: Int) {
+        val media= ((valutazione*nValutazioni)+nuovaValutazione)/(nValutazioni+1)
+        val query="UPDATE libro SET valutazione=$media,nValutazioni=${nValutazioni+1} WHERE libro.id=$idL;"
+
+        ClientNetwork.retrofit.modificaValutazione(query).enqueue(
+            object :Callback<JsonObject>{
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    if(response.isSuccessful()){
+                        Log.i("VALUTAZIONE","VALUTAZIONE REGISTRATA")
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-Login_Fragment-onFailure", "Errore : ${t.message}")
+                }
+
+            }
+        )
 
     }
+
 
     private fun verificaCodice(id:Int,codice: String) {
         val query="SELECT * From prenotazione where prenotazione.id=$id and prenotazione.codeConsegna='$codice' ;"
 
-        ClientNetwork.retrofit.login(query).enqueue(
+        ClientNetwork.retrofit.verificaCodice(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if (response.isSuccessful){
                         if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
                             Toast.makeText(requireContext(),"libro consegnato",Toast.LENGTH_SHORT).show()
+                            binding.codice.visibility=View.GONE
+                            binding.buttonConsegna.visibility=View.GONE
+                            consegnaLibro(id)
 
 
                         }else {
@@ -95,13 +120,33 @@ class Consegna_Fragment:Fragment() {
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    Log.i("LOG-Login_Fragment-onFailure", "Errore : ${t.message}")
+                    Log.i("LOG-valutazione", "Errore : ${t.message}")
 
                 }
 
             })
 
     }
+
+    private fun consegnaLibro(id: Int) {
+        val query="UPDATE prenotazione SET consegnato=1 WHERE id=$id"
+        ClientNetwork.retrofit.modificaValutazione(query).enqueue(
+            object :Callback<JsonObject>{
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    if(response.isSuccessful){
+                        Log.i("TAG","consegnato")
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-consegna errore", "Errore : ${t.message}")
+
+                }
+
+            }
+        )
+    }
+
     private fun getImage(url: String) {
         ClientNetwork.retrofit.getAvatar(url).enqueue(
             object : Callback<ResponseBody> {
