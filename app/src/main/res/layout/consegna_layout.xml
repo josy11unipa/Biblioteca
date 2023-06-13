@@ -3,136 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/home">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="Consegna Libro"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:typeface="monospace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/home"
-            android:orientation="vertical"
-            android:paddingVertical="20dp">
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="codice"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="#979595"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.159" />
 
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/divider"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/copertina"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical"
-                android:paddingHorizontal="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/copertina">
-
-                <TextView
-                    android:id="@+id/titolo1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:text="TITOLO"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/autore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:text="Autore"
-                    android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/annop"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:text="Anno pubblicazione"
-                    android:textColor="#FFFFFF"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/genere"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:text="Genere"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout3">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lascia una valutazione"
-                    android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
-
-                <RatingBar
-                    android:id="@+id/ratingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:isIndicator="true"
-                    android:numStars="5"
-                    android:progressBackgroundTint="#D2D2D2"
-                    android:progressTint="#FBE236" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/buttonVota"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:background="@drawable/green_button"
-                android:text="Vota"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-            <Button
-                android:id="@+id/buttonConsegna"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:background="@drawable/green_button"
-                android:backgroundTint="@color/text"
-                android:text="Consegna"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonVota" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="196dp"
+        android:layout_height="62dp"
+        android:background="@drawable/green_button"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText"
+        app:layout_constraintVertical_bias="0.235" />
 </androidx.constraintlayout.widget.ConstraintLayout>
