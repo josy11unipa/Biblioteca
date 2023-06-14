@@ -49,7 +49,12 @@ class Prenotazioni_Fragment:Fragment() {
                     Log.i("TAG-prenotazione", "response=$username")
 
                     if (response.isSuccessful) {
+
                         val j = (response.body()?.get("queryset") as JsonArray)
+                        if(j.size()==0){
+                            binding.textView.visibility=View.VISIBLE
+                            binding.textView.text="Non hai prenotazioni in corso"
+                        }
                         val adapter=CustomAdapterPrenotazione(j)
 
                         adapter.setOnClickListener(object:

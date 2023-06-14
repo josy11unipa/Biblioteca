@@ -19,7 +19,7 @@ import com.google.zxing.BarcodeFormat
 
 class Profile_Fragment:Fragment() {
     companion object {
-        var isLogged: Boolean = false
+
         var usernameUtente :String =""
     }
 
@@ -66,7 +66,6 @@ class Profile_Fragment:Fragment() {
 
             transaction.replace(R.id.fragmentMain,Login_Fragment())
             transaction.commit()
-            isLogged=false
         }
         return binding.root
     }

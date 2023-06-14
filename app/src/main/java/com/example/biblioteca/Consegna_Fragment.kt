@@ -74,7 +74,7 @@ class Consegna_Fragment:Fragment() {
 
     private fun registraValutazione(idL: String?, nuovaValutazione: Float, valutazione: Float, nValutazioni: Int) {
         val media= ((valutazione*nValutazioni)+nuovaValutazione)/(nValutazioni+1)
-        val query="UPDATE libro SET valutazione=$media,nValutazioni=${nValutazioni+1} WHERE libro.id=$idL;"
+        val query="UPDATE libro SET valutazione=$media,nValutazioni=${nValutazioni+1},nCopie=nCopie+1 WHERE libro.id=$idL;"
 
         ClientNetwork.retrofit.modificaValutazione(query).enqueue(
             object :Callback<JsonObject>{
@@ -107,16 +107,10 @@ class Consegna_Fragment:Fragment() {
                             binding.buttonConsegna.visibility=View.GONE
                             consegnaLibro(id)
 
-
                         }else {
                             Toast.makeText(requireContext(),"codice errato",Toast.LENGTH_SHORT).show()
-
-
                         }
-                    }else{
-
                     }
-
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {

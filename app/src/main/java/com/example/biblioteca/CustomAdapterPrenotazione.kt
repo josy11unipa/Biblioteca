@@ -43,6 +43,7 @@ class CustomAdapterPrenotazione(private val element: JsonArray) :
         holder.dataI.text="Data Ritiro:  "+oggetto.get("dataInizio").asString
         holder.dataF.text="Data Consegna:  "+oggetto.get("dataFine").asString
         holder.consegna.text=oggetto.get("consegnato").asString
+
         holder.card.setOnClickListener {
             onClickListener?.onClick(position, oggetto)
         }

@@ -1,5 +1,6 @@
 package com.example.biblioteca
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.biblioteca.bibliotecario.Librarian_Fragment
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.database.LocalDBHelper
 import com.example.biblioteca.databinding.LibroLayoutBinding
@@ -17,6 +19,7 @@ class HamburgerMenu:Fragment() {
     private lateinit var binding: MenuLayoutBinding
     private lateinit var dbManager: DBManager
     private lateinit var user: LocalDBHelper
+    @SuppressLint("Range")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,6 +32,13 @@ class HamburgerMenu:Fragment() {
         val user=dbManager.getUser()
         val manager=parentFragmentManager
         val transaction=manager.beginTransaction()
+        if(user.count!=0 && user.getString(user.getColumnIndex("type"))=="A"){
+            binding.admin.visibility=View.VISIBLE
+            binding.admin.isClickable=true
+        }else{
+            binding.admin.visibility=View.GONE
+            binding.admin.isClickable=false
+        }
         binding.buttonCronologia.setOnClickListener{
 
             if(user.count !=0){
@@ -51,7 +61,14 @@ class HamburgerMenu:Fragment() {
             }
 
         }
-        binding.button6.text= Profile_Fragment.isLogged.toString()
+        binding.admin.setOnClickListener{
+            transaction.replace(R.id.fragmentMain,Librarian_Fragment())
+            transaction.addToBackStack("Librarian")
+            transaction.commit()
+        }
+
+
+
 
         return binding.root
     }

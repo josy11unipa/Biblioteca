@@ -5,12 +5,12 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 class LocalDBHelper(context: Context): SQLiteOpenHelper(context,
-    DaTABASE_NAME,null,
+    DATABASE_NAME,null,
     DATABASE_VERSION
 ) {
 
     companion object{
-        const val DaTABASE_NAME="LocalDB.db"
+        const val DATABASE_NAME="database.db"
         const val DATABASE_VERSION=1
         const val TABLE_NAME="localUser"
         const val USERNAME="username"
@@ -35,6 +35,7 @@ class LocalDBHelper(context: Context): SQLiteOpenHelper(context,
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
+
         db?.execSQL(DB_CREATE)
     }
 

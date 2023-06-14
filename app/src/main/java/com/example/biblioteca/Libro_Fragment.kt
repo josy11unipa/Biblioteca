@@ -70,8 +70,6 @@ class Libro_Fragment:Fragment() {
                                         var n = ((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject).get("nCopie").asInt
                                         Log.i("LOG-Login_Fragment-onResponse", "nCopie: $n")
                                         if(n>=1){
-                                            Log.i("LOG-Login_Fragment-onResponse", "n: $n")
-                                            Toast.makeText(requireContext(),"Puoi effettuare la prenotazione", Toast.LENGTH_LONG).show()
                                             alreadyTake(idL,user.getString(user.getColumnIndex("username")))
                                         }else{
                                             Log.i("LOG-Login_Fragment-onResponse", "Copie esaurite")
@@ -122,7 +120,7 @@ class Libro_Fragment:Fragment() {
         val currentDate = LocalDate.now()
         Log.i("LOG-alreadyTake", "LocalDate: $currentDate")
 
-        val query = "SELECT * FROM prenotazione WHERE '$idL' = idL AND '$usernameUtente' = usernameU AND '$currentDate' <= dataFine;"
+        val query = "SELECT * FROM prenotazione WHERE '$idL' = idL AND '$usernameUtente' = usernameU AND consegnato=0;"
         ClientNetwork.retrofit.login(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {

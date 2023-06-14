@@ -33,11 +33,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/qr_consegna"
+            android:id="@+id/consegna"
             android:layout_width="300dp"
             android:layout_height="200dp"
             android:background="@drawable/green_button"
-            android:text="Scansiona qr consegna"
+            android:text="lista consegne"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -1,10 +1,12 @@
 package com.example.biblioteca
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.example.biblioteca.bibliotecario.Librarian_Fragment
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var user:LocalDBHelper
 
 
+    @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

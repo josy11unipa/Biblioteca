@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.R
 import com.example.biblioteca.RequestLogin
+import com.example.biblioteca.bibliotecario.Librarian_Fragment
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.databinding.LoginLayoutBinding
 import com.google.gson.JsonArray
@@ -63,14 +64,17 @@ class Login_Fragment : Fragment() {
 
         return binding.root
     }
-    fun login(){
-        val fragmentmanager=parentFragmentManager
-        val transaction=fragmentmanager.beginTransaction()
-        transaction.replace(R.id.fragmentMain, Profile_Fragment())
+    fun login(tipo:String){
+        val fragmentmanager = parentFragmentManager
+        val transaction = fragmentmanager.beginTransaction()
+       if(tipo=="u") {
+
+           transaction.replace(R.id.fragmentMain, Profile_Fragment())
+
+       }else{
+           transaction.replace(R.id.fragmentMain,Librarian_Fragment())
+       }
         transaction.commit()
-
-
-        Profile_Fragment.isLogged=true
 
     }
     private fun loginUtente (requestLogin: RequestLogin){
@@ -83,9 +87,9 @@ class Login_Fragment : Fragment() {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     if (response.isSuccessful) {
-                        try{
-                            getUser((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject)
-                            login()
+
+                           val tipo= getUser((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject)
+                            login(tipo)
                             Log.i("LOG-Login_Fragment-onResponse", "LOGGATO")
 
                             //Profile_Fragment.isLogged=true
@@ -96,10 +100,7 @@ class Login_Fragment : Fragment() {
                                 Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
                                 Toast.makeText(requireContext(),"credenziali errate", Toast.LENGTH_LONG).show()
                             }
-                        }catch (e:Exception){
-                            Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
-                            Toast.makeText(requireContext(),"credenziali errate", Toast.LENGTH_LONG).show()
-                        }
+
 
                     }else{
                         Toast.makeText(requireContext(),"Inserisci le credenziali", Toast.LENGTH_LONG).show()
@@ -113,13 +114,14 @@ class Login_Fragment : Fragment() {
             }
         )
     }
-    private fun getUser(jsonObject: JsonObject){
+    private fun getUser(jsonObject: JsonObject):String{
         val username=jsonObject.get("username").asString
         val nome=jsonObject.get("nome").asString
         val cognome=jsonObject.get("cognome").asString
         val qr=jsonObject.get("qr").asString
         val type=jsonObject.get("type").asString
         dbManager.insert(username,nome,cognome,qr,type) //Test db locale
+        return type
     }
 
     private fun getImageProfilo(jsonObject: JsonObject){
