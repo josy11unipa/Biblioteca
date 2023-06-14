@@ -1,29 +1,18 @@
 package com.example.biblioteca
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Toast
-import androidx.core.os.bundleOf
-import com.example.biblioteca.bibliotecario.Librarian_Fragment
 import com.example.biblioteca.databinding.ActivityMainBinding
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.database.LocalDBHelper
+import com.example.biblioteca.home.HamburgerMenu
 import com.example.biblioteca.home.Home_Fragment
 import com.example.biblioteca.info.Info_Fragment
 import com.example.biblioteca.user.Login_Fragment
 import com.example.biblioteca.user.Profile_Fragment
 import com.example.biblioteca.user.Register_Fragment
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {

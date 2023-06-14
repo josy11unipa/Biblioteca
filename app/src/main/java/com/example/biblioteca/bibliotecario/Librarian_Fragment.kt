@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.biblioteca.CustomCaptureActivity
-import com.example.biblioteca.LibriDaConsegnare
 import com.example.biblioteca.R
 import com.example.biblioteca.databinding.LibrarianLayoutBinding
 import com.google.zxing.integration.android.IntentIntegrator
@@ -35,7 +34,7 @@ class Librarian_Fragment : Fragment() {
         binding.consegna.setOnClickListener{
             val manager=parentFragmentManager
             val transaction=manager.beginTransaction()
-            transaction.replace(R.id.fragmentMain,LibriDaConsegnare())
+            transaction.replace(R.id.fragmentMain, LibriDaConsegnare())
             transaction.addToBackStack("libri")
             transaction.commit()
         }

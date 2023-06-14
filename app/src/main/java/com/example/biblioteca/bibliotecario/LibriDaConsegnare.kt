@@ -1,4 +1,4 @@
-package com.example.biblioteca
+package com.example.biblioteca.bibliotecario
 
 import android.os.Bundle
 import android.util.Log
@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.biblioteca.bibliotecario.CustomAdapterBibliotecario
-import com.example.biblioteca.databinding.CardViewBibliotecarioBinding
+import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.databinding.DaConsegnareBinding
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject

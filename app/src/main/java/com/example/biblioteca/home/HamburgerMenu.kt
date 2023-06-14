@@ -1,4 +1,4 @@
-package com.example.biblioteca
+package com.example.biblioteca.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.biblioteca.Cronologia_Fragment
+import com.example.biblioteca.Prenotazioni_Fragment
+import com.example.biblioteca.R
 import com.example.biblioteca.bibliotecario.Librarian_Fragment
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.database.LocalDBHelper
-import com.example.biblioteca.databinding.LibroLayoutBinding
 import com.example.biblioteca.databinding.MenuLayoutBinding
-import com.example.biblioteca.user.Profile_Fragment
 
 class HamburgerMenu:Fragment() {
     private lateinit var binding: MenuLayoutBinding
@@ -42,7 +43,7 @@ class HamburgerMenu:Fragment() {
         binding.buttonCronologia.setOnClickListener{
 
             if(user.count !=0){
-                transaction.replace(R.id.fragmentMain,Cronologia_Fragment())
+                transaction.replace(R.id.fragmentMain, Cronologia_Fragment())
                 transaction.addToBackStack("crono")
                 transaction.commit()
             }else{

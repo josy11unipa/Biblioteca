@@ -1,6 +1,7 @@
 package com.example.biblioteca
 
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
@@ -9,7 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.example.biblioteca.database.DBManager
@@ -30,12 +34,20 @@ class Libro_Fragment:Fragment() {
     private lateinit var binding: LibroLayoutBinding
     private lateinit var dbManager: DBManager
     private lateinit var user: LocalDBHelper
+    val requestPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+        if (isGranted) {
+            Log.i("TAG", "Permission enabled")
+        } else {
+            Log.i("TAG", "Explain the reason")
+        }
+    }
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding=LibroLayoutBinding.inflate(inflater)
         dbManager = DBManager(requireContext())
         dbManager.open()
@@ -148,9 +160,12 @@ class Libro_Fragment:Fragment() {
 
     }
     private fun effettuaPrenotazione(idL: Int,usernameUtente:String){
+
         val currentDate = LocalDate.now()
         val dataFinePrestito = currentDate.plusDays(15)
         val codice=generaCodiceCasuale(usernameUtente,idL)
+        //val query = "INSERT INTO prenotazione (usernameU, dataInizio, dataFine, idL) VALUES ('$usernameUtente', '$currentDate', '$dataFinePrestito', '$idL');"
+
         val query = "INSERT INTO prenotazione (usernameU, dataInizio, dataFine, idL,codeConsegna) VALUES ('$usernameUtente', '$currentDate', '$dataFinePrestito', '$idL','$codice');"
         Log.i("LOG-effettuaPrenotazione", "QUERY: $query")
 
@@ -162,6 +177,8 @@ class Libro_Fragment:Fragment() {
                     if (response.isSuccessful) {
                         // Registrazione della prenotazione effettuata con successo
                         modCopie(idL)
+                       // setupPermission()
+
                         Toast.makeText(requireContext(), "Registrazione della prenotazione effettuata effettuata con successo", Toast.LENGTH_LONG).show()
                         Log.i("LOG-effettuaPrenotazione-onResponse", "Registrazione della prenotazione effettuata effettuata con successo")
                     } else {
@@ -213,5 +230,6 @@ class Libro_Fragment:Fragment() {
             .map { alfanumerico[random.nextInt(alfanumerico.size)] }
             .joinToString("")
     }
+
 
 }
