@@ -111,10 +111,8 @@ class Consegna_Fragment:Fragment() {
             object :Callback<JsonObject>{
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if(response.isSuccessful){
-                        binding.buttonConsegna.visibility=View.GONE
-                        binding.codice.visibility=View.GONE
                         binding.LinearLayoutValutazione.visibility=View.VISIBLE
-                        binding.LinearLayoutPosticipa.visibility=View.GONE
+                        binding.Layout1.visibility=View.GONE
                         Log.i("TAG","consegnato")
                     }
                 }
