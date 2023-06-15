@@ -1,9 +1,27 @@
 package com.example.biblioteca
 
+import NotificationScheduler
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.os.Build
+import android.os.Build.VERSION_CODES.O
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.biblioteca.databinding.ActivityMainBinding
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.database.LocalDBHelper
@@ -13,6 +31,7 @@ import com.example.biblioteca.info.Info_Fragment
 import com.example.biblioteca.user.Login_Fragment
 import com.example.biblioteca.user.Profile_Fragment
 import com.example.biblioteca.user.Register_Fragment
+import java.util.Calendar
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,13 +39,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dbManager: DBManager
     private lateinit var user:LocalDBHelper
 
-
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val home_binding = binding.tastoHome
         val info_binding = binding.tastoInfo
         val profile_bindng = binding.tastoUser
@@ -115,6 +133,8 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
+
     override fun onDestroy() {
         dbManager.close()
         super.onDestroy()
