@@ -15,6 +15,7 @@ import com.example.biblioteca.bibliotecario.Librarian_Fragment
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.database.LocalDBHelper
 import com.example.biblioteca.databinding.MenuLayoutBinding
+import com.example.biblioteca.user.ModPsw_Fragment
 
 class HamburgerMenu:Fragment() {
     private lateinit var binding: MenuLayoutBinding
@@ -68,7 +69,16 @@ class HamburgerMenu:Fragment() {
             transaction.commit()
         }
 
-
+        binding.modificaPassword.setOnClickListener {
+            if(user.count !=0) {
+                transaction.replace(R.id.fragmentMain, ModPsw_Fragment())
+                transaction.addToBackStack("ModPsw_Fragment")
+                transaction.commit()
+            }else{
+                Log.i("LOG-Hamburger", "Effettua l'accesso per accedere alla modifica della password")
+                Toast.makeText(requireContext(),"Effettua l'accesso per accedere alla modifica della password", Toast.LENGTH_LONG).show()
+            }
+        }
 
 
         return binding.root
