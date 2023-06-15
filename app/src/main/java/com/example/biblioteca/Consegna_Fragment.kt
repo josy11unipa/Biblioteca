@@ -93,8 +93,7 @@ class Consegna_Fragment:Fragment() {
                     if (response.isSuccessful){
                         if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
                             Toast.makeText(requireContext(),"libro consegnato",Toast.LENGTH_SHORT).show()
-                            binding.codice.visibility=View.GONE
-                            binding.buttonConsegna.visibility=View.GONE
+
                             consegnaLibro(id)
                         }else {
                             Toast.makeText(requireContext(),"codice errato",Toast.LENGTH_SHORT).show()
@@ -112,6 +111,11 @@ class Consegna_Fragment:Fragment() {
             object :Callback<JsonObject>{
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if(response.isSuccessful){
+                        binding.buttonConsegna.visibility=View.GONE
+                        binding.codice.visibility=View.GONE
+                        binding.LinearLayoutValutazione.visibility=View.VISIBLE
+                        binding.LinearLayoutPosticipa.visibility=View.GONE
+
                         Log.i("TAG","consegnato")
                     }
                 }

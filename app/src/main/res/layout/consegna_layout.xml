@@ -89,15 +89,16 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayoutVotazione"
+                android:id="@+id/linearLayoutConsegna"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="20dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutInfiLibro"
-                tools:layout_editor_absoluteX="0dp">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutInfiLibro">
 
                 <EditText
                     android:id="@+id/codice"
@@ -133,7 +134,7 @@
                 android:layout_marginVertical="20dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutVotazione">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutConsegna">
 
                 <TextView
                     android:id="@+id/textView6"
@@ -160,6 +161,7 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/LinearLayoutPosticipa">
 
                 <TextView
