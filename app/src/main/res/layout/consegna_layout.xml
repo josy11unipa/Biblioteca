@@ -128,6 +128,7 @@
                 android:ems="10"
                 android:hint="codice"
                 android:inputType="text"
+                android:textColor="#FFFFFF"
                 android:textColorHint="#656363"
                 app:layout_constraintBottom_toTopOf="@+id/buttonConsegna"
                 app:layout_constraintEnd_toEndOf="parent"

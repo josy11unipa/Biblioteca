@@ -38,11 +38,17 @@ class Cronologia_Fragment:Fragment() {
         binding= CronologiaLayoutBinding.inflate(inflater)
        val dbManager = DBManager(requireContext())
         dbManager.open()
+        val manager=parentFragmentManager
+        val transaction=manager.beginTransaction()
         val cursor=dbManager.getUser()
         val username = cursor.getString(cursor.getColumnIndex("username"))
         getCrono(username)
 
-
+        binding.button.setOnClickListener{
+            transaction.replace(R.id.fragmentMain, Prenotazioni_Fragment())
+            transaction.addToBackStack("prenotazioni")
+            transaction.commit()
+        }
         return binding.root
     }
 

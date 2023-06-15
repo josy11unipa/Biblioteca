@@ -1,7 +1,7 @@
 package com.example.biblioteca
 
+import NotificationScheduler
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
@@ -12,14 +12,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.database.LocalDBHelper
 import com.example.biblioteca.databinding.LibroLayoutBinding
-import com.example.biblioteca.user.Profile_Fragment
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import java.time.LocalDate
@@ -34,6 +31,7 @@ class Libro_Fragment:Fragment() {
     private lateinit var binding: LibroLayoutBinding
     private lateinit var dbManager: DBManager
     private lateinit var user: LocalDBHelper
+    private lateinit var notificationScheduler: NotificationScheduler
     val requestPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
         if (isGranted) {
             Log.i("TAG", "Permission enabled")
@@ -47,7 +45,6 @@ class Libro_Fragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding=LibroLayoutBinding.inflate(inflater)
         dbManager = DBManager(requireContext())
         dbManager.open()
@@ -163,7 +160,13 @@ class Libro_Fragment:Fragment() {
 
         val currentDate = LocalDate.now()
         val dataFinePrestito = currentDate.plusDays(15)
-        val codice=generaCodiceCasuale(usernameUtente,idL)
+        val anno=dataFinePrestito.year
+        val mese=dataFinePrestito.monthValue
+        val giorno=dataFinePrestito.dayOfMonth
+
+        crea_Notifica(anno,mese,giorno)
+        val codice=generaCodiceCasuale(usernameUtente,giorno)
+
         //val query = "INSERT INTO prenotazione (usernameU, dataInizio, dataFine, idL) VALUES ('$usernameUtente', '$currentDate', '$dataFinePrestito', '$idL');"
 
         val query = "INSERT INTO prenotazione (usernameU, dataInizio, dataFine, idL,codeConsegna) VALUES ('$usernameUtente', '$currentDate', '$dataFinePrestito', '$idL','$codice');"
@@ -222,9 +225,16 @@ class Libro_Fragment:Fragment() {
 
     }
 
-    private fun generaCodiceCasuale(user:String,idL :Int):String{
-        val random = Random(user.hashCode() + idL)
-        val dimensione=user.length*idL
+    private fun crea_Notifica(anno:Int, mese: Int, giorno:Int){
+        notificationScheduler = NotificationScheduler(requireContext())
+        notificationScheduler.registerNotificationReceiver()
+        notificationScheduler.scheduleNotification(anno,mese,giorno)
+
+    }
+
+    private fun generaCodiceCasuale(user:String,giorno :Int):String{
+        val random = Random(user.hashCode() + giorno)
+        val dimensione=user.length*giorno
         val alfanumerico = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         return (1..dimensione.coerceAtMost(5))
             .map { alfanumerico[random.nextInt(alfanumerico.size)] }
