@@ -54,34 +54,28 @@ class Login_Fragment : Fragment() {
                 Toast.makeText(requireContext(),"Inserisci le credenziali", Toast.LENGTH_LONG).show()
             }
         }
-
         binding.button4.setOnClickListener{
             val fragmentmanager=parentFragmentManager
             val transaction=fragmentmanager.beginTransaction()
             transaction.replace(R.id.fragmentMain, Register_Fragment())
             transaction.commit()
         }
-
         return binding.root
     }
     fun login(tipo:String){
         val fragmentmanager = parentFragmentManager
         val transaction = fragmentmanager.beginTransaction()
        if(tipo=="u") {
-
            transaction.replace(R.id.fragmentMain, Profile_Fragment())
-
        }else{
            transaction.replace(R.id.fragmentMain,Librarian_Fragment())
        }
         transaction.commit()
-
     }
     private fun loginUtente (requestLogin: RequestLogin){
 
         val query = "select * from persona where username = '${requestLogin.username}' and password = '${requestLogin.password}';"
         Log.i("LOG-Login_Fragment", "Query creata:$query ")
-
         ClientNetwork.retrofit.login(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
@@ -90,17 +84,12 @@ class Login_Fragment : Fragment() {
                            val tipo= getUser((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject)
                             login(tipo)
                             Log.i("LOG-Login_Fragment-onResponse", "LOGGATO")
-
-                            //Profile_Fragment.isLogged=true
-
                             if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
                                 //Log.i("LOG-Login_Fragment-onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
                             } else {
                                 Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
                                 Toast.makeText(requireContext(),"credenziali errate", Toast.LENGTH_LONG).show()
                             }
-
-
                     }else{
                         Toast.makeText(requireContext(),"Errore nelle credenziali", Toast.LENGTH_LONG).show()
                         Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
