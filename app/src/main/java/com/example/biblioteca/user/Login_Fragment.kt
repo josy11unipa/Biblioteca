@@ -84,12 +84,6 @@ class Login_Fragment : Fragment() {
                            val tipo= getUser((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject)
                             login(tipo)
                             Log.i("LOG-Login_Fragment-onResponse", "LOGGATO")
-                            if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
-                                //Log.i("LOG-Login_Fragment-onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
-                            } else {
-                                Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
-                                Toast.makeText(requireContext(),"credenziali errate", Toast.LENGTH_LONG).show()
-                            }
                     }else{
                         Toast.makeText(requireContext(),"Errore nelle credenziali", Toast.LENGTH_LONG).show()
                         Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
