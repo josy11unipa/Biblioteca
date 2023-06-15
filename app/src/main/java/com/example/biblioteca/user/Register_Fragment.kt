@@ -50,7 +50,7 @@ class Register_Fragment: Fragment() {
         return binding.root
     }
 
-    private fun registerUtente(registerRequest: RequestRegister) {
+    private fun registerUtente(registerRequest: RequestRegister) {//METTERE IL CONTROLLO SULL'UNICITà DELL'USERNAME
         if (registerRequest.password1 != registerRequest.password2) {
             // Le due password non corrispondono
             Toast.makeText(requireContext(), "Le password non corrispondono", Toast.LENGTH_LONG).show()
