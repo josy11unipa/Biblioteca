@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity() {
 
         info_binding.setOnClickListener{
             val transaction = manager.beginTransaction()
-            dbManager.delete()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
             if(verifica is Info_Fragment) {
             }else{

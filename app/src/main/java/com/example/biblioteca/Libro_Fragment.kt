@@ -25,6 +25,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalTime
 import kotlin.random.Random
 
 class Libro_Fragment:Fragment() {
@@ -159,13 +160,14 @@ class Libro_Fragment:Fragment() {
     private fun effettuaPrenotazione(idL: Int,usernameUtente:String){
 
         val currentDate = LocalDate.now()
+        val minuti= LocalTime.now().minute
         val dataFinePrestito = currentDate.plusDays(15)
         val anno=dataFinePrestito.year
         val mese=dataFinePrestito.monthValue
         val giorno=dataFinePrestito.dayOfMonth
 
         crea_Notifica(anno,mese,giorno)
-        val codice=generaCodiceCasuale(usernameUtente,giorno)
+        val codice=generaCodiceCasuale(usernameUtente,minuti)
 
         //val query = "INSERT INTO prenotazione (usernameU, dataInizio, dataFine, idL) VALUES ('$usernameUtente', '$currentDate', '$dataFinePrestito', '$idL');"
 
@@ -228,9 +230,9 @@ class Libro_Fragment:Fragment() {
 
     }
 
-    private fun generaCodiceCasuale(user:String,giorno :Int):String{
-        val random = Random(user.hashCode() + giorno)
-        val dimensione=user.length*giorno
+    private fun generaCodiceCasuale(user:String,minuto :Int):String{
+        val random = Random(user.hashCode() + minuto)
+        val dimensione=user.length*minuto
         val alfanumerico = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         return (1..dimensione.coerceAtMost(5))
             .map { alfanumerico[random.nextInt(alfanumerico.size)] }

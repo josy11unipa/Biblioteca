@@ -54,7 +54,7 @@ class Cronologia_Fragment:Fragment() {
 
     private fun getCrono(username:String){
 
-        val query="select libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND '$username'=prenotazione.usernameU;"
+        val query="select libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND '$username'=prenotazione.usernameU Order by prenotazione.dataFine;"
         ClientNetwork.retrofit.getCronologia(query).enqueue(
             object : Callback<JsonObject> {
 
@@ -77,17 +77,6 @@ class Cronologia_Fragment:Fragment() {
                         binding.recyclerViewCrono.layoutManager = LinearLayoutManager(requireContext())
                         val adapter= CustomAdapterCrono(j)
                         binding.recyclerViewCrono.adapter=adapter
-
-                        adapter.setOnClickListener(object:
-                            CustomAdapterCrono.OnClickListener {
-                            override fun onClick(position: Int, model: JsonObject) {
-                                val oggetto: JsonObject = j.get(position) as JsonObject
-                                Toast.makeText(requireContext(),"Hai premuto: ${oggetto.get("titolo")}", Toast.LENGTH_LONG).show()
-                                Log.i("TAG-OGGETTO CLICCATO", "OGGETTO CLICCATO: $oggetto")
-                            }
-                        })
-
-
                         binding.recyclerViewCrono.layoutManager = LinearLayoutManager(requireContext())
                         binding.recyclerViewCrono.adapter = adapter
                     }

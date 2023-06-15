@@ -51,13 +51,13 @@ class NotificationScheduler(private val context: Context) {
         }
     }
 
-    fun scheduleNotification(min: Int, mese: Int, giorno: Int) {
+    fun scheduleNotification(anno: Int, mese: Int, giorno: Int) {
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.YEAR, 2023)
-        calendar.set(Calendar.MONTH, 5)
-        calendar.set(Calendar.DAY_OF_MONTH, 15)
+        calendar.set(Calendar.YEAR, anno)
+        calendar.set(Calendar.MONTH, mese)
+        calendar.set(Calendar.DAY_OF_MONTH, giorno)
         calendar.set(Calendar.HOUR_OF_DAY, 13)
-        calendar.set(Calendar.MINUTE, 2)
+        calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
 
         val intent = Intent(ACTION_SHOW_NOTIFICATION)
@@ -75,10 +75,6 @@ class NotificationScheduler(private val context: Context) {
     fun registerNotificationReceiver() {
         val filter = IntentFilter(ACTION_SHOW_NOTIFICATION)
         context.registerReceiver(notificationReceiver, filter)
-    }
-
-    fun unregisterNotificationReceiver() {
-        context.unregisterReceiver(notificationReceiver)
     }
 
     private fun createNotificationChannel() {

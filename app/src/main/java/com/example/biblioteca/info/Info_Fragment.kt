@@ -20,7 +20,7 @@ class Info_Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = InfoLayoutBinding.inflate(inflater)
-        val uri="https://www.google.com/maps/dir//Viale+delle+Scienze,+8,+90128+Palermo+PA/@38.1051203,13.3454843,17z/data=!4m8!4m7!1m0!1m5!1m1!1s0x1319ef7a384ba497:0x8fcd066cfdddd06f!2m2!1d13.3480592!2d38.1051203?entry=ttu"
+        val uri="geo:38.1051203,13.3454843?q=Viale+delle+Scienze,+8,+90128+Palermo+PA"
         binding.buttonMaps.setOnClickListener{
             val i = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
             startActivity(i)

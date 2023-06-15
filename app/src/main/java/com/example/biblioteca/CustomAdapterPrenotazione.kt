@@ -8,6 +8,7 @@ import com.example.biblioteca.databinding.CardViewTabellaBinding
 import com.example.biblioteca.home.CustomAdapterLista
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import java.time.LocalDate
 
 class CustomAdapterPrenotazione(private val element: JsonArray) :
     RecyclerView.Adapter<CustomAdapterPrenotazione.ViewHolder>() {
@@ -42,7 +43,10 @@ class CustomAdapterPrenotazione(private val element: JsonArray) :
         holder.titolo.text=oggetto.get("titolo").asString
         holder.dataI.text="Data Ritiro:  "+oggetto.get("dataInizio").asString
         holder.dataF.text="Data Consegna:  "+oggetto.get("dataFine").asString
-        holder.consegna.text=oggetto.get("consegnato").asString
+        val oggi=LocalDate.now()
+        val dataF= LocalDate.parse(oggetto.get("dataFine").asString)
+        val differenza=dataF.toEpochDay()-oggi.toEpochDay()
+        holder.consegna.text="giorni rimanenti: $differenza"
 
         holder.card.setOnClickListener {
             onClickListener?.onClick(position, oggetto)

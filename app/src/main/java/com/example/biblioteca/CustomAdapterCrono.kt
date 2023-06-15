@@ -11,7 +11,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 
 class CustomAdapterCrono(private val element: JsonArray) :RecyclerView.Adapter<CustomAdapterCrono.ViewHolder>(){
-    private var onClickListener: OnClickListener?=null
+
     class ViewHolder(binding: CardViewTabellaBinding) : RecyclerView.ViewHolder(binding.root) {
         val titolo = binding.titolo
         val dataI = binding.dataI
@@ -41,16 +41,13 @@ class CustomAdapterCrono(private val element: JsonArray) :RecyclerView.Adapter<C
         holder.titolo.text=oggetto.get("titolo").asString
         holder.dataI.text="Data Ritiro:  "+oggetto.get("dataInizio").asString
         holder.dataF.text=oggetto.get("dataFine").asString
-        holder.consegna.text=oggetto.get("consegnato").asString
-        holder.card.setOnClickListener{
-            onClickListener?.onClick(position,oggetto)
+        if(oggetto.get("consegnato").asInt==0) {
+            holder.consegna.text = "Prestito in corso"
+        }else{
+            holder.consegna.text="Consegnato"
         }
+
     }
-    interface OnClickListener {
-        fun onClick(position: Int, model: JsonObject )
-    }
-    fun setOnClickListener(onClickListener:OnClickListener){
-        this.onClickListener = onClickListener
-    }
+
 
 }
