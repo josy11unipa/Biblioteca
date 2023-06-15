@@ -86,8 +86,7 @@ class Login_Fragment : Fragment() {
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
-                    if (response.isSuccessful) {
-
+                    if (response.isSuccessful && (response.body()?.get("queryset") as JsonArray).size() == 1) {
                            val tipo= getUser((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject)
                             login(tipo)
                             Log.i("LOG-Login_Fragment-onResponse", "LOGGATO")
@@ -103,7 +102,7 @@ class Login_Fragment : Fragment() {
 
 
                     }else{
-                        Toast.makeText(requireContext(),"Inserisci le credenziali", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(),"Errore nelle credenziali", Toast.LENGTH_LONG).show()
                         Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
                     }
                 }

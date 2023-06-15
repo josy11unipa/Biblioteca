@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".Cronologia_Fragment">
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:textColor="#FBE236"
+        android:textSize="20sp"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recyclerViewCrono" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCrono"
         android:layout_width="match_parent"

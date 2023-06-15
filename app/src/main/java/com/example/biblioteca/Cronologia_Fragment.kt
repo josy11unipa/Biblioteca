@@ -63,6 +63,12 @@ class Cronologia_Fragment:Fragment() {
                     Log.i("TAG-CRONOLOGIA", "response=$username")
 
                     if (response.isSuccessful) {
+
+                        val j = (response.body()?.get("queryset") as JsonArray)
+                        if(j.size()==0){
+                            binding.textView5.visibility=View.VISIBLE
+                            binding.textView5.text="Non hai prenotazioni in corso"
+                        }
                         /*val crono = (response.body()?.get("queryset") as JsonArray)
                         val adapter = CustomAdapterCrono(crono, object : CustomAdapterCrono.OnItemClickListener {
                             override fun onItemClick(position: Int) {
@@ -73,7 +79,6 @@ class Cronologia_Fragment:Fragment() {
 
                             }
                         })*/
-                        val j=(response.body()?.get("queryset")as JsonArray)
                         binding.recyclerViewCrono.layoutManager = LinearLayoutManager(requireContext())
                         val adapter= CustomAdapterCrono(j)
                         binding.recyclerViewCrono.adapter=adapter

@@ -79,8 +79,6 @@ class HamburgerMenu:Fragment() {
                 Toast.makeText(requireContext(),"Effettua l'accesso per accedere alla modifica della password", Toast.LENGTH_LONG).show()
             }
         }
-
-
         return binding.root
     }
 }
