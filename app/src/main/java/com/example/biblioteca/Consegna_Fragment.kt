@@ -115,7 +115,6 @@ class Consegna_Fragment:Fragment() {
                         binding.codice.visibility=View.GONE
                         binding.LinearLayoutValutazione.visibility=View.VISIBLE
                         binding.LinearLayoutPosticipa.visibility=View.GONE
-
                         Log.i("TAG","consegnato")
                     }
                 }
