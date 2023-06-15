@@ -50,6 +50,8 @@ class Consegna_Fragment:Fragment() {
                 val codice = binding.codice.text.toString()
                 if (codice != "") {
                     verificaCodice(id, codice)
+                    //incrementaCopie(idL.toInt())
+
                 }else{
                     Toast.makeText(requireContext(),"inserisci il codice",Toast.LENGTH_LONG).show()
                 }
@@ -83,14 +85,12 @@ class Consegna_Fragment:Fragment() {
                         Log.i("VALUTAZIONE","VALUTAZIONE REGISTRATA")
                     }
                 }
-
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     Log.i("LOG-Login_Fragment-onFailure", "Errore : ${t.message}")
                 }
 
             }
         )
-
     }
 
 
@@ -112,14 +112,10 @@ class Consegna_Fragment:Fragment() {
                         }
                     }
                 }
-
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     Log.i("LOG-valutazione", "Errore : ${t.message}")
-
                 }
-
             })
-
     }
 
     private fun consegnaLibro(id: Int) {
@@ -131,12 +127,9 @@ class Consegna_Fragment:Fragment() {
                         Log.i("TAG","consegnato")
                     }
                 }
-
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     Log.i("LOG-consegna errore", "Errore : ${t.message}")
-
                 }
-
             }
         )
     }
@@ -161,4 +154,26 @@ class Consegna_Fragment:Fragment() {
             }
         )
     }
+
+    /*private fun incrementaCopie(idl:Int){
+        val query = "UPDATE libro SET nCopie = nCopie + 1 WHERE id = $idl"
+
+        ClientNetwork.retrofit.register(query).enqueue(
+            object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    Log.i("LOG-incrementaCopie-onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                    Log.i("LOG-incrementaCopie-onResponse", "Response be like: ${response.body()}")
+                    if (response.isSuccessful) {
+                        Log.i("LOG-incrementaCopie-onResponse", "Incremento delle copie effettuata effettuata con successo")
+                    } else {
+                        Log.i("LOG-incrementaCopie-onResponse", "Errore durante l'incremento delle copie")
+                    }
+                }
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-incrementaCopie-onFailure", "Errore durante  l'incremento delle copie: ${t.message}")
+                    Toast.makeText(requireContext(), "Errore durante  l'incremento delle copie: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+    }*/
 }

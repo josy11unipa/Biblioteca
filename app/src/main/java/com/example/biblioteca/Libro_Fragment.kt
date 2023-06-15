@@ -213,16 +213,12 @@ class Libro_Fragment:Fragment() {
                         Log.i("LOG-modCopie-onResponse", "Errore durante la diminuzione delle copie")
                     }
                 }
-
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     Log.i("LOG-modCopie-onFailure", "Errore durante la diminuzione delle copie: ${t.message}")
                     Toast.makeText(requireContext(), "Errore durante la diminuzione delle copie: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
-
             }
         )
-
-
     }
 
     private fun crea_Notifica(anno:Int, mese: Int, giorno:Int){
