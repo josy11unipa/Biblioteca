@@ -61,7 +61,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/copertina" />
 
             <LinearLayout
-                android:id="@+id/linearLayout3"
+                android:id="@+id/linearLayoutInfiLibro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -126,7 +126,7 @@
                 android:paddingVertical="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutInfiLibro">
 
                 <TextView
                     android:id="@+id/descrizione"
