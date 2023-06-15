@@ -31,15 +31,7 @@ import kotlin.random.Random
 class Libro_Fragment:Fragment() {
     private lateinit var binding: LibroLayoutBinding
     private lateinit var dbManager: DBManager
-    private lateinit var user: LocalDBHelper
     private lateinit var notificationScheduler: NotificationScheduler
-    val requestPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-        if (isGranted) {
-            Log.i("TAG", "Permission enabled")
-        } else {
-            Log.i("TAG", "Explain the reason")
-        }
-    }
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -158,32 +150,23 @@ class Libro_Fragment:Fragment() {
 
     }
     private fun effettuaPrenotazione(idL: Int,usernameUtente:String){
-
         val currentDate = LocalDate.now()
         val minuti= LocalTime.now().minute
         val dataFinePrestito = currentDate.plusDays(15)
         val anno=dataFinePrestito.year
         val mese=dataFinePrestito.monthValue
         val giorno=dataFinePrestito.dayOfMonth
-
         crea_Notifica(anno,mese,giorno)
         val codice=generaCodiceCasuale(usernameUtente,minuti)
-
-        //val query = "INSERT INTO prenotazione (usernameU, dataInizio, dataFine, idL) VALUES ('$usernameUtente', '$currentDate', '$dataFinePrestito', '$idL');"
-
         val query = "INSERT INTO prenotazione (usernameU, dataInizio, dataFine, idL,codeConsegna) VALUES ('$usernameUtente', '$currentDate', '$dataFinePrestito', '$idL','$codice');"
         Log.i("LOG-effettuaPrenotazione", "QUERY: $query")
-
         ClientNetwork.retrofit.register(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     Log.i("LOG-effettuaPrenotazione-onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     Log.i("LOG-effettuaPrenotazione-onResponse", "Response be like: ${response.body()}")
                     if (response.isSuccessful) {
-                        // Registrazione della prenotazione effettuata con successo
                         modCopie(idL)
-                       // setupPermission()
-
                         Toast.makeText(requireContext(), "Registrazione della prenotazione effettuata effettuata con successo", Toast.LENGTH_LONG).show()
                         Log.i("LOG-effettuaPrenotazione-onResponse", "Registrazione della prenotazione effettuata effettuata con successo")
                     } else {

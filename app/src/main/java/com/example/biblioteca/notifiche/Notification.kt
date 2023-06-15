@@ -11,7 +11,6 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -32,7 +31,7 @@ class NotificationScheduler(private val context: Context) {
                 val notification = NotificationCompat.Builder(context!!, CHANNEL_ID)
                     .setContentTitle("Consegna libro prevista per domani")
                     .setContentText("Se vuoi posticipare la data di consegna entra nell'app\n nella sezione prestiti in corso")
-                    .setSmallIcon(R.drawable.home_icon)
+                    .setSmallIcon(R.drawable.icona)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .build()
 
@@ -50,7 +49,6 @@ class NotificationScheduler(private val context: Context) {
             }
         }
     }
-
     fun scheduleNotification(anno: Int, mese: Int, giorno: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, anno)
@@ -68,7 +66,7 @@ class NotificationScheduler(private val context: Context) {
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
 
-        Toast.makeText(context, "Notification scheduled", Toast.LENGTH_SHORT).show()
+       // Toast.makeText(context, "Notification scheduled", Toast.LENGTH_SHORT).show()
     }
 
 

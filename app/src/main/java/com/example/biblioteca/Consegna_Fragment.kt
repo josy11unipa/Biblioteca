@@ -25,7 +25,6 @@ class Consegna_Fragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding= ConsegnaLayoutBinding.inflate(inflater)
         setFragmentResultListener("keyId") { requestKey, bundle ->
             val prenotazioneS = bundle.getString("chiaveBundle")
@@ -43,15 +42,10 @@ class Consegna_Fragment:Fragment() {
             binding.autore.text=autore
             val url: String = prenotazione.get("copertina").asString
             getImage(url)
-            // val code=prenotazioneS.get("codeConsegna").asString  //codice di consegna
-
-
             binding.buttonConsegna.setOnClickListener {
                 val codice = binding.codice.text.toString()
                 if (codice != "") {
                     verificaCodice(id, codice)
-                    //incrementaCopie(idL.toInt())
-
                 }else{
                     Toast.makeText(requireContext(),"inserisci il codice",Toast.LENGTH_LONG).show()
                 }
@@ -60,24 +54,20 @@ class Consegna_Fragment:Fragment() {
                 val rating = binding.ratingBar.rating
                 if(rating==0.0f){
                     Toast.makeText(requireContext(),"dai una valutazione",Toast.LENGTH_LONG).show()
-
                 }else {
                     binding.textValutazione.text = "Grazie per aver lasciato una valutazione a questo libro"
                     binding.buttonVota.visibility = View.GONE
                     binding.ratingBar.setIsIndicator(true)
                     Toast.makeText(requireContext(), "hai valutato : $rating", Toast.LENGTH_LONG).show()
                     registraValutazione(idL,rating,valutazione,nValutazioni)
-
                 }
             }
         }
         return binding.root
     }
-
     private fun registraValutazione(idL: String?, nuovaValutazione: Float, valutazione: Float, nValutazioni: Int) {
         val media= ((valutazione*nValutazioni)+nuovaValutazione)/(nValutazioni+1)
         val query="UPDATE libro SET valutazione=$media,nValutazioni=${nValutazioni+1},nCopie=nCopie+1 WHERE libro.id=$idL;"
-
         ClientNetwork.retrofit.modificaValutazione(query).enqueue(
             object :Callback<JsonObject>{
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
@@ -106,7 +96,6 @@ class Consegna_Fragment:Fragment() {
                             binding.codice.visibility=View.GONE
                             binding.buttonConsegna.visibility=View.GONE
                             consegnaLibro(id)
-
                         }else {
                             Toast.makeText(requireContext(),"codice errato",Toast.LENGTH_SHORT).show()
                         }
@@ -117,7 +106,6 @@ class Consegna_Fragment:Fragment() {
                 }
             })
     }
-
     private fun consegnaLibro(id: Int) {
         val query="UPDATE prenotazione SET consegnato=1 WHERE id=$id"
         ClientNetwork.retrofit.modificaValutazione(query).enqueue(
@@ -149,7 +137,6 @@ class Consegna_Fragment:Fragment() {
                     }
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    //Toast.makeText(requireContext(),"onFailure2", Toast.LENGTH_SHORT).show()
                 }
             }
         )
