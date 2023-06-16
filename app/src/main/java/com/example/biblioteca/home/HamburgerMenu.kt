@@ -15,6 +15,7 @@ import com.example.biblioteca.bibliotecario.Librarian_Fragment
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.database.LocalDBHelper
 import com.example.biblioteca.databinding.MenuLayoutBinding
+import com.example.biblioteca.user.ModDati_Fragment
 import com.example.biblioteca.user.ModPsw_Fragment
 
 class HamburgerMenu:Fragment() {
@@ -77,6 +78,16 @@ class HamburgerMenu:Fragment() {
             }else{
                 Log.i("LOG-Hamburger", "Effettua l'accesso per accedere alla modifica della password")
                 Toast.makeText(requireContext(),"Effettua l'accesso per accedere alla modifica della password", Toast.LENGTH_LONG).show()
+            }
+        }
+        binding.buttonModificaDati.setOnClickListener {
+            if(user.count !=0) {
+                transaction.replace(R.id.fragmentMain, ModDati_Fragment())
+                transaction.addToBackStack("ModificaDati_Fragment")
+                transaction.commit()
+            }else{
+                Log.i("LOG-Hamburger", "Effettua l'accesso per accedere alla modifica dei dati")
+                Toast.makeText(requireContext(),"Effettua l'accesso per accedere alla modifica dei dati", Toast.LENGTH_LONG).show()
             }
         }
         return binding.root
