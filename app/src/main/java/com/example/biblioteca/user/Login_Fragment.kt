@@ -85,7 +85,7 @@ class Login_Fragment : Fragment() {
                             login(tipo)
                             Log.i("LOG-Login_Fragment-onResponse", "LOGGATO")
                     }else{
-                        Toast.makeText(requireContext(),"Errore nelle credenziali", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(),"Credenziali errate", Toast.LENGTH_LONG).show()
                         Log.i("LOG-Login_Fragment-onResponse", "CREDENZIALI ERRATE")
                     }
                 }

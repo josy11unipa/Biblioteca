@@ -70,11 +70,11 @@ class Libro_Fragment:Fragment() {
                                     if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
                                         //Log.i("LOG-Login_Fragment-onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
                                         var n = ((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject).get("nCopie").asInt
-                                        Log.i("LOG-Login_Fragment-onResponse", "nCopie: $n")
+                                        Log.i("LOG-Libro_Fragment-onResponse", "nCopie: $n")
                                         if(n>=1){
                                             alreadyTake(idL,user.getString(user.getColumnIndex("username")))
                                         }else{
-                                            Log.i("LOG-Login_Fragment-onResponse", "Copie esaurite")
+                                            Log.i("LOG-Libro_Fragment-onResponse", "Copie esaurite")
                                         }
                                     }else {
                                         Log.i("LOG-Libro_Fragment-onResponse", "Copie non disponibili")
@@ -82,7 +82,7 @@ class Libro_Fragment:Fragment() {
                                     }
                                 }else{
                                     //Toast.makeText(requireContext(),"Errore richiestaDB", Toast.LENGTH_LONG).show()
-                                    Log.i("LOG-Login_Fragment-onResponse", "Errore richiestaDB")
+                                    Log.i("LOG-Libro_Fragment-onResponse", "Errore richiestaDB")
                                 }
                             }
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -91,6 +91,9 @@ class Libro_Fragment:Fragment() {
                             }
                         }
                     )
+                }else{
+                    Log.i("LOG-Libro_Fragment-onFailure", "Utente non autenticato")
+                    Toast.makeText(requireContext(), "Autenticati per prenotare", Toast.LENGTH_SHORT).show()
                 }
             }
         }

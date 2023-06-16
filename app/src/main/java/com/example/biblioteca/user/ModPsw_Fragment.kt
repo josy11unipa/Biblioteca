@@ -13,6 +13,7 @@ import com.example.biblioteca.R
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.databinding.ModPasswordBinding
 import com.example.biblioteca.home.HamburgerMenu
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,8 +42,8 @@ class ModPsw_Fragment: Fragment() {
                 nuovaPass1 = binding.campoNuovaPass1.text.toString()
                 nuovaPass2 = binding.campoNuovaPass2.text.toString()
                 val user=dbManager.getUser()
+                verificaOldPsw(user.getString(user.getColumnIndex("username")),vecchiaPass, nuovaPass1, nuovaPass2)
 
-                modPws(user.getString(user.getColumnIndex("username")),vecchiaPass, nuovaPass1, nuovaPass2)
             }else{
                 Log.i("LOG-ModPsw_Fragment", "L'utente non ha inserito le credenziali di modifica password")
                 Toast.makeText(requireContext(),"Compila tutti i campi", Toast.LENGTH_LONG).show()
@@ -51,6 +52,35 @@ class ModPsw_Fragment: Fragment() {
         return binding.root
     }
 
+    private fun verificaOldPsw(username:String,oldPass:String, psw1:String, psw2:String){
+        val query="SELECT password FROM persona WHERE username='$username';"
+        Log.i("LOG-verificaOldPsw", "query= $query")
+        ClientNetwork.retrofit.oldPass(query).enqueue(
+            object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                    Log.i("onResponse", "Response be like: ${response.body()}")
+                    if (response.isSuccessful) {
+                        var n = ((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject).get("password").asString
+                        Log.i("LOG-verificaOldPsw-onResponse", "n= $n")
+                        if(oldPass==n){
+                            modPws(username,oldPass, psw1, psw2)
+                        }else{
+                            Toast.makeText(requireContext(), "Vecchia password errata", Toast.LENGTH_LONG).show()
+                            Log.i("LOG-verificaOldPsw-onResponse", "Vecchia password errata")
+                        }
+                    }else {
+                        Log.i("LOG-verificaOldPsw-onResponse", "Errore durante la verifica della vecchia password errata")
+                    }
+                }
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-verificaOldPsw-onFailure", "Errore durante la verifica della vecchia password: ${t.message}")
+                    Toast.makeText(requireContext(), "Errore durante la verifica della vecchia password", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+
+    }
     private fun modPws(username:String,oldPassword:String, psw1:String, psw2:String) {
         if (psw1 != psw2) {
             // Le due password non corrispondono
@@ -62,6 +92,7 @@ class ModPsw_Fragment: Fragment() {
             Log.i("LOG-Login_Fragment", "La nuova password non puo' corrispondere alla vecchia password")
             return
         }
+
         val query = "UPDATE persona SET password = '$psw1' WHERE username = '$username' AND password = '$oldPassword';"
         Log.i("LOG-Register_Fragment", "Insert creata: $query")
 
@@ -79,8 +110,8 @@ class ModPsw_Fragment: Fragment() {
                         transaction.replace(R.id.fragmentMain, HamburgerMenu())
                         transaction.commit()
                     }else {
-                        Toast.makeText(requireContext(), "Vecchia password errata", Toast.LENGTH_LONG).show()
-                        Log.i("LOG-modPws-onResponse", "Vecchia password errata")
+                        Toast.makeText(requireContext(), "Errore durante la modifica della password", Toast.LENGTH_LONG).show()
+                        Log.i("LOG-modPws-onResponse", "Errore durante la modifica della password")
                     }
                 }
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
