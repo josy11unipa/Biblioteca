@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".user.ModDati_Fragment"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/profile_image_top"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/generic_user"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+    <EditText
+        android:id="@+id/campoPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="Password"
+        android:padding="8dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#9C9C9C" />
+    <EditText
+        android:id="@+id/campoNuovoNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="Nuovo nome"
+        android:padding="8dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#9C9C9C" />
+    <EditText
+        android:id="@+id/campoNuovoCognome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="Nuovo cognome"
+        android:padding="8dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#9C9C9C" />
+    <Button
+        android:id="@+id/button_conferma"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="Conferma" />
+</LinearLayout>

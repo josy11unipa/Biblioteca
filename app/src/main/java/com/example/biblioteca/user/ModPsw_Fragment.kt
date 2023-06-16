@@ -70,7 +70,7 @@ class ModPsw_Fragment: Fragment() {
                             Log.i("LOG-verificaOldPsw-onResponse", "Vecchia password errata")
                         }
                     }else {
-                        Log.i("LOG-verificaOldPsw-onResponse", "Errore durante la verifica della vecchia password errata")
+                        Log.i("LOG-verificaOldPsw-onResponse", "Errore durante la verifica della vecchia password")
                     }
                 }
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -85,11 +85,11 @@ class ModPsw_Fragment: Fragment() {
         if (psw1 != psw2) {
             // Le due password non corrispondono
             Toast.makeText(requireContext(), "Le password non corrispondono", Toast.LENGTH_LONG).show()
-            Log.i("LOG-Login_Fragment", "Le password non corrispondono")
+            Log.i("LOG-modPws", "Le password non corrispondono")
             return
         }else if(oldPassword==psw1){
             Toast.makeText(requireContext(), "La nuova password non puo' corrispondere alla vecchia password", Toast.LENGTH_LONG).show()
-            Log.i("LOG-Login_Fragment", "La nuova password non puo' corrispondere alla vecchia password")
+            Log.i("LOG-modPws", "La nuova password non puo' corrispondere alla vecchia password")
             return
         }
 
@@ -105,9 +105,10 @@ class ModPsw_Fragment: Fragment() {
                         // modifica password effettuata con successo
                         Toast.makeText(requireContext(), "Modifica password effettuata con successo", Toast.LENGTH_LONG).show()
                         Log.i("LOG-modPws-onResponse", "Modifica password effettuata con successo")
+                        dbManager.delete()
                         val fragmentmanager=parentFragmentManager
                         val transaction=fragmentmanager.beginTransaction()
-                        transaction.replace(R.id.fragmentMain, HamburgerMenu())
+                        transaction.replace(R.id.fragmentMain, Login_Fragment())
                         transaction.commit()
                     }else {
                         Toast.makeText(requireContext(), "Errore durante la modifica della password", Toast.LENGTH_LONG).show()
