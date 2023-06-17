@@ -52,11 +52,10 @@
                 android:fontFamily="monospace"
                 android:hint="Username"
                 android:inputType="text"
-                android:text="user"
                 android:textAlignment="textEnd"
                 android:textColor="@color/white"
                 android:textColorHighlight="#FBE236"
-                android:textColorHint="@color/white"
+                android:textColorHint="#B8B4B4"
                 android:textColorLink="#FBE236"
                 android:textCursorDrawable="@drawable/custom_cursor_layout" />
 
@@ -70,9 +69,8 @@
                 android:fontFamily="monospace"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:text="user"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="#B8B4B4"
                 android:textCursorDrawable="@drawable/custom_cursor_layout" />
 
         </LinearLayout>
