@@ -105,7 +105,6 @@ class Libro_Fragment:Fragment() {
                     }
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    //Toast.makeText(requireContext(),"onFailure2", Toast.LENGTH_SHORT).show()
                 }
             }
         )
@@ -123,20 +122,15 @@ class Libro_Fragment:Fragment() {
                     Log.i("LOG-alreadyTake", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     if (response.isSuccessful) {
                         if ((response.body()?.get("queryset") as JsonArray).size() >0) {
-                            Log.i("LOG-alreadyTake", "Hai già una prenotazione in corso per questo libro")
-                            Log.i("LOG-alreadyTake", "reponse.body: ${response.body()}")
                             Toast.makeText(requireContext(),"Hai già una prenotazione in corso per questo libro", Toast.LENGTH_LONG).show()
                         } else {
                             effettuaPrenotazione(idL,usernameUtente)
                         }
                     }else{
-                        //Toast.makeText(requireContext(),"Errore richiestaDB", Toast.LENGTH_LONG).show()
                         Log.i("LOG-Login_Fragment-onResponse", "Errore richiestaDB")
                     }
                 }
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    Log.i("LOG-Login_Fragment-onFailure", "Errore prenotazione: ${t.message}")
-                    Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
                 }
             }
         )
@@ -155,20 +149,14 @@ class Libro_Fragment:Fragment() {
         ClientNetwork.retrofit.register(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    Log.i("LOG-effettuaPrenotazione-onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
-                    Log.i("LOG-effettuaPrenotazione-onResponse", "Response be like: ${response.body()}")
                     if (response.isSuccessful) {
                         modCopie(idL)
                         Toast.makeText(requireContext(), "Registrazione della prenotazione effettuata effettuata con successo", Toast.LENGTH_LONG).show()
-                        Log.i("LOG-effettuaPrenotazione-onResponse", "Registrazione della prenotazione effettuata effettuata con successo")
                     } else {
                         Toast.makeText(requireContext(), "Errore durante la registrazione della prenotazione", Toast.LENGTH_LONG).show()
-                        Log.i("LOG-effettuaPrenotazione-onResponse", "Errore durante la registrazione della prenotazione")
                     }
                 }
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    Log.i("LOG-effettuaPrenotazione-onFailure", "Errore durante la registrazione: ${t.message}")
-                    Toast.makeText(requireContext(), "Errore durante la registrazione: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
 
             }
