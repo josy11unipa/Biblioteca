@@ -48,7 +48,7 @@ class Consegna_Fragment:Fragment() {
             binding.buttonConsegna.setOnClickListener {
                 val codice = binding.codice.text.toString()
                 if (codice != "") {
-                    verificaCodice(id, codice)
+                    verificaCodice(id, codice,idL)
                 }else{
                     Toast.makeText(requireContext(),"inserisci il codice",Toast.LENGTH_LONG).show()
                 }
@@ -96,7 +96,7 @@ class Consegna_Fragment:Fragment() {
 
     private fun registraValutazione(idL: String?, nuovaValutazione: Float, valutazione: Float, nValutazioni: Int) {
         val media= ((valutazione*nValutazioni)+nuovaValutazione)/(nValutazioni+1)
-        val query="UPDATE libro SET valutazione=$media,nValutazioni=${nValutazioni+1},nCopie=nCopie+1 WHERE libro.id=$idL;"
+        val query="UPDATE libro SET valutazione=$media,nValutazioni=${nValutazioni+1} WHERE libro.id=$idL;"
         ClientNetwork.retrofit.modificaValutazione(query).enqueue(
             object :Callback<JsonObject>{
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
@@ -113,7 +113,7 @@ class Consegna_Fragment:Fragment() {
     }
 
 
-    private fun verificaCodice(id:Int,codice: String) {
+    private fun verificaCodice(id:Int,codice: String,idL:String) {
         val query="SELECT * From prenotazione where prenotazione.id=$id and prenotazione.codeConsegna='$codice' ;"
 
         ClientNetwork.retrofit.verificaCodice(query).enqueue(
@@ -122,7 +122,7 @@ class Consegna_Fragment:Fragment() {
                     if (response.isSuccessful){
                         if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
                             Toast.makeText(requireContext(),"libro consegnato",Toast.LENGTH_SHORT).show()
-
+                            incrementa_copie(idL)
                             consegnaLibro(id)
                         }else {
                             Toast.makeText(requireContext(),"codice errato",Toast.LENGTH_SHORT).show()
@@ -147,6 +147,21 @@ class Consegna_Fragment:Fragment() {
                 }
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     Log.i("LOG-consegna errore", "Errore : ${t.message}")
+                }
+            }
+        )
+    }
+    private fun incrementa_copie(id: String) {
+        val query="UPDATE libro SET nCopie=nCopie+1 WHERE id=$id"
+        ClientNetwork.retrofit.incrementaCopie(query).enqueue(
+            object :Callback<JsonObject>{
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    if(response.isSuccessful){
+                        Log.i("TAG","copie incrementate")
+                    }
+                }
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-copie errore", "Errore : ${t.message}")
                 }
             }
         )

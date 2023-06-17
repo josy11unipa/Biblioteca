@@ -42,7 +42,9 @@ interface UserAPI {
     @POST("postUpdate/")
     @FormUrlEncoded
     fun modificaValutazione(@Field("query") query: String): Call<JsonObject>
-
+    @POST("postUpdate/")
+    @FormUrlEncoded
+    fun incrementaCopie(@Field("query") query: String): Call<JsonObject>
     @POST("postUpdate/")
     @FormUrlEncoded
     fun posticipa(@Field("query") query: String): Call<JsonObject>
