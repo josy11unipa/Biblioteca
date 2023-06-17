@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import com.example.biblioteca.databinding.InfoLayoutBinding
+
+//classe che gestisce il fragment riguardante le informazioni della biblioteca e relativa pressione del bottone
 
 class Info_Fragment : Fragment() {
 
@@ -25,7 +25,6 @@ class Info_Fragment : Fragment() {
             val i = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
             startActivity(i)
         }
-
         return binding.root
     }
 }

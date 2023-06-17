@@ -94,8 +94,7 @@ class ModPsw_Fragment: Fragment() {
         }
 
         val query = "UPDATE persona SET password = '$psw1' WHERE username = '$username' AND password = '$oldPassword';"
-        Log.i("LOG-Register_Fragment", "Insert creata: $query")
-
+        //query che effettua l'aggiornamento della password
         ClientNetwork.retrofit.register(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
@@ -105,7 +104,7 @@ class ModPsw_Fragment: Fragment() {
                         // modifica password effettuata con successo
                         Toast.makeText(requireContext(), "Modifica password effettuata con successo", Toast.LENGTH_LONG).show()
                         Log.i("LOG-modPws-onResponse", "Modifica password effettuata con successo")
-                        dbManager.delete()
+                        dbManager.delete()//pulisco il db locale e effettuo il logout dell'utente
                         val fragmentmanager=parentFragmentManager
                         val transaction=fragmentmanager.beginTransaction()
                         transaction.replace(R.id.fragmentMain, Login_Fragment())

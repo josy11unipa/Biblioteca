@@ -7,12 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.R
 import com.example.biblioteca.database.DBManager
-import com.example.biblioteca.databinding.ModPasswordBinding
-import com.example.biblioteca.home.HamburgerMenu
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -21,9 +18,8 @@ import retrofit2.Response
 import androidx.fragment.app.Fragment
 import com.example.biblioteca.databinding.ModDatiBinding
 
-
+//funzione che gestisce il fragment per la modifica dei dati
 class ModDati_Fragment :Fragment() {
-
     private lateinit var binding: ModDatiBinding
     var password =""
     var nuovoNome = ""
@@ -40,7 +36,7 @@ class ModDati_Fragment :Fragment() {
         dbManager.open()
         binding= ModDatiBinding.inflate(inflater)
 
-        binding.buttonConferma.setOnClickListener{
+        binding.buttonConferma.setOnClickListener{ //gestione evento pressione bottone di conferma
             if (binding.campoPass.text.toString() != "" && binding.campoNuovoNome.text.toString() != "" && binding.campoNuovoCognome.text.toString() != "") {
                 password = binding.campoPass.text.toString()
                 nuovoNome = binding.campoNuovoNome.text.toString()
@@ -56,9 +52,8 @@ class ModDati_Fragment :Fragment() {
         return binding.root
     }
 
-    private fun verificaPsw(username:String,pass:String, nuovoNome:String, nuovoCognome:String){
+    private fun verificaPsw(username:String,pass:String, nuovoNome:String, nuovoCognome:String){ //funzione che verifica la correttezza della password inserita
         val query="SELECT password FROM persona WHERE username='$username';"
-        Log.i("LOG-verificaPsw", "query= $query")
         ClientNetwork.retrofit.oldPass(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
@@ -66,8 +61,7 @@ class ModDati_Fragment :Fragment() {
                     Log.i("onResponse", "Response be like: ${response.body()}")
                     if (response.isSuccessful) {
                         var n = ((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject).get("password").asString
-                        Log.i("LOG-verificaPsw-onResponse", "n= $n")
-                        if(pass==n){
+                        if(pass==n){//se la password è corretta chiamo la funzione per modificare i dati
                             modDati(username, nuovoNome, nuovoCognome)
                         }else{
                             Toast.makeText(requireContext(), "Password errata", Toast.LENGTH_LONG).show()
@@ -83,18 +77,14 @@ class ModDati_Fragment :Fragment() {
                 }
             }
         )
-
     }
-    private fun modDati(username:String, nuovoNome:String, nuovoCognome:String) {
+    private fun modDati(username:String, nuovoNome:String, nuovoCognome:String) { //funzione che gestisce la modifica dei dati
         if (nuovoNome == nuovoCognome) {
-            // Le due password non corrispondono
             Toast.makeText(requireContext(), "Il nome e il cognome no possono corrispondere", Toast.LENGTH_LONG).show()
-            Log.i("LOG-modDati", "Nome e cognome uguali")
             return
         }
         val query = "UPDATE persona SET nome = '$nuovoNome', cognome = '$nuovoCognome' WHERE username = '$username';"
-        Log.i("LOG-modDati", "Insert creata: $query")
-
+        //query che effettua l'aggiornamento dei dati
         ClientNetwork.retrofit.register(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
@@ -103,8 +93,7 @@ class ModDati_Fragment :Fragment() {
                     if (response.isSuccessful) {
                         // modifica dati effettuata con successo
                         Toast.makeText(requireContext(), "Modifica dei dati effettuata con successo", Toast.LENGTH_LONG).show()
-                        Log.i("LOG-modDati-onResponse", "Modifica dei dati effettuata con successo")
-                        dbManager.delete()
+                        dbManager.delete()  //pulisco il db locale e effettuo il logout dell'utente
                         val fragmentmanager=parentFragmentManager
                         val transaction=fragmentmanager.beginTransaction()
                         transaction.replace(R.id.fragmentMain, Login_Fragment())
