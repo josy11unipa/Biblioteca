@@ -55,39 +55,32 @@ class Libro_Fragment:Fragment() {
             val url: String = libro.get("copertina").asString
             getImage(url)
             val idL = libro.get("id").asInt
-            button.setOnClickListener{
+            button.setOnClickListener{          //button Prenotazione
                 val user=dbManager.getUser()
-                if(user.count !=0){
+                if(user.count !=0){ //verifico se l'utente ha effettuato il login
                     val query = "SELECT nCopie FROM libro WHERE id = '$idL';"
                     Log.i("TAG-Prenotazione", "queryP be like: $query")
-                    ClientNetwork.retrofit.login(query).enqueue(
+                    ClientNetwork.retrofit.getCopie(query).enqueue(     //verifico se ci sono abbastanza copie disponibili
                         object : Callback<JsonObject> {
                             @SuppressLint("Range")
                             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                                Log.i("LOG-Login_Fragment-onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                                 if (response.isSuccessful) {
-                                    //Profile_Fragment.isLogged=true
                                     if ((response.body()?.get("queryset") as JsonArray).size() == 1) {
-                                        //Log.i("LOG-Login_Fragment-onResponse", "Sono dentro il secondo if. e chiamo la getImageProfilo")
                                         var n = ((response.body()?.get("queryset")as JsonArray).get(0) as JsonObject).get("nCopie").asInt
-                                        Log.i("LOG-Libro_Fragment-onResponse", "nCopie: $n")
                                         if(n>=1){
                                             alreadyTake(idL,user.getString(user.getColumnIndex("username")))
                                         }else{
-                                            Log.i("LOG-Libro_Fragment-onResponse", "Copie esaurite")
+                                            Toast.makeText(requireContext(),"Copie non disponibili",Toast.LENGTH_LONG).show()
                                         }
                                     }else {
-                                        Log.i("LOG-Libro_Fragment-onResponse", "Copie non disponibili")
                                         Toast.makeText(requireContext(),"Copie non disponibili", Toast.LENGTH_LONG).show()
                                     }
                                 }else{
-                                    //Toast.makeText(requireContext(),"Errore richiestaDB", Toast.LENGTH_LONG).show()
                                     Log.i("LOG-Libro_Fragment-onResponse", "Errore richiestaDB")
                                 }
                             }
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                                 Log.i("LOG-Login_Fragment-onFailure", "Errore prenotazione: ${t.message}")
-                                Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
                             }
                         }
                     )
