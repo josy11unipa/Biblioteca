@@ -63,9 +63,7 @@ class NotificationScheduler(private val context: Context) {
         val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-
        // Toast.makeText(context, "Notification scheduled", Toast.LENGTH_SHORT).show()
     }
 
