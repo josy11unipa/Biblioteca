@@ -14,6 +14,7 @@ import com.example.biblioteca.R
 import com.example.biblioteca.databinding.LibrarianLayoutBinding
 import com.google.zxing.integration.android.IntentIntegrator
 
+//Classe che gestisce l'interfaccia del bibliotecario con relativa gestione dei bottoni premuti
 class Librarian_Fragment : Fragment() {
     private lateinit var binding: LibrarianLayoutBinding
     var value:String=""
@@ -59,18 +60,16 @@ class Librarian_Fragment : Fragment() {
                     }
                     val dialog = dialogBuilder.create()
                     dialog.show()
-                    }else{
-                        val dialogBuilder = android.app.AlertDialog.Builder(context)
-                        dialogBuilder.setTitle("Esito scansione")
-                        dialogBuilder.setMessage("Negato")
-                        dialogBuilder.setPositiveButton("OK"){
-                                _, _ ->
-                        }
-                        val dialog = dialogBuilder.create()
-                        dialog.show()
+                }else{
+                    val dialogBuilder = android.app.AlertDialog.Builder(context)
+                    dialogBuilder.setTitle("Esito scansione")
+                    dialogBuilder.setMessage("Negato")
+                    dialogBuilder.setPositiveButton("OK"){
+                            _, _ ->
                     }
-
-
+                    val dialog = dialogBuilder.create()
+                    dialog.show()
+                }
             }
         }
     }
