@@ -47,7 +47,7 @@ class Profile_Fragment:Fragment() {
             binding.username.text=username.toString()
             usernameUtente=username.toString()
             //qrcode
-            val code = username.toString() // Codice da convertire in QR Code
+            val code = qr.toString() // Codice da convertire in QR Code
             val bitmap = generateQRCode(code) //genero il qrCode dal nome utente
             binding.imageView3.setImageBitmap(bitmap) //imposto il qrCode come immagine profilo
         }

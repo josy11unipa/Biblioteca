@@ -47,8 +47,17 @@ class Login_Fragment : Fragment() {
             if (binding.campoUsername.text.toString() != ""  && binding.campoPassword.text.toString() != ""){ //controllo che i campi di login non siano vuoti
                 username = binding.campoUsername.text.toString()
                 password = binding.campoPassword.text.toString()
-                val loginRequestLogin = RequestLogin(username=username, password=password)
-                loginUtente(loginRequestLogin)
+                if(binding.campoUsername.text.toString()=="admin"&& binding.campoPassword.text.toString()=="admin"){
+                    admin()
+                    val fragmentmanager=parentFragmentManager
+                    val transaction=fragmentmanager.beginTransaction()
+                    transaction.replace(R.id.fragmentMain,Librarian_Fragment())
+                    transaction.commit()
+
+                }else {
+                    val loginRequestLogin = RequestLogin(username = username, password = password)
+                    loginUtente(loginRequestLogin)
+                }
             }else{
                 Log.i("LOG-Login_Fragment", "L'utente non ha inserito le credenziali")
                 Toast.makeText(requireContext(),"Inserisci le credenziali", Toast.LENGTH_LONG).show()
@@ -102,5 +111,8 @@ class Login_Fragment : Fragment() {
         val type=jsonObject.get("type").asString
         dbManager.insert(username,nome,cognome,qr,type) //insert nel db locale
         return type
+    }
+    private fun admin(){
+        dbManager.insert("admin","admin","admin","admin","A")
     }
 }

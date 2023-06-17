@@ -54,7 +54,7 @@ class Librarian_Fragment : Fragment() {
                 Toast.makeText(this.requireContext(),"nessun contenuto", Toast.LENGTH_SHORT).show()
 
             }else{
-                Toast.makeText(this.requireContext(),"scanned ->"+result.contents, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.requireContext(),"scanned ->"+result.contents, Toast.LENGTH_SHORT).show()
                 value=result.contents.toString()
                 if(value in listaUser){  //verifico se il qr code corrisponde ad un utente autorizzato
                     val dialogBuilder = android.app.AlertDialog.Builder(context)
