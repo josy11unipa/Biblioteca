@@ -1,7 +1,6 @@
 package com.example.biblioteca
 
 import android.content.pm.ActivityInfo
-
 import com.journeyapps.barcodescanner.CaptureActivity
 
 class CustomCaptureActivity : CaptureActivity() {
