@@ -35,7 +35,7 @@ class Prenotazioni_Fragment:Fragment() {
         return binding.root
     }
 
-    private fun getPrenotazioni(username: String?) { //prendo tutte le prenotazioni in corso
+    private fun getPrenotazioni(username: String?) { //funzione che preleva tutte le prenotazioni associate all'utente
         val query="select prenotazione.id,prenotazione.codeConsegna,libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato,libro.anno,libro.genere,libro.autore,libro.copertina,libro.valutazione,libro.nValutazioni ,prenotazione.idL,prenotazione.posticipato from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND '$username'=prenotazione.usernameU AND prenotazione.consegnato=0;"
         ClientNetwork.retrofit.getPrenotazione(query).enqueue(
             object : Callback<JsonObject> {
@@ -43,7 +43,7 @@ class Prenotazioni_Fragment:Fragment() {
                     if (response.isSuccessful) {
 
                         val j = (response.body()?.get("queryset") as JsonArray)
-                        if(j.size()==0){
+                        if(j.size()==0){//nel caso non ci siano prenotazioni in corso
                             binding.textView.visibility=View.VISIBLE
                             binding.textView.text="Non hai prenotazioni in corso"
                         }
@@ -52,7 +52,7 @@ class Prenotazioni_Fragment:Fragment() {
                         adapter.setOnClickListener(object:
                             CustomAdapterPrenotazione.OnClickListener {
                             override fun onClick(position: Int, model: JsonObject) {
-                                val consegna=JsonObject()               //filtro il risultato della query precedente e passo i dati a ConsegnaFragment
+                                val consegna=JsonObject()//filtro il risultato della query precedente
                                 consegna.addProperty("titolo",model.get("titolo").asString)
                                 consegna.addProperty("autore",model.get("autore").asString)
                                 consegna.addProperty("anno",model.get("anno").asString)

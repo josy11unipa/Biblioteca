@@ -11,28 +11,26 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.biblioteca.MainActivity
 import com.example.biblioteca.R
 
 class NotificationScheduler(private val context: Context) {
 
     companion object {
-        private const val CHANNEL_ID = "my_channel"//canale con id unitario per ricevere la notifica
-        private const val NOTIFICATION_ID = 1 //id notifica
-        private const val ACTION_SHOW_NOTIFICATION = "com.example.MY_CUSTOM_ACTION"
+        private const val CHANNEL_ID = "my_channel"
+        private const val NOTIFICATION_ID = 1
+        private const val ACTION_SHOW_NOTIFICATION = "com.example.MY_CUSTOM_ACTION" // Azione personalizzata
     }
 
     private val notificationReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == ACTION_SHOW_NOTIFICATION) {
-                // Crea la notifica
+                // Crea e invia la notifica
                 val notification = NotificationCompat.Builder(context!!, CHANNEL_ID)
-                    .setContentTitle("Consegna Libro prevista per domani")
-                    .setContentText("per posticipare entra nell'app")
+                    .setContentTitle("Consegna libro prevista per domani")
+                    .setContentText("Se vuoi posticipare la data di consegna entra nell'app\n nella sezione prestiti in corso")
                     .setSmallIcon(R.drawable.icona)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .build()
@@ -40,7 +38,7 @@ class NotificationScheduler(private val context: Context) {
                 val notificationManager = NotificationManagerCompat.from(context)
                 createNotificationChannel()
 
-                if (ActivityCompat.checkSelfPermission( //permessi notifica
+                if (ActivityCompat.checkSelfPermission(
                         context.applicationContext,
                         Manifest.permission.POST_NOTIFICATIONS
                     ) != PackageManager.PERMISSION_GRANTED
@@ -51,33 +49,31 @@ class NotificationScheduler(private val context: Context) {
             }
         }
     }
-
-    fun scheduleNotification(anno: Int,mese:Int,giorno: Int) {//setto la data in cui ricevere la notifica
+    fun scheduleNotification(anno: Int, mese: Int, giorno: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, anno)
-        calendar.set(Calendar.MONTH, Calendar.JUNE)
+        calendar.set(Calendar.MONTH, mese)
         calendar.set(Calendar.DAY_OF_MONTH, giorno)
-        calendar.set(Calendar.HOUR_OF_DAY, 19) // Ora in formato 24 ore
-        calendar.set(Calendar.MINUTE, 32)
+        calendar.set(Calendar.HOUR_OF_DAY, 13)
+        calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
 
         val intent = Intent(ACTION_SHOW_NOTIFICATION)
-        intent.action = "com.example.MY_CUSTOM_ACTION" // Azione personalizzata
+        //intent.action = "com.example.MY_CUSTOM_ACTION" // Azione personalizzata
         val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)//alarmManager memorizza la data in cui inviare la notifica
-
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+       // Toast.makeText(context, "Notification scheduled", Toast.LENGTH_SHORT).show()
     }
 
 
-    fun registerNotificationReceiver() { //registratore di notifica
+    fun registerNotificationReceiver() {
         val filter = IntentFilter(ACTION_SHOW_NOTIFICATION)
         context.registerReceiver(notificationReceiver, filter)
     }
 
-    private fun createNotificationChannel() {  //creo il canale di notifica
+    private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID, "My Channel",
