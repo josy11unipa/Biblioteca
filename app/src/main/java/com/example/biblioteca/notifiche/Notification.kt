@@ -58,7 +58,7 @@ class NotificationScheduler(private val context: Context) {
         calendar.set(Calendar.MONTH, Calendar.JUNE)
         calendar.set(Calendar.DAY_OF_MONTH, giorno)
         calendar.set(Calendar.HOUR_OF_DAY, 19) // Ora in formato 24 ore
-        calendar.set(Calendar.MINUTE, 32)
+        calendar.set(Calendar.MINUTE, 35)
         calendar.set(Calendar.SECOND, 0)
 
         val intent = Intent(ACTION_SHOW_NOTIFICATION)

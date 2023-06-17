@@ -30,8 +30,6 @@ class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<Cu
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val oggetto: JsonObject = element.get(position) as JsonObject
         holder.image.setOnClickListener{
-            val id=oggetto.get("id").asString
-            Toast.makeText(holder.image.context,"$id",Toast.LENGTH_SHORT).show()
             onClickListener?.onClick(position, oggetto)
         }
         val url: String = oggetto.get("copertina").asString
