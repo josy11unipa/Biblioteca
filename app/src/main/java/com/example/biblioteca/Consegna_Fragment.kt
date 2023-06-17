@@ -82,7 +82,7 @@ class Consegna_Fragment:Fragment() {
             object :Callback<JsonObject>{
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if(response.isSuccessful()){
-                        binding.textView6.text="Hai posticipato la consegna"
+                        binding.textView6.text="-->CONSEGNA POSTICIPATA CON SUCCESSO<--"
                         binding.buttonPosticipa.visibility=View.GONE
                     }
                 }
