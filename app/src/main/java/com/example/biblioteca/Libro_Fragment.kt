@@ -182,7 +182,7 @@ class Libro_Fragment:Fragment() {
                     Log.i("LOG-effettuaPrenotazione-onFailure", "Errore durante la registrazione: ${t.message}")
                     Toast.makeText(requireContext(), "Errore durante la registrazione: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
-
+//gh
             }
         )
     }
