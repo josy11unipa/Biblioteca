@@ -11,6 +11,7 @@ import com.example.biblioteca.ClientNetwork
 import com.example.biblioteca.R
 import com.example.biblioteca.com.example.biblioteca.RequestRegister
 import com.example.biblioteca.databinding.RegisterLayoutBinding
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,7 +42,7 @@ class Register_Fragment: Fragment() {
 
                 val registerRequest = RequestRegister(nome=nome, cognome=cognome, username=username, password1=password1, password2=password2)
                 Log.i("LOG-Register_Fragment", "chiamo la fun registerUtente passando: $registerRequest ")
-                registerUtente(registerRequest)
+                verificaNomeUtente(registerRequest)
             }else{
                 Log.i("LOG-Login_Fragment", "L'utente non ha inserito le credenziali di regisgtrazione")
                 Toast.makeText(requireContext(),"Compila tutti i campi", Toast.LENGTH_LONG).show()
@@ -50,16 +51,40 @@ class Register_Fragment: Fragment() {
         return binding.root
     }
 
-    private fun registerUtente(registerRequest: RequestRegister) {//METTERE IL CONTROLLO SULL'UNICITà DELL'USERNAME
+    private fun verificaNomeUtente(registerRequest: RequestRegister){
+        val query = "SELECT * FROM persona WHERE username = ${registerRequest.username};"
+        Log.i("LOG-verificaNomeUtente", "Insert creata: $query")
+        ClientNetwork.retrofit.register(query).enqueue(
+            object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
+                    Log.i("onResponse", "Response be like: ${response.body()}")
+                    if (response.isSuccessful) {
+                        if((response.body()?.get("queryset") as JsonArray).size() == 1){
+                            Toast.makeText(requireContext(), "Nome utente già esistente", Toast.LENGTH_LONG).show()
+                            Log.i("LOG-Register_Fragment-onResponse", "Nome utente già esistente")
+                        }
+                    }else{
+                        registerUtente(registerRequest)
+                    }
+                }
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-Register_Fragment-onFailure", "Errore durante la registrazione: ${t.message}")
+                    Toast.makeText(requireContext(), "Errore durante la registrazione: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        )
+    }
+
+    private fun registerUtente(registerRequest: RequestRegister) {
         if (registerRequest.password1 != registerRequest.password2) {
-            // Le due password non corrispondono
             Toast.makeText(requireContext(), "Le password non corrispondono", Toast.LENGTH_LONG).show()
             Log.i("LOG-Login_Fragment", "Le password non corrispondono")
             return
         }
         val query = "INSERT INTO persona (username, password, nome, cognome, image, qr, type) VALUES ('${registerRequest.username}', '${registerRequest.password1}', '${registerRequest.nome}', '${registerRequest.cognome}', 'media/images/Immagine.png', 'HelloWord', 'u');"
         Log.i("LOG-Register_Fragment", "Insert creata: $query")
-
         ClientNetwork.retrofit.register(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
@@ -84,6 +109,7 @@ class Register_Fragment: Fragment() {
             }
         )
     }
+
     fun changeFrag(){
         val fragmentmanager=parentFragmentManager
         val transaction=fragmentmanager.beginTransaction()
