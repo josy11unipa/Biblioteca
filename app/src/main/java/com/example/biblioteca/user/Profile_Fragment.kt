@@ -16,7 +16,7 @@ import com.google.zxing.common.BitMatrix
 import com.google.zxing.WriterException
 import com.google.zxing.BarcodeFormat
 
-
+//classe che gestisce il fragment del profilo utente
 class Profile_Fragment:Fragment() {
     companion object {
 
@@ -25,8 +25,6 @@ class Profile_Fragment:Fragment() {
 
     private lateinit var binding:ProfileLayoutBinding
     private lateinit var dbManager: DBManager
-    var risult:String=""
-
     @SuppressLint("Range")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,40 +34,33 @@ class Profile_Fragment:Fragment() {
         binding=ProfileLayoutBinding.inflate(inflater)
         dbManager = DBManager(requireContext())
         dbManager.open()
-        //val result = "Area Personale"
         val cursor=dbManager.getUser()
 
-        //setFragmentResult("key", bundleOf("keyBundle" to result))
-        if (cursor.count!=0) {
+        if (cursor.count!=0) {  //se l'utente ha effettuato l'accesso
             val username = cursor.getString(cursor.getColumnIndex("username"))
             val nome = cursor.getString(cursor.getColumnIndex("nome"))
             val cognome = cursor.getString(cursor.getColumnIndex("cognome"))
             val qr = cursor.getString(cursor.getColumnIndex("qr"))
-            //val isLogged = cursor.getString(cursor.getColumnIndex("flag"))
-            //binding.nome.text = "NOME: " + username.toString() //Mod JJ
 
             binding.nome.text = nome.toString()
             binding.cognome.text=cognome.toString()
             binding.username.text=username.toString()
             usernameUtente=username.toString()
-
             //qrcode
             val code = username.toString() // Codice da convertire in QR Code
-            val bitmap = generateQRCode(code)
-            binding.imageView3.setImageBitmap(bitmap)
+            val bitmap = generateQRCode(code) //genero il qrCode dal nome utente
+            binding.imageView3.setImageBitmap(bitmap) //imposto il qrCode come immagine profilo
         }
-
         binding.logoutButton.setOnClickListener{
            dbManager.delete()
             val manager=parentFragmentManager
             val transaction=manager.beginTransaction()
-
             transaction.replace(R.id.fragmentMain,Login_Fragment())
             transaction.commit()
         }
         return binding.root
     }
-    private fun generateQRCode(code: String): Bitmap? {
+    private fun generateQRCode(code: String): Bitmap? { //Funzione che si occupa di generare il qrCode da una stringa
         val qrCodeWriter = QRCodeWriter()
         try {
             val bitMatrix: BitMatrix = qrCodeWriter.encode(code, BarcodeFormat.QR_CODE, 200, 200)

@@ -17,6 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+//funzione che gestisce il fragment per la registrazioe di un nuovo utente
 class Register_Fragment: Fragment() {
     private lateinit var binding: RegisterLayoutBinding
     var nome =""
@@ -34,6 +35,7 @@ class Register_Fragment: Fragment() {
 
         binding.buttonRegister.setOnClickListener {
             if (binding.campoRegisterNome.text.toString() != "" && binding.campoRegisterCognome.text.toString() != "" && binding.campoRegisterUsername.text.toString() != "" && binding.campoRegisterPassword1.text.toString() != "" && binding.campoRegisterPassword2.text.toString() != "") {
+                //se i campi di testo non sono vuoti
                 nome=binding.campoRegisterNome.text.toString()
                 cognome=binding.campoRegisterCognome.text.toString()
                 username = binding.campoRegisterUsername.text.toString()
@@ -41,7 +43,6 @@ class Register_Fragment: Fragment() {
                 password2 = binding.campoRegisterPassword2.text.toString()
 
                 val registerRequest = RequestRegister(nome=nome, cognome=cognome, username=username, password1=password1, password2=password2)
-                Log.i("LOG-Register_Fragment", "chiamo la fun registerUtente passando: $registerRequest ")
                 verificaNomeUtente(registerRequest)
             }else{
                 Log.i("LOG-Login_Fragment", "L'utente non ha inserito le credenziali di regisgtrazione")
@@ -51,9 +52,9 @@ class Register_Fragment: Fragment() {
         return binding.root
     }
 
-    private fun verificaNomeUtente(registerRequest: RequestRegister){
+    private fun verificaNomeUtente(registerRequest: RequestRegister){   //verifico l'unicità del nomeUtente
         val query = "SELECT * FROM persona WHERE username = ${registerRequest.username};"
-        Log.i("LOG-verificaNomeUtente", "Insert creata: $query")
+        //query
         ClientNetwork.retrofit.register(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
