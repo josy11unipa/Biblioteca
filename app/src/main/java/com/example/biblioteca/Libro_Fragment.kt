@@ -161,7 +161,7 @@ class Libro_Fragment:Fragment() {
         val giorno=dataFinePrestito.dayOfMonth
         crea_Notifica(anno,mese,giorno)
         val codice=generaCodiceCasuale(usernameUtente,minuti)
-        val query = "INSERT INTO prenotazione (usernameU, dataInizio, dataFine, idL,codeConsegna) VALUES ('$usernameUtente', '$currentDate', '$dataFinePrestito', '$idL','$codice');"
+        val query = "INSERT INTO prenotazione (usernameU, dataInizio, dataFine, prenotazione.idL,codeConsegna) VALUES ('$usernameUtente', '$currentDate', '$dataFinePrestito', '$idL','$codice');"
         Log.i("LOG-effettuaPrenotazione", "QUERY: $query")
         ClientNetwork.retrofit.register(query).enqueue(
             object : Callback<JsonObject> {
