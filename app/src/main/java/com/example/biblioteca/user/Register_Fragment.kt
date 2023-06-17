@@ -54,18 +54,18 @@ class Register_Fragment: Fragment() {
 
     private fun verificaNomeUtente(registerRequest: RequestRegister){   //verifico l'unicità del nomeUtente
         val query = "SELECT * FROM persona WHERE username = ${registerRequest.username};"
-        //query
+        //query che restituisce tutte le tuple avete username quello inserito dall'utente in fase di registrazione
         ClientNetwork.retrofit.register(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
                     Log.i("onResponse", "Response be like: ${response.body()}")
                     if (response.isSuccessful) {
-                        if((response.body()?.get("queryset") as JsonArray).size() == 1){
+                        if((response.body()?.get("queryset") as JsonArray).size() == 1){    //se l'username è già esistente
                             Toast.makeText(requireContext(), "Nome utente già esistente", Toast.LENGTH_LONG).show()
                             Log.i("LOG-Register_Fragment-onResponse", "Nome utente già esistente")
                         }
-                    }else{
+                    }else{  //se non è già esistente procedo con la registrazione
                         registerUtente(registerRequest)
                     }
                 }
@@ -73,45 +73,37 @@ class Register_Fragment: Fragment() {
                     Log.i("LOG-Register_Fragment-onFailure", "Errore durante la registrazione: ${t.message}")
                     Toast.makeText(requireContext(), "Errore durante la registrazione: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
-
             }
         )
     }
-
     private fun registerUtente(registerRequest: RequestRegister) {
-        if (registerRequest.password1 != registerRequest.password2) {
+        if (registerRequest.password1 != registerRequest.password2) {   //se le password inserite sono diverse
             Toast.makeText(requireContext(), "Le password non corrispondono", Toast.LENGTH_LONG).show()
-            Log.i("LOG-Login_Fragment", "Le password non corrispondono")
             return
         }
         val query = "INSERT INTO persona (username, password, nome, cognome, image, qr, type) VALUES ('${registerRequest.username}', '${registerRequest.password1}', '${registerRequest.nome}', '${registerRequest.cognome}', 'media/images/Immagine.png', 'HelloWord', 'u');"
-        Log.i("LOG-Register_Fragment", "Insert creata: $query")
+        //query che esegue la insert della nuova tupla nel db
         ClientNetwork.retrofit.register(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    Log.i("onResponse", "Sono dentro la onResponse e l'esito sarà: ${response.isSuccessful}")
-                    Log.i("onResponse", "Response be like: ${response.body()}")
                     if (response.isSuccessful) {
-                        // Registrazione effettuata con successo
+                        //Registrazione effettuata con successo
                         Toast.makeText(requireContext(), "Registrazione effettuata con successo", Toast.LENGTH_LONG).show()
                         Log.i("LOG-Register_Fragment-onResponse", "Registrazione effettuata con successo")
-                        changeFrag()
+                        changeFrag()    //cambio fragment riportando l'utente nell0are personale
                     } else {
                         Toast.makeText(requireContext(), "Errore durante la registrazione, utente già esistente", Toast.LENGTH_LONG).show()
                         Log.i("LOG-Register_Fragment-onResponse", "Errore durante la registrazione")
                     }
                 }
-
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     Log.i("LOG-Register_Fragment-onFailure", "Errore durante la registrazione: ${t.message}")
                     Toast.makeText(requireContext(), "Errore durante la registrazione: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
-
             }
         )
     }
-
-    fun changeFrag(){
+    fun changeFrag(){   //funzione che si occupa di cambiare fragment
         val fragmentmanager=parentFragmentManager
         val transaction=fragmentmanager.beginTransaction()
         transaction.replace(R.id.fragmentMain, Login_Fragment())
