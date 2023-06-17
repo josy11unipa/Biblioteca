@@ -2,7 +2,6 @@ package com.example.biblioteca.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.example.biblioteca.Prenotazioni_Fragment
 import com.example.biblioteca.R
 import com.example.biblioteca.bibliotecario.Librarian_Fragment
 import com.example.biblioteca.database.DBManager
-import com.example.biblioteca.database.LocalDBHelper
 import com.example.biblioteca.databinding.MenuLayoutBinding
 import com.example.biblioteca.user.ModDati_Fragment
 import com.example.biblioteca.user.ModPsw_Fragment
