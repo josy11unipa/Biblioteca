@@ -30,6 +30,7 @@ class Libro_Fragment:Fragment() {
     private lateinit var binding: LibroLayoutBinding
     private lateinit var dbManager: DBManager
     private lateinit var notificationScheduler: NotificationScheduler
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
         inflater: LayoutInflater,
