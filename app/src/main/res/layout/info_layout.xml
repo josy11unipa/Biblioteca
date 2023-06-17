@@ -42,7 +42,8 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:typeface="monospace" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -67,8 +68,9 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/premiPreMappeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp">
 
@@ -89,8 +91,22 @@
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="34sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:typeface="monospace" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/crediti"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:gravity="bottom|end"
+                android:paddingBottom="10dp"
+                android:text="Created by Joseph &amp; Guido"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:typeface="monospace" />
+
         </LinearLayout>
 
     </FrameLayout>

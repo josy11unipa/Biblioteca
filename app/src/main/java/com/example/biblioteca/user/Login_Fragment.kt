@@ -47,7 +47,7 @@ class Login_Fragment : Fragment() {
             if (binding.campoUsername.text.toString() != ""  && binding.campoPassword.text.toString() != ""){ //controllo che i campi di login non siano vuoti
                 username = binding.campoUsername.text.toString()
                 password = binding.campoPassword.text.toString()
-                if(binding.campoUsername.text.toString()=="admin"&& binding.campoPassword.text.toString()=="admin"){
+                if(binding.campoUsername.text.toString()=="admin"&& binding.campoPassword.text.toString()=="admin"){    //if di servizio per simulare il funzionamento dell'app sul dispositivo fisico
                     admin()
                     val fragmentmanager=parentFragmentManager
                     val transaction=fragmentmanager.beginTransaction()
