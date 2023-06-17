@@ -8,7 +8,6 @@ class LocalDBHelper(context: Context): SQLiteOpenHelper(context,
     DATABASE_NAME,null,
     DATABASE_VERSION
 ) {
-
     companion object{
         const val DATABASE_NAME="database.db"
         const val DATABASE_VERSION=1
@@ -19,16 +18,14 @@ class LocalDBHelper(context: Context): SQLiteOpenHelper(context,
         const val TYPE="type"
         const val QR="qr"
         const val ID = "id"
-        //const val ISLOGGED = "flag"
 
         private const val DB_CREATE=
-            "CREATE TABLE" +
+            "CREATE TABLE" +                                            //creo la tabella utente nel db locale
                     " ${TABLE_NAME} (${ID} INTEGER PRIMARY KEY, "+
                     "${USERNAME} TEXT, "+
                     "${NOME} TEXT, "+
                     "${COGNOME} TEXT, "+
                     "${TYPE} TEXT, "+
-                    //"${ISLOGGED} BOOLEAN, "+
                     "${QR} TEXT );"
         const val SQL_DELETE="DROP TABLE "+
                 "IF EXISTS $TABLE_NAME;"
