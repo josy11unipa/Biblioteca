@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.example.biblioteca.databinding.ConsegnaLayoutBinding
+
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -36,6 +37,8 @@ class Consegna_Fragment:Fragment() {
             val valutazione=prenotazione.get("valutazione").asFloat
             val nValutazioni=prenotazione.get("nValutazioni").asInt
             val id=prenotazione.get("id").asInt
+
+            val posticipato=prenotazione.get("posticipato").asInt
             binding.titolo1.text=titolo.toString()
             binding.annop.text=prenotazione.get("anno").asString
             binding.genere.text=prenotazione.get("genere").asString
@@ -48,6 +51,13 @@ class Consegna_Fragment:Fragment() {
                     verificaCodice(id, codice)
                 }else{
                     Toast.makeText(requireContext(),"inserisci il codice",Toast.LENGTH_LONG).show()
+                }
+            }
+            binding.buttonPosticipa.setOnClickListener{
+                if(posticipato==1){
+                   Toast.makeText(requireContext(),"Hai già posticipato la consegna",Toast.LENGTH_LONG).show()
+                }else {
+                    posticipa(id)
                 }
             }
             binding.buttonVota.setOnClickListener{
@@ -65,6 +75,25 @@ class Consegna_Fragment:Fragment() {
         }
         return binding.root
     }
+
+    private fun posticipa(id: Int) {
+        val query="UPDATE prenotazione SET dataFine = DATE_ADD(dataFine, INTERVAL 10 DAY),posticipato=1 WHERE prenotazione.id=$id AND prenotazione.posticipato=0;"
+        ClientNetwork.retrofit.posticipa(query).enqueue(
+            object :Callback<JsonObject>{
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    if(response.isSuccessful()){
+                        binding.textView6.text="Hai posticipato la consegna"
+                        binding.buttonPosticipa.visibility=View.GONE
+                    }
+                }
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.i("LOG-Login_Fragment-onFailure", "Errore : ${t.message}")
+                }
+
+            }
+        )
+    }
+
     private fun registraValutazione(idL: String?, nuovaValutazione: Float, valutazione: Float, nValutazioni: Int) {
         val media= ((valutazione*nValutazioni)+nuovaValutazione)/(nValutazioni+1)
         val query="UPDATE libro SET valutazione=$media,nValutazioni=${nValutazioni+1},nCopie=nCopie+1 WHERE libro.id=$idL;"

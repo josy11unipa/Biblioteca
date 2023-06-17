@@ -40,7 +40,7 @@ class Prenotazioni_Fragment:Fragment() {
     }
 
     private fun getPrenotazioni(username: String?) {
-        val query="select prenotazione.id,prenotazione.codeConsegna,libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato,libro.anno,libro.genere,libro.autore,libro.copertina,libro.valutazione,libro.nValutazioni ,prenotazione.idL from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND '$username'=prenotazione.usernameU AND prenotazione.consegnato=0;"
+        val query="select prenotazione.id,prenotazione.codeConsegna,libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato,libro.anno,libro.genere,libro.autore,libro.copertina,libro.valutazione,libro.nValutazioni ,prenotazione.idL,prenotazione.posticipato from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND '$username'=prenotazione.usernameU AND prenotazione.consegnato=0;"
         ClientNetwork.retrofit.getPrenotazione(query).enqueue(
             object : Callback<JsonObject> {
 
@@ -71,6 +71,7 @@ class Prenotazioni_Fragment:Fragment() {
                                 consegna.addProperty("idL",model.get("idL").asString)
                                 consegna.addProperty("valutazione",model.get("valutazione").asString)
                                 consegna.addProperty("nValutazioni",model.get("nValutazioni").asString)
+                                consegna.addProperty("posticipato",model.get("posticipato").asString)
                                 val manager=parentFragmentManager
                                 setFragmentResult("keyId", bundleOf("chiaveBundle" to consegna.toString() ))
                                 val transaction=manager.beginTransaction()

@@ -43,11 +43,12 @@ interface UserAPI {
     @FormUrlEncoded
     fun modificaValutazione(@Field("query") query: String): Call<JsonObject>
 
+    @POST("postUpdate/")
+    @FormUrlEncoded
+    fun posticipa(@Field("query") query: String): Call<JsonObject>
+
     @GET
     fun getAvatar(@Url url: String) : Call<ResponseBody>
 
-    @POST("postSelect/")
-    @FormUrlEncoded
-    fun getlibri(@Field("query") query : String): Call<JsonObject>
 
 }
