@@ -23,6 +23,7 @@
         android:layout_marginBottom="8dp"
         android:backgroundTint="#FBE236"
         android:hint="Password"
+        android:inputType="textPassword"
         android:padding="8dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#9C9C9C"
@@ -60,4 +61,5 @@
         android:padding="12dp"
         android:text="Conferma"
         android:typeface="monospace" />
+
 </LinearLayout>
