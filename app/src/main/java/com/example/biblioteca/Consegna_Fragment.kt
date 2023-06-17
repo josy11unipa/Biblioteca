@@ -27,7 +27,7 @@ class Consegna_Fragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding= ConsegnaLayoutBinding.inflate(inflater)
-        setFragmentResultListener("keyId") { requestKey, bundle ->
+        setFragmentResultListener("keyId") { requestKey, bundle ->//ricevo le informazioni dal fragment Prenotazioni_Fragment
             val prenotazioneS = bundle.getString("chiaveBundle")
             Log.i("BUNDLE", "$prenotazioneS")
             val prenotazione = JsonParser().parse(prenotazioneS) as JsonObject
@@ -76,7 +76,7 @@ class Consegna_Fragment:Fragment() {
         return binding.root
     }
 
-    private fun posticipa(id: Int) {
+    private fun posticipa(id: Int) { //query per posticipare la consegna
         val query="UPDATE prenotazione SET dataFine = DATE_ADD(dataFine, INTERVAL 10 DAY),posticipato=1 WHERE prenotazione.id=$id AND prenotazione.posticipato=0;"
         ClientNetwork.retrofit.posticipa(query).enqueue(
             object :Callback<JsonObject>{
@@ -94,7 +94,7 @@ class Consegna_Fragment:Fragment() {
         )
     }
 
-    private fun registraValutazione(idL: String?, nuovaValutazione: Float, valutazione: Float, nValutazioni: Int) {
+    private fun registraValutazione(idL: String?, nuovaValutazione: Float, valutazione: Float, nValutazioni: Int) { //registro la valutazione data dall utente per il libro
         val media= ((valutazione*nValutazioni)+nuovaValutazione)/(nValutazioni+1)
         val query="UPDATE libro SET valutazione=$media,nValutazioni=${nValutazioni+1} WHERE libro.id=$idL;"
         ClientNetwork.retrofit.modificaValutazione(query).enqueue(
@@ -113,7 +113,7 @@ class Consegna_Fragment:Fragment() {
     }
 
 
-    private fun verificaCodice(id:Int,codice: String,idL:String) {
+    private fun verificaCodice(id:Int,codice: String,idL:String) { //verifico che il codice di riconsegna sia corretto
         val query="SELECT * From prenotazione where prenotazione.id=$id and prenotazione.codeConsegna='$codice' ;"
 
         ClientNetwork.retrofit.verificaCodice(query).enqueue(
@@ -134,7 +134,7 @@ class Consegna_Fragment:Fragment() {
                 }
             })
     }
-    private fun consegnaLibro(id: Int) {
+    private fun consegnaLibro(id: Int) { //consegno il libro
         val query="UPDATE prenotazione SET consegnato=1 WHERE id=$id"
         ClientNetwork.retrofit.modificaValutazione(query).enqueue(
             object :Callback<JsonObject>{
@@ -151,7 +151,7 @@ class Consegna_Fragment:Fragment() {
             }
         )
     }
-    private fun incrementa_copie(id: String) {
+    private fun incrementa_copie(id: String) {//incremento le copie dopo la riconsegna del libro
         val query="UPDATE libro SET nCopie=nCopie+1 WHERE id=$id"
         ClientNetwork.retrofit.incrementaCopie(query).enqueue(
             object :Callback<JsonObject>{
@@ -167,7 +167,7 @@ class Consegna_Fragment:Fragment() {
         )
     }
 
-    private fun getImage(url: String) {
+    private fun getImage(url: String) {//get immagine
         ClientNetwork.retrofit.getAvatar(url).enqueue(
             object : Callback<ResponseBody> {
                 override fun onResponse(

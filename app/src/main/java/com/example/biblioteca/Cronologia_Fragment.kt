@@ -28,7 +28,6 @@ import java.util.Locale
 
 class Cronologia_Fragment:Fragment() {
     private lateinit var binding:CronologiaLayoutBinding
-
     @SuppressLint("Range")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,37 +58,20 @@ class Cronologia_Fragment:Fragment() {
             object : Callback<JsonObject> {
 
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    Log.i("TAG-CRONOLOGIA", "response=${response.isSuccessful}")
-                    Log.i("TAG-CRONOLOGIA", "response=$username")
-
                     if (response.isSuccessful) {
 
                         val j = (response.body()?.get("queryset") as JsonArray)
-                        if(j.size()==0){
+                        if(j.size()==0){  //se non ci sono prenotazioni in corso
                             binding.textView5.visibility=View.VISIBLE
                             binding.textView5.text="Non hai prenotazioni in corso"
                         }
-                        /*val crono = (response.body()?.get("queryset") as JsonArray)
-                        val adapter = CustomAdapterCrono(crono, object : CustomAdapterCrono.OnItemClickListener {
-                            override fun onItemClick(position: Int) {
-                                val oggetto: JsonObject = crono.get(position) as JsonObject
-                                Toast.makeText(requireContext(),"Hai premuto: ${oggetto.get("titolo")}", Toast.LENGTH_LONG).show()
-                                Log.i("TAG-OGGETTO CLICCATO", "OGGETTO CLICCATO: $oggetto")
-                                //setFragmentResult("keyId", bundleOf("keyBundleId" to model.toString() ))
-
-                            }
-                        })*/
-                        binding.recyclerViewCrono.layoutManager = LinearLayoutManager(requireContext())
                         val adapter= CustomAdapterCrono(j)
                         binding.recyclerViewCrono.adapter=adapter
                         binding.recyclerViewCrono.layoutManager = LinearLayoutManager(requireContext())
                         binding.recyclerViewCrono.adapter = adapter
                     }
                 }
-
-
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    Log.i("TAG-CRONOLOGIA", "sono nella onFailure = ${t.message}")
                 }
             })
 

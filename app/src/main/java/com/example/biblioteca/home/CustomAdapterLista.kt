@@ -13,7 +13,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+//customAdapter della home
 class CustomAdapterLista(private val element: JsonArray):RecyclerView.Adapter<CustomAdapterLista.ViewHolder>() {
     private var onClickListener:OnClickListener?=null
     class ViewHolder(binding: CardViewBinding) : RecyclerView.ViewHolder(binding.root) {

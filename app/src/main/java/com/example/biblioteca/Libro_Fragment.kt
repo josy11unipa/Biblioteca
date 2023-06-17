@@ -92,7 +92,7 @@ class Libro_Fragment:Fragment() {
         }
         return binding.root
     }
-    private fun getImage(url: String) {
+    private fun getImage(url: String) { //get immagine del libro
         ClientNetwork.retrofit.getAvatar(url).enqueue(
             object : Callback<ResponseBody> {
                 override fun onResponse(
@@ -113,7 +113,7 @@ class Libro_Fragment:Fragment() {
         )
     }
 
-    private fun alreadyTake(idL: Int, usernameUtente:String){
+    private fun alreadyTake(idL: Int, usernameUtente:String){     //verifico se l'utente ha gia una prenotazione in corso per questo libro
         Log.i("LOG-alreadyTake", "idL: $idL")
         val currentDate = LocalDate.now()
         Log.i("LOG-alreadyTake", "LocalDate: $currentDate")
@@ -145,7 +145,7 @@ class Libro_Fragment:Fragment() {
 
 
     }
-    private fun effettuaPrenotazione(idL: Int,usernameUtente:String){
+    private fun effettuaPrenotazione(idL: Int,usernameUtente:String){  //effettuo la prenotazione e setto la notifica
         val currentDate = LocalDate.now()
         val minuti= LocalTime.now().minute
         val dataFinePrestito = currentDate.plusDays(15)
@@ -175,14 +175,13 @@ class Libro_Fragment:Fragment() {
                     Log.i("LOG-effettuaPrenotazione-onFailure", "Errore durante la registrazione: ${t.message}")
                     Toast.makeText(requireContext(), "Errore durante la registrazione: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
-//gh
+
             }
         )
     }
 
-    private fun modCopie(idl:Int){
+    private fun modCopie(idl:Int){ //decremento il numero di copie
         val query = "UPDATE libro SET nCopie = nCopie - 1 WHERE id = $idl"
-
         ClientNetwork.retrofit.register(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
@@ -202,14 +201,14 @@ class Libro_Fragment:Fragment() {
         )
     }
 
-    private fun crea_Notifica(anno:Int, mese: Int, giorno:Int){
+    private fun crea_Notifica(anno:Int, mese: Int, giorno:Int){  //creo la notifica
         notificationScheduler = NotificationScheduler(requireContext())
         notificationScheduler.registerNotificationReceiver()
         notificationScheduler.scheduleNotification(anno,mese,giorno)
 
     }
 
-    private fun generaCodiceCasuale(user:String,minuto :Int):String{
+    private fun generaCodiceCasuale(user:String,minuto :Int):String{ //genero un codice casuale che servirà per la riconsegna del libro
         val random = Random(user.hashCode() + minuto)
         val dimensione=user.length*minuto
         val alfanumerico = ('A'..'Z') + ('a'..'z') + ('0'..'9')

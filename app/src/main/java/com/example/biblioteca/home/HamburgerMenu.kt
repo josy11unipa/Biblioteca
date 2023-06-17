@@ -21,7 +21,6 @@ import com.example.biblioteca.user.ModPsw_Fragment
 class HamburgerMenu:Fragment() {
     private lateinit var binding: MenuLayoutBinding
     private lateinit var dbManager: DBManager
-    private lateinit var user: LocalDBHelper
     @SuppressLint("Range")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,52 +34,48 @@ class HamburgerMenu:Fragment() {
         val user=dbManager.getUser()
         val manager=parentFragmentManager
         val transaction=manager.beginTransaction()
-        if(user.count!=0 && user.getString(user.getColumnIndex("type"))=="A"){
+        if(user.count!=0 && user.getString(user.getColumnIndex("type"))=="A"){//verifico che l'utente sia autenticato e che sia amministratore
             binding.admin.visibility=View.VISIBLE
-            binding.admin.isClickable=true
+            binding.admin.isClickable=true      //se è amministratore rendo un button visibile
         }else{
-            binding.admin.visibility=View.GONE
+            binding.admin.visibility=View.GONE //rendo il button non visibile
             binding.admin.isClickable=false
         }
-        binding.buttonCronologia.setOnClickListener{
-
-            if(user.count !=0){
+        binding.buttonCronologia.setOnClickListener{//visualizza la Cronologia dei libri letti e non letti
+            if(user.count !=0){//verifico il login
                 transaction.replace(R.id.fragmentMain, Cronologia_Fragment())
                 transaction.addToBackStack("crono")
                 transaction.commit()
             }else{
-                Log.i("LOG-Hamburger", "Effettua l'accesso per accedere alla cronologia")
                 Toast.makeText(requireContext(),"Effettua l'accesso per accedere alla cronologia", Toast.LENGTH_LONG).show()
             }
         }
-        binding.buttonPrestiti.setOnClickListener{
-            if(user.count !=0) {
+        binding.buttonPrestiti.setOnClickListener{ //visualizza le prenotazioni in corso
+            if(user.count !=0) {//verifico login
                 transaction.replace(R.id.fragmentMain, Prenotazioni_Fragment())
                 transaction.addToBackStack("prestiti")
                 transaction.commit()
             }else{
-                Log.i("LOG-Hamburger", "Effettua l'accesso per accedere ai prestiti")
                 Toast.makeText(requireContext(),"Effettua l'accesso per accedere ai prestiti", Toast.LENGTH_LONG).show()
             }
 
         }
-        binding.admin.setOnClickListener{
+        binding.admin.setOnClickListener{ //button ad uso esclusivo dell' admin
             transaction.replace(R.id.fragmentMain,Librarian_Fragment())
             transaction.addToBackStack("Librarian")
             transaction.commit()
         }
 
-        binding.modificaPassword.setOnClickListener {
+        binding.modificaPassword.setOnClickListener {//modifica password
             if(user.count !=0) {
                 transaction.replace(R.id.fragmentMain, ModPsw_Fragment())
                 transaction.addToBackStack("ModPsw_Fragment")
                 transaction.commit()
             }else{
-                Log.i("LOG-Hamburger", "Effettua l'accesso per accedere alla modifica della password")
                 Toast.makeText(requireContext(),"Effettua l'accesso per accedere alla modifica della password", Toast.LENGTH_LONG).show()
             }
         }
-        binding.buttonModificaDati.setOnClickListener {
+        binding.buttonModificaDati.setOnClickListener {//modifica datio
             if(user.count !=0) {
                 transaction.replace(R.id.fragmentMain, ModDati_Fragment())
                 transaction.addToBackStack("ModificaDati_Fragment")

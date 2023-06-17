@@ -80,14 +80,12 @@ class MainActivity : AppCompatActivity() {
             val transaction = manager.beginTransaction()
             var verifica = manager.findFragmentById(R.id.fragmentMain)
 
-            if(user.count!=0) {
+            if(user.count!=0) {//verifico che l'utente sia autenticato
                 if (verifica is Profile_Fragment) {
                 }else {
                     transaction.replace(R.id.fragmentMain, Profile_Fragment())
-                    Log.i("LOG-MainActivity","user.count() = ${user.count}")
                 }
             }else{
-                Log.i("LOG-MainActivity","user.count() = ${user.count}")
                 transaction.replace(R.id.fragmentMain, Login_Fragment())
             }
             transaction.commit()
