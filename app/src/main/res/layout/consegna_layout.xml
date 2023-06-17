@@ -67,83 +67,74 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Layout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="248dp">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutConsegna"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginVertical="20dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
+        <EditText
+            android:id="@+id/codice"
+            android:layout_width="240dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/edit_text_draw"
+            android:hint="codice"
+            android:inputType="text"
+            android:paddingLeft="5dp"
+            android:textAlignment="viewStart"
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="#FFDF36"
+            android:textColorHint="#8A8686"
+            android:textSize="16sp"
+            android:typeface="monospace"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutInfiLibro">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
 
-            <EditText
-                android:id="@+id/codice"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="27dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/edit_text_draw"
-                android:hint="codice"
-                android:inputType="text"
-                android:paddingLeft="5dp"
-                android:textAlignment="viewStart"
-                android:textColor="#FFFFFF"
-                android:textColorHighlight="#FFDF36"
-                android:textColorHint="#8A8686"
-                android:textSize="16sp"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginRight="10dp"
-                android:text="Vuoi posticipare la consegna?"
-                android:textColor="#FFFFFF" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/LinearLayoutPosticipa"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="20dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutConsegna">
+            android:layout_marginLeft="12dp"
+            android:text="Vuoi posticipare la consegna?"
+            android:textColor="#FFFFFF"
+            android:typeface="monospace"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/codice" />
 
-            <Button
-                android:id="@+id/buttonConsegna"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="22dp"
-                android:background="@drawable/green_button"
-                android:backgroundTint="@color/text"
-                android:text="Consegna"
-                tools:ignore="TouchTargetSizeCheck" />
+        <Button
+            android:id="@+id/buttonConsegna"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/green_button"
+            android:backgroundTint="@color/text"
+            android:text="Consegna"
+            android:typeface="monospace"
+            app:layout_constraintStart_toEndOf="@+id/codice"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
 
-            <Button
-                android:id="@+id/buttonPosticipa"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="22dp"
-                android:background="@drawable/green_button"
-                android:backgroundTint="@color/text"
-                android:text="Posticipa"
-                tools:ignore="TouchTargetSizeCheck" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/buttonPosticipa"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/green_button"
+            android:backgroundTint="@color/text"
+            android:text="Posticipa"
+            android:typeface="monospace"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.446"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/buttonConsegna"
+            tools:ignore="TouchTargetSizeCheck" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/LinearLayoutValutazione"
@@ -152,8 +143,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/LinearLayoutPosticipa">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textValutazione"
