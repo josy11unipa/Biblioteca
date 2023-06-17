@@ -10,12 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.example.biblioteca.database.DBManager
-import com.example.biblioteca.database.LocalDBHelper
 import com.example.biblioteca.databinding.LibroLayoutBinding
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -142,8 +140,6 @@ class Libro_Fragment:Fragment() {
                 }
             }
         )
-
-
     }
     private fun effettuaPrenotazione(idL: Int,usernameUtente:String){  //effettuo la prenotazione e setto la notifica
         val currentDate = LocalDate.now()
@@ -170,7 +166,6 @@ class Libro_Fragment:Fragment() {
                         Log.i("LOG-effettuaPrenotazione-onResponse", "Errore durante la registrazione della prenotazione")
                     }
                 }
-
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     Log.i("LOG-effettuaPrenotazione-onFailure", "Errore durante la registrazione: ${t.message}")
                     Toast.makeText(requireContext(), "Errore durante la registrazione: ${t.message}", Toast.LENGTH_SHORT).show()
@@ -200,14 +195,12 @@ class Libro_Fragment:Fragment() {
             }
         )
     }
-
     private fun crea_Notifica(anno:Int, mese: Int, giorno:Int){  //creo la notifica
         notificationScheduler = NotificationScheduler(requireContext())
         notificationScheduler.registerNotificationReceiver()
         notificationScheduler.scheduleNotification(anno,mese,giorno)
 
     }
-
     private fun generaCodiceCasuale(user:String,minuto :Int):String{ //genero un codice casuale che servirà per la riconsegna del libro
         val random = Random(user.hashCode() + minuto)
         val dimensione=user.length*minuto
@@ -216,6 +209,4 @@ class Libro_Fragment:Fragment() {
             .map { alfanumerico[random.nextInt(alfanumerico.size)] }
             .joinToString("")
     }
-
-
 }

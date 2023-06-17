@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.biblioteca.databinding.CardViewTabellaBinding
-import com.example.biblioteca.home.CustomAdapterLista
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import java.time.LocalDate
@@ -20,23 +19,14 @@ class CustomAdapterPrenotazione(private val element: JsonArray) :
         val dataF = binding.dataF
         val consegna = binding.consegnato
         val card=binding.cardViewT
-
-
     }
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = CardViewTabellaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
     }
-
-
-
     override fun getItemCount(): Int {
         return  element.size()
     }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val oggetto: JsonObject = element.get(position) as JsonObject
         Log.i("TAG-CRONO", "oggetto be like: $oggetto")
@@ -58,5 +48,4 @@ class CustomAdapterPrenotazione(private val element: JsonArray) :
     fun setOnClickListener(onClickListener:OnClickListener){
         this.onClickListener = onClickListener
     }
-
 }

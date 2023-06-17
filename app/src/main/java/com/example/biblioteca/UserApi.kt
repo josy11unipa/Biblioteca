@@ -1,6 +1,5 @@
 package com.example.biblioteca
 
-import com.google.gson.JsonArray
 import retrofit2.Call
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody

@@ -2,19 +2,15 @@ package com.example.biblioteca
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.databinding.PrenotazioniLayoutBinding
-import com.example.biblioteca.home.CustomAdapterLista
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -78,14 +74,9 @@ class Prenotazioni_Fragment:Fragment() {
                         })
                         binding.recyclePrenotazioni.adapter=adapter
                         binding.recyclePrenotazioni.layoutManager=LinearLayoutManager(requireContext())
-
-
                     }
                 }
-
-
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-
                 }
             })
     }

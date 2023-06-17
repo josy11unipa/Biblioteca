@@ -4,9 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.biblioteca.databinding.CardViewBinding
 import com.example.biblioteca.databinding.CardViewTabellaBinding
-import com.example.biblioteca.home.CustomAdapterLista
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 //Custom adapter cronologia
@@ -18,23 +16,14 @@ class CustomAdapterCrono(private val element: JsonArray) :RecyclerView.Adapter<C
         val dataF = binding.dataF
         val consegna = binding.consegnato
         val card=binding.cardViewT
-
-
     }
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = CardViewTabellaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
     }
-
-
-
     override fun getItemCount(): Int {
       return  element.size()
     }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val oggetto: JsonObject = element.get(position) as JsonObject
         Log.i("TAG-CRONO", "oggetto be like: $oggetto")
@@ -46,8 +35,5 @@ class CustomAdapterCrono(private val element: JsonArray) :RecyclerView.Adapter<C
         }else{
             holder.consegna.text="Consegnato"
         }
-
     }
-
-
 }

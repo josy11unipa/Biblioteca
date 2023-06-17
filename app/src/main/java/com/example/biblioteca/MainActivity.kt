@@ -1,27 +1,9 @@
 package com.example.biblioteca
 
-import NotificationScheduler
-import android.Manifest
+
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.content.pm.PackageManager
-import android.graphics.Color
-import android.os.Build
-import android.os.Build.VERSION_CODES.O
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.example.biblioteca.databinding.ActivityMainBinding
 import com.example.biblioteca.database.DBManager
 import com.example.biblioteca.database.LocalDBHelper
@@ -31,8 +13,6 @@ import com.example.biblioteca.info.Info_Fragment
 import com.example.biblioteca.user.Login_Fragment
 import com.example.biblioteca.user.Profile_Fragment
 import com.example.biblioteca.user.Register_Fragment
-import java.util.Calendar
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -101,7 +81,6 @@ class MainActivity : AppCompatActivity() {
             transaction.commit()
         }
     }
-
     override fun onBackPressed() {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
@@ -130,8 +109,6 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
-
     override fun onDestroy() {
         dbManager.close()
         super.onDestroy()
