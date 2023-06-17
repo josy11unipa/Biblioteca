@@ -19,13 +19,18 @@ class Librarian_Fragment : Fragment() {
     private lateinit var binding: LibrarianLayoutBinding
     var value:String=""
 
+    val listaUser = mutableListOf<String>()//lista che contiene gli utenti
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = LibrarianLayoutBinding.inflate(inflater)
-
+        listaUser.add("antonn")
+        listaUser.add("luine")
+        listaUser.add("maross")
+        listaUser.add("luverd")
         binding.qrAccesso.setOnClickListener {
             val scanner= IntentIntegrator.forSupportFragment(this)
             scanner.setCaptureActivity(CustomCaptureActivity::class.java) // Imposta la tua activity personalizzata
@@ -42,16 +47,16 @@ class Librarian_Fragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { //gestisce il risultato del qrcode
         val result=IntentIntegrator.parseActivityResult(requestCode,resultCode,data)
         if(resultCode== Activity.RESULT_OK){
             if(result.contents==null){
-                Toast.makeText(this.requireContext(),"cancelled", Toast.LENGTH_SHORT).show()
-                Log.i("QRCODE","${result.contents}")
+                Toast.makeText(this.requireContext(),"nessun contenuto", Toast.LENGTH_SHORT).show()
+
             }else{
                 Toast.makeText(this.requireContext(),"scanned ->"+result.contents, Toast.LENGTH_SHORT).show()
                 value=result.contents.toString()
-                if(value =="user"){
+                if(value in listaUser){  //verifico se il qr code corrisponde ad un utente autorizzato
                     val dialogBuilder = android.app.AlertDialog.Builder(context)
                     dialogBuilder.setTitle("Esito scansione")
                     dialogBuilder.setMessage("Approvato")
