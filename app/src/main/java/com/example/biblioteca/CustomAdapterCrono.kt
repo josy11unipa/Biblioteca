@@ -9,7 +9,7 @@ import com.example.biblioteca.databinding.CardViewTabellaBinding
 import com.example.biblioteca.home.CustomAdapterLista
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-
+//Custom adapter cronologia
 class CustomAdapterCrono(private val element: JsonArray) :RecyclerView.Adapter<CustomAdapterCrono.ViewHolder>(){
 
     class ViewHolder(binding: CardViewTabellaBinding) : RecyclerView.ViewHolder(binding.root) {

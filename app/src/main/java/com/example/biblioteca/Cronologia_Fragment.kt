@@ -43,7 +43,7 @@ class Cronologia_Fragment:Fragment() {
         val username = cursor.getString(cursor.getColumnIndex("username"))
         getCrono(username)
 
-        binding.button.setOnClickListener{
+        binding.button.setOnClickListener{//per visualizzare le prenotazioni in corso
             transaction.replace(R.id.fragmentMain, Prenotazioni_Fragment())
             transaction.addToBackStack("prenotazioni")
             transaction.commit()
@@ -51,8 +51,7 @@ class Cronologia_Fragment:Fragment() {
         return binding.root
     }
 
-    private fun getCrono(username:String){
-
+    private fun getCrono(username:String){ //query per visualizzare la cronologia delle prenotazioni
         val query="select libro.titolo,prenotazione.dataInizio,prenotazione.dataFine, prenotazione.consegnato from prenotazione,persona,libro where persona.username=prenotazione.usernameU AND libro.id=prenotazione.idL AND '$username'=prenotazione.usernameU Order by prenotazione.dataFine;"
         ClientNetwork.retrofit.getCronologia(query).enqueue(
             object : Callback<JsonObject> {

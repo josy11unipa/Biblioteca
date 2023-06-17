@@ -75,13 +75,12 @@ class HamburgerMenu:Fragment() {
                 Toast.makeText(requireContext(),"Effettua l'accesso per accedere alla modifica della password", Toast.LENGTH_LONG).show()
             }
         }
-        binding.buttonModificaDati.setOnClickListener {//modifica datio
-            if(user.count !=0) {
+        binding.buttonModificaDati.setOnClickListener {//modifica dati
+            if(user.count !=0) {//verifico login
                 transaction.replace(R.id.fragmentMain, ModDati_Fragment())
                 transaction.addToBackStack("ModificaDati_Fragment")
                 transaction.commit()
             }else{
-                Log.i("LOG-Hamburger", "Effettua l'accesso per accedere alla modifica dei dati")
                 Toast.makeText(requireContext(),"Effettua l'accesso per accedere alla modifica dei dati", Toast.LENGTH_LONG).show()
             }
         }
