@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.example.biblioteca.databinding.ConsegnaLayoutBinding
-
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -107,12 +106,9 @@ class Consegna_Fragment:Fragment() {
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     Log.i("LOG-Login_Fragment-onFailure", "Errore : ${t.message}")
                 }
-
             }
         )
     }
-
-
     private fun verificaCodice(id:Int,codice: String,idL:String) { //verifico che il codice di riconsegna sia corretto
         val query="SELECT * From prenotazione where prenotazione.id=$id and prenotazione.codeConsegna='$codice' ;"
 
@@ -166,7 +162,6 @@ class Consegna_Fragment:Fragment() {
             }
         )
     }
-
     private fun getImage(url: String) {//get immagine
         ClientNetwork.retrofit.getAvatar(url).enqueue(
             object : Callback<ResponseBody> {
